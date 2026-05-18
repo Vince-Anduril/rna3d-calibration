@@ -1,0 +1,7 @@
+[08:45:10] Found 8672 files in PDB_RNA/
+[08:45:10] Spawning 64 workers
+[08:45:19] Progress: 500/8672 (5.8%) elapsed=9s
+[08:45:28] Progress: 1000/8672 (11.5%) elapsed=18s
+[08:45:38] Progress: 1500/8672 (17.3%) elapsed=28s
+[08:45:54] Progress: 2000/8672 (23.1%) elapsed=44s
+[08:46:07] Progress: 2500/8672 (28.8%) elapsed=57s

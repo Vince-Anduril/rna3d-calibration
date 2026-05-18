@@ -1,0 +1,14 @@
+[08:45:07] Found 2534 MSA fasta files in MSA_v2/
+[08:45:07] Progress: 200/2534 elapsed=0s
+[08:45:08] Progress: 400/2534 elapsed=1s
+[08:45:08] Progress: 600/2534 elapsed=1s
+[08:45:08] Progress: 800/2534 elapsed=1s
+[08:45:08] Progress: 1000/2534 elapsed=1s
+[08:45:09] Progress: 1200/2534 elapsed=2s
+[08:45:09] Progress: 1400/2534 elapsed=2s
+[08:45:09] Progress: 1600/2534 elapsed=2s
+[08:45:10] Progress: 1800/2534 elapsed=3s
+[08:45:10] Progress: 2000/2534 elapsed=3s
+[08:45:10] Progress: 2200/2534 elapsed=3s
+[08:45:12] Progress: 2400/2534 elapsed=5s
+[08:45:13] DONE: 2534/2534 OK. Elapsed 6s
