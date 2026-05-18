@@ -90,3 +90,19 @@ git commit -m "feat(GPU_run): training + eval complete on RTX 5090 ($(date -u +%
 git push origin main 2>&1 | tail -3 | tee -a $LOG
 
 echo "===== POD AUTONOMOUS RUN finished $(date -u +%FT%TZ) =====" | tee -a $LOG
+
+# 8) AUTO-STOP THE POD to avoid burning money.
+# Tries multiple paths in order of preference:
+#   (a) runpodctl with cached config + RUNPOD_POD_ID env var
+#   (b) runpodctl with hostname as pod id
+#   (c) graceful container shutdown
+echo "--- auto-stop attempt ---" | tee -a $LOG
+POD_ID="${RUNPOD_POD_ID:-$(hostname)}"
+if command -v runpodctl >/dev/null 2>&1; then
+  echo "trying: runpodctl stop pod $POD_ID" | tee -a $LOG
+  runpodctl stop pod "$POD_ID" 2>&1 | tee -a $LOG
+  # Give the API ~30s; if we are still alive, fall through.
+  sleep 30
+fi
+echo "fallback: poweroff" | tee -a $LOG
+poweroff 2>&1 | tee -a $LOG || shutdown -h now 2>&1 | tee -a $LOG || true

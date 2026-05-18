@@ -28,24 +28,27 @@ def _kabsch_align(P: torch.Tensor, Q: torch.Tensor, mask: torch.Tensor) -> torch
     Returns P_aligned: [B, L, 3]
     """
     B = P.shape[0]
+    orig_dtype = P.dtype
     out = torch.zeros_like(P)
     for b in range(B):
         m = mask[b]
         if m.sum() < 3:
             out[b] = P[b]
             continue
-        p, q = P[b, m], Q[b, m]
+        # SVD on CUDA does not support bfloat16/float16 — promote to float32 around it.
+        p = P[b, m].float()
+        q = Q[b, m].float()
         pc, qc = p.mean(0), q.mean(0)
         pp, qq = p - pc, q - qc
         H = pp.T @ qq
         U, S, Vt = torch.linalg.svd(H)
         d = torch.sign(torch.det(Vt.T @ U.T))
-        D = torch.diag(torch.tensor([1.0, 1.0, d], device=P.device, dtype=P.dtype))
+        D = torch.diag(torch.tensor([1.0, 1.0, d], device=p.device, dtype=p.dtype))
         R = Vt.T @ D @ U.T
-        # Apply rotation + translation to full P (not just masked) for downstream
-        p_full = P[b]
+        p_full = P[b].float()
         p_full_centered = p_full - pc
-        out[b] = (R @ p_full_centered.T).T + qc
+        aligned = (R @ p_full_centered.T).T + qc
+        out[b] = aligned.to(orig_dtype)
     return out
 
 
