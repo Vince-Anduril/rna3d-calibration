@@ -175,7 +175,11 @@ def stage2_structure(model, device, dataset: StanfordRNADataset, out_dir: Path, 
         valid = batch["valid"].to(device, non_blocking=True)
 
         optim.zero_grad(set_to_none=True)
-        if scaler is not None:
+        # NOTE: stage 2 is FP32-only — bfloat16 autocast around _kabsch_align
+        # crashes with "svd_cuda_gesvdjBatched not implemented for BFloat16"
+        # even when we .float() the inputs inside the SVD call, because the
+        # autocast context re-wraps the op. Mem stays under 2 GB so this is fine.
+        if False:  # FP32-only stage2
             with torch.amp.autocast("cuda", dtype=torch.bfloat16):
                 out = model(ids)
                 struct = structure_loss(out["coords"].float(), coords, valid)
