@@ -32,32 +32,60 @@ class StructureSample:
     valid: np.ndarray | None   # [L] bool
 
 
-def load_pdb_coords(pdb_path: Path) -> np.ndarray | None:
-    """Extract per-residue C1' or P coordinates. Returns [L, 3] or None on failure.
+def load_pdb_coords(pdb_path: Path, chain_id: str | None = None) -> np.ndarray | None:
+    """Extract per-residue C1' (or fallback P) coordinates from a mmCIF/PDB file.
 
-    Uses biotite if available; falls back to a simple parser.
+    Stanford dataset stores structures as `<lowercase_pdb_id>.cif`. The CSV
+    `target_id` has the form `<PDB_ID>_<CHAIN>` (e.g. `1SCL_A`). The caller
+    is responsible for stripping the chain suffix to find the file; this
+    function takes the chain id to filter atoms when the file has multiple
+    chains. Returns None if no atoms could be loaded.
     """
     try:
         import biotite.structure.io as bsio
         s = bsio.load_structure(str(pdb_path))
-        # Prefer C1' for RNA backbone; fall back to P
-        for name in ("C1'", "P"):
+        # If a stack (NMR multi-model), take first model
+        if hasattr(s, "stack_depth") and s.stack_depth() > 1:
+            s = s[0]
+        # Filter by chain if specified and the structure has chain_id field
+        if chain_id is not None and hasattr(s, "chain_id"):
+            mask = s.chain_id == chain_id
+            if mask.any():
+                s = s[mask]
+            # If chain didn't match, fall through and use whole structure
+        # Prefer C1' for RNA; fallback to P, then any backbone
+        for name in ("C1'", "P", "O5'"):
             mask = s.atom_name == name
             if mask.any():
-                coords = s.coord[mask]
-                return np.asarray(coords, dtype=np.float32)
+                return np.asarray(s.coord[mask], dtype=np.float32)
     except Exception:
         pass
-    # naive fallback: parse PDB ATOM lines
+    # naive fallback: parse mmCIF/PDB lines
     coords = []
     try:
+        in_atoms = False
         with open(pdb_path) as f:
             for line in f:
-                if line.startswith("ATOM") and line[12:16].strip() in ("C1'", "P"):
-                    x = float(line[30:38])
-                    y = float(line[38:46])
-                    z = float(line[46:54])
-                    coords.append([x, y, z])
+                # PDB-style ATOM line
+                if line.startswith("ATOM") and len(line) > 54:
+                    atom = line[12:16].strip()
+                    chain = line[21].strip() if len(line) > 21 else ""
+                    if atom in ("C1'", "P") and (chain_id is None or chain == chain_id):
+                        try:
+                            coords.append([float(line[30:38]), float(line[38:46]), float(line[46:54])])
+                        except ValueError:
+                            continue
+                # naive mmCIF _atom_site.* table parse
+                elif line.startswith("ATOM ") and "." not in line[:5]:
+                    parts = line.split()
+                    if len(parts) >= 14:
+                        atom_name = parts[3].strip("\"'")
+                        chain = parts[7] if len(parts) > 7 else ""
+                        if atom_name in ("C1'", "P") and (chain_id is None or chain == chain_id):
+                            try:
+                                coords.append([float(parts[10]), float(parts[11]), float(parts[12])])
+                            except (ValueError, IndexError):
+                                continue
         if not coords:
             return None
         return np.asarray(coords, dtype=np.float32)
@@ -111,16 +139,23 @@ class StanfordRNADataset(Dataset):
         ids = ids + [PAD_ID] * (self.max_len - len(ids))
         token_ids = torch.tensor(ids, dtype=torch.long)
 
-        # Try to load coords for this target_id; if none, return zeros with valid=0
+        # Try to load coords. Stanford convention: target_id = "<PDB>_<CHAIN>"
+        # (e.g. 1SCL_A), files are stored lowercase as "<pdb>.cif" (e.g. 1scl.cif).
         coords = np.zeros((self.max_len, 3), dtype=np.float32)
         valid = np.zeros(self.max_len, dtype=bool)
+        target = row["target_id"]
+        parts = target.split("_")
+        pdb_id = parts[0].lower()
+        chain = parts[1] if len(parts) > 1 else None
         pdb_candidates = [
-            self.pdb_dir / f"{row['target_id']}.pdb",
-            self.pdb_dir / f"{row['target_id']}.cif",
+            self.pdb_dir / f"{pdb_id}.cif",
+            self.pdb_dir / f"{pdb_id}.pdb",
+            self.pdb_dir / f"{target.lower()}.cif",   # in case some are stored with chain
+            self.pdb_dir / f"{target}.cif",
         ]
         for p in pdb_candidates:
             if p.exists():
-                cc = load_pdb_coords(p)
+                cc = load_pdb_coords(p, chain_id=chain)
                 if cc is not None and len(cc) > 0:
                     n = min(len(cc), self.max_len - 1)  # leave room for CLS
                     coords[1 : 1 + n] = cc[:n]
