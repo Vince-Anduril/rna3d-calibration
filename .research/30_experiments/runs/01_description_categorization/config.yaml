@@ -1,0 +1,36 @@
+run_id: 01_description_categorization
+date: 2026-05-18
+hypothesis_ref: H-001  # focus selection groundwork
+source_csvs:
+  - /workspace/rna3d/data/kaggle_raw/train_sequences.csv
+  - /workspace/rna3d/data/kaggle_raw/validation_sequences.csv
+  - /workspace/rna3d/data/kaggle_raw/test_sequences.csv
+scheme_version: v1
+scheme_source: Q-2026-05-18-002 (answered, questions_for_scientist.md)
+seed: na
+length_threshold_nmr_solution_motif: 60
+viability_threshold: 10  # across train+val+test combined
+priority_order:  # FIRST match wins
+  - ribosome_subunit
+  - riboswitch
+  - ribozyme
+  - tRNA
+  - viral_rna
+  - pseudoknot
+  - nmr_solution_motif
+  - loop_motif
+  - complex_with_protein
+  - synthetic_designed
+  - other
+regex_table:
+  ribosome_subunit: '\bribosom(e|al|os)\b|\b(small|large)\s+subunit\b|\b(30|40|50|60|70|80)s\b|\b(5|5\.8|16|18|23|28)s\s*r?rna\b|\brrna\b'
+  riboswitch: '\briboswitch(es)?\b|\baptamer\b|\b(sam|tpp|fmn|cobalamin|glycine|lysine|preq[12]?|guanine|adenine)\b.*\b(riboswitch|aptamer)\b|\b(riboswitch|aptamer)\b.*\b(sam|tpp|fmn|cobalamin|glycine|lysine|preq[12]?|guanine|adenine)\b'
+  ribozyme: '\bribozyme(s)?\b|\bhammerhead\b|\bhairpin\s+ribozyme\b|\bhdv\b|\bgroup\s+i+\b|\brnase\s*p\b|\bspliceosom'
+  tRNA: '\btrna\b|\btransfer\s+rna\b'
+  viral_rna: '\bhiv\b|\bhcv\b|\bsars\b|\bires\b|\bframeshift\w*\b|\btar\s+rna\b|\bviral\s+rna\b'
+  pseudoknot: '\bpseudoknot(s)?\b'
+  nmr_solution_motif: '\b(nmr|solution)\b'  # AND length < 60 enforced in code
+  loop_motif: '\b(loop|hairpin|kink[-\s]?turn|sarcin[-\s]?ricin|tetraloop)\b'
+  complex_with_protein: '\bcomplex\b.*\b(protein|with)\b|\b(bound\s+to|in\s+complex\s+with)\b.*\bprotein\b|\brna[-\s]protein\s+complex\b'
+  synthetic_designed: '\b(designed|engineered|synthetic|chimer\w*)\b'
+  other: '.*'  # fallback

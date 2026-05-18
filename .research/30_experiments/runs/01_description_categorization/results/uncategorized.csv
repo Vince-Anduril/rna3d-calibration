@@ -1,0 +1,217 @@
+split,target_id,sequence_length,description,description_truncated_80chars,category,matched_rule,confidence
+train,1HLX_A,20,P1 HELIX NUCLEIC ACIDS (DNA/RNA) RIBONUCLEIC ACID,P1 HELIX NUCLEIC ACIDS (DNA/RNA) RIBONUCLEIC ACID,other,,low
+train,1ZDI_S,19,RNA BACTERIOPHAGE MS2 COAT PROTEIN/RNA COMPLEX,RNA BACTERIOPHAGE MS2 COAT PROTEIN/RNA COMPLEX,other,,low
+train,7MSF_S,14,MS2 PROTEIN CAPSID/RNA COMPLEX,MS2 PROTEIN CAPSID/RNA COMPLEX,other,,low
+train,5MSF_S,18,MS2 PROTEIN CAPSID/RNA COMPLEX,MS2 PROTEIN CAPSID/RNA COMPLEX,other,,low
+train,1QFQ_A,15,Bacteriophage Lambda N-protein-NutboxB-RNA Complex,Bacteriophage Lambda N-protein-NutboxB-RNA Complex,other,,low
+train,1FOQ_A,120,PENTAMERIC MODEL OF THE BACTERIOPHAGE PHI29 PROHEAD RNA,PENTAMERIC MODEL OF THE BACTERIOPHAGE PHI29 PROHEAD RNA,other,,low
+train,1FYO_A,27,EUKARYOTIC DECODING REGION A-SITE RNA,EUKARYOTIC DECODING REGION A-SITE RNA,other,,low
+train,1S9S_A,101,SOLUTION STRUCTURE OF MLV PSI SITE,SOLUTION STRUCTURE OF MLV PSI SITE,other,,low
+train,1T28_A,34,High resolution structure of a picornaviral internal cis-acting replication element,High resolution structure of a picornaviral internal cis-acting replication elem...,other,,low
+train,1Y1Y_P,4,RNA Polymerase II-TFIIS-DNA/RNA complex,RNA Polymerase II-TFIIS-DNA/RNA complex,other,,low
+train,1Z31_A,32,The structure of an enzyme-activating fragment of human telomerase RNA,The structure of an enzyme-activating fragment of human telomerase RNA,other,,low
+train,2A64_A,417,Crystal Structure of Bacterial Ribonuclease P RNA,Crystal Structure of Bacterial Ribonuclease P RNA,other,,low
+train,2B6G_B,19,RNA recognition by the Vts1 SAM domain,RNA recognition by the Vts1 SAM domain,other,,low
+train,2B2E_R,19,"RNA stemloop from bacteriophage MS2 complexed with an N87S,E89K mutant MS2 capsid","RNA stemloop from bacteriophage MS2 complexed with an N87S,E89K mutant MS2 capsi...",other,,low
+train,2B2E_S,19,"RNA stemloop from bacteriophage MS2 complexed with an N87S,E89K mutant MS2 capsid","RNA stemloop from bacteriophage MS2 complexed with an N87S,E89K mutant MS2 capsi...",other,,low
+train,2EVY_A,14,GNYA tetranucleotide loops found in poliovirus oriL by in vivo SELEX (un)expectedly form a YNMG-like structure,GNYA tetranucleotide loops found in poliovirus oriL by in vivo SELEX (un)expecte...,other,,low
+train,2IY3_B,110,Structure of the E. Coli Signal Regognition Particle,Structure of the E. Coli Signal Regognition Particle,other,,low
+train,2IHX_B,75,Solution Structure of the Rous Sarcoma Virus Nucleocapsid Protein:uPsi RNA Packaging Signal Complex,Solution Structure of the Rous Sarcoma Virus Nucleocapsid Protein:uPsi RNA Packa...,other,,low
+train,2OB7_D,86,Structure of tmRNA-(SmpB)2 complex as inferred from cryo-EM,Structure of tmRNA-(SmpB)2 complex as inferred from cryo-EM,other,,low
+train,2FY1_B,21,A dual mode of RNA recognition by the RBMY protein,A dual mode of RNA recognition by the RBMY protein,other,,low
+train,2JPP_C,20,Structural basis of RsmA/CsrA RNA recognition: Structure of RsmE bound to the Shine-Dalgarno sequence of hcnA mRNA,Structural basis of RsmA/CsrA RNA recognition: Structure of RsmE bound to the Sh...,other,,low
+train,2OM3_R,3,High-resolution cryo-EM structure of Tobacco Mosaic Virus,High-resolution cryo-EM structure of Tobacco Mosaic Virus,other,,low
+train,2K4C_A,76,tRNAPhe-based homology model for tRNAVal refined against base N-H RDCs in two media and SAXS data,tRNAPhe-based homology model for tRNAVal refined against base N-H RDCs in two me...,other,,low
+train,3HAY_E,71,Crystal structure of a substrate-bound full H/ACA RNP from Pyrococcus furiosus,Crystal structure of a substrate-bound full H/ACA RNP from Pyrococcus furiosus,other,,low
+train,2KHY_A,38,Specifier Domain of B. subtilis tyrS T box leader RNA,Specifier Domain of B. subtilis tyrS T box leader RNA,other,,low
+train,2X7N_A,28,Mechanism of eIF6s anti-association activity,Mechanism of eIF6s anti-association activity,other,,low
+train,3LWQ_D,58,Structure of H/ACA RNP bound to a substrate RNA containing 3MU,Structure of H/ACA RNP bound to a substrate RNA containing 3MU,other,,low
+train,2L1F_A,65,Structure of a conserved retroviral RNA packaging element by NMR spectroscopy and cryo-electron tomography,Structure of a conserved retroviral RNA packaging element by NMR spectroscopy an...,other,,low
+train,2L1F_B,66,Structure of a conserved retroviral RNA packaging element by NMR spectroscopy and cryo-electron tomography,Structure of a conserved retroviral RNA packaging element by NMR spectroscopy an...,other,,low
+train,2L3J_B,71,The solution structure of the ADAR2 dsRBM-RNA complex reveals a sequence-specific read out of the minor groove,The solution structure of the ADAR2 dsRBM-RNA complex reveals a sequence-specifi...,other,,low
+train,3PGW_N,164,Crystal structure of human U1 snRNP,Crystal structure of human U1 snRNP,other,,low
+train,3NDB_M,136,Crystal structure of a signal sequence bound to the signal recognition particle,Crystal structure of a signal sequence bound to the signal recognition particle,other,,low
+train,2KZL_A,55,Specifier domain and GA motif region of B. subtilis tyrS T box leader RNA,Specifier domain and GA motif region of B. subtilis tyrS T box leader RNA,other,,low
+train,3TUP_T,76,Crystal structure of human mitochondrial PheRS complexed with tRNAPhe in the active open state,Crystal structure of human mitochondrial PheRS complexed with tRNAPhe in the act...,other,,low
+train,2LKR_A,111,Yeast U2/U6 complex,Yeast U2/U6 complex,other,,low
+train,2LK3_A,24,U2/U6 Helix I,U2/U6 Helix I,other,,low
+train,2LPA_A,15,Mutant of the sub-genomic promoter from Brome Mosaic Virus,Mutant of the sub-genomic promoter from Brome Mosaic Virus,other,,low
+train,2LP9_A,16,Pseudo-triloop from the sub-genomic promoter of Brome Mosaic Virus,Pseudo-triloop from the sub-genomic promoter of Brome Mosaic Virus,other,,low
+train,4A4T_A,22,UNAC Tetraloops: To What Extent Can They Mimic GNRA Tetraloops,UNAC Tetraloops: To What Extent Can They Mimic GNRA Tetraloops,other,,low
+train,4A4U_A,22,UNAC Tetraloops: To What Extent Can They Mimic GNRA Tetraloops,UNAC Tetraloops: To What Extent Can They Mimic GNRA Tetraloops,other,,low
+train,4A4S_A,22,UNAC Tetraloops: To What Extent Can They Mimic GNRA Tetraloops,UNAC Tetraloops: To What Extent Can They Mimic GNRA Tetraloops,other,,low
+train,2LQZ_A,27,Structure of the RNA claw of the DNA packaging motor of bacteriophage 29,Structure of the RNA claw of the DNA packaging motor of bacteriophage 29,other,,low
+train,4ILM_M,16,CRISPR RNA Processing endoribonuclease,CRISPR RNA Processing endoribonuclease,other,,low
+train,4ILL_C,24,Recognition and Cleavage of a non-structured CRISPR RNA by its Processing Endoribonuclease Cas6,Recognition and Cleavage of a non-structured CRISPR RNA by its Processing Endori...,other,,low
+train,3W1K_F,95,Crystal structure of the selenocysteine synthase SelA and tRNASec complex,Crystal structure of the selenocysteine synthase SelA and tRNASec complex,other,,low
+train,4KJI_D,16,Novel re-arrangement of an RsmA/cSRa family protein to create a structurally distinct new RNA-binding family member,Novel re-arrangement of an RsmA/cSRa family protein to create a structurally dis...,other,,low
+train,2MFG_D,21,Csr/Rsm protein-RNA recognition - A molecular affinity ruler: RsmZ(SL4)/RsmE(dimer) 2:1 complex,Csr/Rsm protein-RNA recognition - A molecular affinity ruler: RsmZ(SL4)/RsmE(dim...,other,,low
+train,2MFC_B,22,Csr/Rsm protein-RNA recognition - A molecular affinity ruler: RsmZ(SL1)/RsmE(dimer) 2:1 complex,Csr/Rsm protein-RNA recognition - A molecular affinity ruler: RsmZ(SL1)/RsmE(dim...,other,,low
+train,2MFE_D,22,Csr/Rsm protein-RNA recognition - A molecular affinity ruler: RsmZ(SL2)/RsmE(dimer) 2:1 complex,Csr/Rsm protein-RNA recognition - A molecular affinity ruler: RsmZ(SL2)/RsmE(dim...,other,,low
+train,2MFF_B,21,Csr/Rsm protein-RNA recognition - A molecular affinity ruler: RsmZ(SL3)/RsmE(dimer) 2:1 complex,Csr/Rsm protein-RNA recognition - A molecular affinity ruler: RsmZ(SL3)/RsmE(dim...,other,,low
+train,2M4W_A,17,single G-bulge in a conserved regulatory region of the HEV genome,single G-bulge in a conserved regulatory region of the HEV genome,other,,low
+train,4KR6_D,39,Crystal structure of a 4-thiouridine synthetase - RNA complex,Crystal structure of a 4-thiouridine synthetase - RNA complex,other,,low
+train,2MF0_G,72,Structural basis of the non-coding RNA RsmZ acting as protein sponge: Conformer L of RsmZ(1-72)/RsmE(dimer) 1to3 complex,Structural basis of the non-coding RNA RsmZ acting as protein sponge: Conformer ...,other,,low
+train,4V99_FX,17,The Crystallographic Structure of Panicum Mosaic Virus,The Crystallographic Structure of Panicum Mosaic Virus,other,,low
+train,4V6U_A0,76,Promiscuous behavior of proteins in archaeal ribosomes revealed by cryo-EM: implications for evolution of eukaryotic ribosomes,Promiscuous behavior of proteins in archaeal ribosomes revealed by cryo-EM: impl...,other,,low
+train,4V6U_B1,3049,Promiscuous behavior of proteins in archaeal ribosomes revealed by cryo-EM: implications for evolution of eukaryotic ribosomes,Promiscuous behavior of proteins in archaeal ribosomes revealed by cryo-EM: impl...,other,,low
+train,4OQ9_3,10,Satellite Tobacco Mosaic Virus Refined to 1.4 A Resolution using non-crystallographic symmetry restraints,Satellite Tobacco Mosaic Virus Refined to 1.4 A Resolution using non-crystallogr...,other,,low
+train,2MS1_B,71,Solution NMR structure of tRNApro:MLV Nucleocapsid Protein (1:1) Complex,Solution NMR structure of tRNApro:MLV Nucleocapsid Protein (1:1) Complex,other,,low
+train,2MQT_A,68,Solution NMR structure of the U5-primer binding site (U5-PBS) domain of murine leukemia virus RNA genome,Solution NMR structure of the U5-primer binding site (U5-PBS) domain of murine l...,other,,low
+train,2MNC_A,29,oligonucleotide model of miR-21 pre-element,oligonucleotide model of miR-21 pre-element,other,,low
+train,4WSA_V,14,Crystal structure of Influenza B polymerase bound to the vRNA promoter (FluB1 form),Crystal structure of Influenza B polymerase bound to the vRNA promoter (FluB1 fo...,other,,low
+train,4WJ3_Q,76,Crystal structure of the asparagine transamidosome from Pseudomonas aeruginosa,Crystal structure of the asparagine transamidosome from Pseudomonas aeruginosa,other,,low
+train,5A18_A,32,The structure of the SOLE element of oskar mRNA,The structure of the SOLE element of oskar mRNA,other,,low
+train,2N2O_A,23,Structure of murine tumour necrosis factor alpha CDE RNA,Structure of murine tumour necrosis factor alpha CDE RNA,other,,low
+train,2N7M_X,92,NMR-SAXS/WAXS Structure of the core of the U4/U6 di-snRNA,NMR-SAXS/WAXS Structure of the core of the U4/U6 di-snRNA,other,,low
+train,5FMZ_V,12,Crystal structure of Influenza B polymerase with bound 5' vRNA,Crystal structure of Influenza B polymerase with bound 5' vRNA,other,,low
+train,5EPI_H,12,CRYSTAL STRUCTURE OF INFLUENZA B POLYMERASE WITH BOUND 5' CRNA EXHIBITS A NOVEL DOMAIN ARRANGEMENT,CRYSTAL STRUCTURE OF INFLUENZA B POLYMERASE WITH BOUND 5' CRNA EXHIBITS A NOVEL ...,other,,low
+train,5GAP_U,214,Body region of the U4/U6.U5 tri-snRNP,Body region of the U4/U6.U5 tri-snRNP,other,,low
+train,5GAP_V,67,Body region of the U4/U6.U5 tri-snRNP,Body region of the U4/U6.U5 tri-snRNP,other,,low
+train,4Z7L_F,14,Crystal structure of Cas6b,Crystal structure of Cas6b,other,,low
+train,2N6W_A,68,NMR Assignment and structure of CssA Thermometer from Neisseria meningitidis,NMR Assignment and structure of CssA Thermometer from Neisseria meningitidis,other,,low
+train,2N6S_A,36,Structure of CssA4 (bottom stem) of CssA thermometer,Structure of CssA4 (bottom stem) of CssA thermometer,other,,low
+train,5KK5_B,45,AsCpf1(E993A)-crRNA-DNA ternary complex,AsCpf1(E993A)-crRNA-DNA ternary complex,other,,low
+train,5MS0_R,29,pseudo-atomic model of the RNA polymerase lambda-based antitermination complex solved by cryo-EM,pseudo-atomic model of the RNA polymerase lambda-based antitermination complex s...,other,,low
+train,5O7H_A,43,Structure of the Cascade-I-Fv complex from Shewanella putrefaciens,Structure of the Cascade-I-Fv complex from Shewanella putrefaciens,other,,low
+train,5LSN_A,29,SINEB2 element of the long non-coding RNA activator of translation AS Uchl1,SINEB2 element of the long non-coding RNA activator of translation AS Uchl1,other,,low
+train,5XJ2_G,10,Structure of spRlmCD with U747 RNA,Structure of spRlmCD with U747 RNA,other,,low
+train,5Y36_B,99,Cryo-EM structure of SpCas9-sgRNA-DNA ternary complex,Cryo-EM structure of SpCas9-sgRNA-DNA ternary complex,other,,low
+train,6C4H_x,12,Conformation of methylated GGQ in the peptidyl transferase center during translation termination (PTC region),Conformation of methylated GGQ in the peptidyl transferase center during transla...,other,,low
+train,6FLQ_R,21,CryoEM structure of E.coli RNA polymerase paused elongation complex bound to NusA,CryoEM structure of E.coli RNA polymerase paused elongation complex bound to Nus...,other,,low
+train,5ZAL_C,73,Cryo-EM structure of human Dicer and its complexes with a pre-miRNA substrate,Cryo-EM structure of human Dicer and its complexes with a pre-miRNA substrate,other,,low
+train,5ZAM_C,44,Cryo-EM structure of human Dicer and its complexes with a pre-miRNA substrate,Cryo-EM structure of human Dicer and its complexes with a pre-miRNA substrate,other,,low
+train,6C66_J,61,"CRISPR RNA-guided surveillance complex, pre-nicking","CRISPR RNA-guided surveillance complex, pre-nicking",other,,low
+train,6AGB_A,369,Cryo-EM structure of yeast Ribonuclease P,Cryo-EM structure of yeast Ribonuclease P,other,,low
+train,6MJ0_B,104,Crystal structure of the complete turnip yellow mosaic virus 3'UTR,Crystal structure of the complete turnip yellow mosaic virus 3'UTR,other,,low
+train,6IFO_D,99,Crystal structure of AcrIIA2-SpyCas9-sgRNA ternary complex,Crystal structure of AcrIIA2-SpyCas9-sgRNA ternary complex,other,,low
+train,6QW6_5,117,Structure of the human U5.U4/U6 tri-snRNP at 2.9A resolution.,Structure of the human U5.U4/U6 tri-snRNP at 2.9A resolution.,other,,low
+train,6AAX_D,28,Crystal structure of TFB1M and h45 with SAM in homo sapiens,Crystal structure of TFB1M and h45 with SAM in homo sapiens,other,,low
+train,6NM9_G,40,CryoEM structure of the LbCas12a-crRNA-AcrVA4 dimer,CryoEM structure of the LbCas12a-crRNA-AcrVA4 dimer,other,,low
+train,6K0A_X,258,cryo-EM structure of an archaeal Ribonuclease P,cryo-EM structure of an archaeal Ribonuclease P,other,,low
+train,6O0Z_B,102,Conformational states of Cas9-sgRNA-DNA ternary complex in the presence of magnesium,Conformational states of Cas9-sgRNA-DNA ternary complex in the presence of magne...,other,,low
+train,6O0Y_B,102,Conformational states of Cas9-sgRNA-DNA ternary complex in the presence of magnesium,Conformational states of Cas9-sgRNA-DNA ternary complex in the presence of magne...,other,,low
+train,6HYU_D,6,Crystal structure of DHX8 helicase bound to single stranded poly-adenine RNA,Crystal structure of DHX8 helicase bound to single stranded poly-adenine RNA,other,,low
+train,6RR7_D,15,Influenza A virus (A/NT/60/1968) polymerase Heterotrimer bound to 3'5' vRNA promoter and capped RNA primer,Influenza A virus (A/NT/60/1968) polymerase Heterotrimer bound to 3'5' vRNA prom...,other,,low
+train,6KUT_V,15,Structure of influenza D virus polymerase bound to vRNA promoter in Mode B conformation (Class B2),Structure of influenza D virus polymerase bound to vRNA promoter in Mode B confo...,other,,low
+train,6KUV_V,15,Structure of influenza D virus polymerase bound to cRNA promoter in class 2,Structure of influenza D virus polymerase bound to cRNA promoter in class 2,other,,low
+train,6RFL_U,72,Structure of the complete Vaccinia DNA-dependent RNA polymerase complex,Structure of the complete Vaccinia DNA-dependent RNA polymerase complex,other,,low
+train,6XWW_A,19,Constitutive decay element CDE1 from human 3'UTR,Constitutive decay element CDE1 from human 3'UTR,other,,low
+train,6XWJ_A,21,Constitutive decay element CDE2 from human 3'UTR,Constitutive decay element CDE2 from human 3'UTR,other,,low
+train,6WLO_A,338,"hc16 ligase models, 11.0 Angstrom resolution","hc16 ligase models, 11.0 Angstrom resolution",other,,low
+train,6WLN_A,349,"hc16 ligase product models, 10.0 Angstrom resolution","hc16 ligase product models, 10.0 Angstrom resolution",other,,low
+train,6WLK_A,130,"Apo ATP-TTR-3 models, 10.0 Angstrom resolution","Apo ATP-TTR-3 models, 10.0 Angstrom resolution",other,,low
+train,6Z6B_UUU,10,Structure of full-length La Crosse virus L protein (polymerase),Structure of full-length La Crosse virus L protein (polymerase),other,,low
+train,6VZC_A,28,Tandem UU:GA mismatch within an RNA helix,Tandem UU:GA mismatch within an RNA helix,other,,low
+train,6W62_B,30,Cryo-EM structure of Cas12i-crRNA complex,Cryo-EM structure of Cas12i-crRNA complex,other,,low
+train,6W64_B,38,Cryo-EM structure of Cas12i-crRNA-dsDNA complex in I1 state,Cryo-EM structure of Cas12i-crRNA-dsDNA complex in I1 state,other,,low
+train,6W5C_B,59,Cryo-EM structure of Cas12i(E894A)-crRNA-dsDNA complex,Cryo-EM structure of Cas12i(E894A)-crRNA-dsDNA complex,other,,low
+train,6LTP_H,56,Crystal structure of Cas12i2 binary complex,Crystal structure of Cas12i2 binary complex,other,,low
+train,6XZD_IN1,20,Influenza C virus polymerase complex without chicken ANP32A - Subclass 2,Influenza C virus polymerase complex without chicken ANP32A - Subclass 2,other,,low
+train,6VAR_A,61,61 nt human Hepatitis B virus epsilon pre-genomic RNA,61 nt human Hepatitis B virus epsilon pre-genomic RNA,other,,low
+train,7LJY_B,76,Cryo-EM structure of the B dENE construct complexed with a 28-mer poly(A),Cryo-EM structure of the B dENE construct complexed with a 28-mer poly(A),other,,low
+train,6ZDU_C,65,Structure of telomerase from Candida albicans in complexe with TWJ fragment of telomeric RNA,Structure of telomerase from Candida albicans in complexe with TWJ fragment of t...,other,,low
+train,7LMA_B,159,Tetrahymena telomerase T3D2 structure at 3.3 Angstrom,Tetrahymena telomerase T3D2 structure at 3.3 Angstrom,other,,low
+train,7LMB_B,159,Tetrahymena telomerase T5D5 structure at 3.8 Angstrom,Tetrahymena telomerase T5D5 structure at 3.8 Angstrom,other,,low
+train,7D8C_B,44,Crystal structure of the Cas12i1-crRNA binary complex,Crystal structure of the Cas12i1-crRNA binary complex,other,,low
+train,7OBQ_1,249,SRP-SR at the distal site conformation,SRP-SR at the distal site conformation,other,,low
+train,7M5O_B,45,Cryo-EM structure of CasPhi-2 (Cas12j) bound to crRNA,Cryo-EM structure of CasPhi-2 (Cas12j) bound to crRNA,other,,low
+train,7LYT_B,45,Cryo-EM structure of CasPhi-2 (Cas12j) bound to crRNA and Phosphorothioate-DNA,Cryo-EM structure of CasPhi-2 (Cas12j) bound to crRNA and Phosphorothioate-DNA,other,,low
+train,7LYS_B,45,Cryo-EM structure of CasPhi-2 (Cas12j) bound to crRNA and DNA,Cryo-EM structure of CasPhi-2 (Cas12j) bound to crRNA and DNA,other,,low
+train,7K4L_A,36,DENV1 SLA bottom stem RNA (DenvBS),DENV1 SLA bottom stem RNA (DenvBS),other,,low
+train,6WW6_E,54,Crystal structure of EutV bound to RNA,Crystal structure of EutV bound to RNA,other,,low
+train,6WW6_F,54,Crystal structure of EutV bound to RNA,Crystal structure of EutV bound to RNA,other,,low
+train,6WW6_C,54,Crystal structure of EutV bound to RNA,Crystal structure of EutV bound to RNA,other,,low
+train,7NK4_D,15,1918 H1N1 Viral influenza polymerase heterotrimer with Nb8203 core,1918 H1N1 Viral influenza polymerase heterotrimer with Nb8203 core,other,,low
+train,7M57_cc,16,Crystallographic structure of a primitive orthorhombic crystal form of STMV,Crystallographic structure of a primitive orthorhombic crystal form of STMV,other,,low
+train,7M57_ii,27,Crystallographic structure of a primitive orthorhombic crystal form of STMV,Crystallographic structure of a primitive orthorhombic crystal form of STMV,other,,low
+train,7M2T_ss,27,Crystallographic Structure of the Monoclinic Form of Satellite Tobacco Mosaic Virus,Crystallographic Structure of the Monoclinic Form of Satellite Tobacco Mosaic Vi...,other,,low
+train,7LHD_A,4217,The complete model of phage Qbeta virion,The complete model of phage Qbeta virion,other,,low
+train,7ORJ_H,17,La Crosse virus polymerase at transcription capped RNA cleavage stage,La Crosse virus polymerase at transcription capped RNA cleavage stage,other,,low
+train,7ORM_H,17,La Crosse virus polymerase at transcription early-elongation stage,La Crosse virus polymerase at transcription early-elongation stage,other,,low
+train,7ORI_H,17,La Crosse virus polymerase at replication late-elongation stage,La Crosse virus polymerase at replication late-elongation stage,other,,low
+train,7S4V_B,98,"Cas9 bound to 12-14MM DNA, 60 min time-point, kinked conformation","Cas9 bound to 12-14MM DNA, 60 min time-point, kinked conformation",other,,low
+train,7WB1_D,121,PlmCasX-sgRNAv2-dsDNA ternary complex at nts loading state,PlmCasX-sgRNAv2-dsDNA ternary complex at nts loading state,other,,low
+train,7SLP_R,81,Cryo-EM structure of 7SK core RNP with linear RNA,Cryo-EM structure of 7SK core RNP with linear RNA,other,,low
+train,7S36_R,102,"Cas9:sgRNA:DNA (S. pyogenes) with 0 RNA:DNA base pairs, closed-protein/bent-DNA conformation","Cas9:sgRNA:DNA (S. pyogenes) with 0 RNA:DNA base pairs, closed-protein/bent-DNA ...",other,,low
+train,7S3H_R,102,"Cas9:sgRNA:DNA (S. pyogenes) with 0 RNA:DNA base pairs, open-protein/linear-DNA conformation","Cas9:sgRNA:DNA (S. pyogenes) with 0 RNA:DNA base pairs, open-protein/linear-DNA ...",other,,low
+train,7KUB_A,60,Au1 Domain of VEGF Readthrough Element,Au1 Domain of VEGF Readthrough Element,other,,low
+train,7KUD_A,13,Ax2 Domain of VEGF Readthrough Element,Ax2 Domain of VEGF Readthrough Element,other,,low
+train,7KUC_A,16,Ax1 Domain of VEGF Readthrough Element,Ax1 Domain of VEGF Readthrough Element,other,,low
+train,7X34_3,130,Cryo-EM structure of RNC-RAC complex in presence of Ssb from S. cerevisiae 2,Cryo-EM structure of RNC-RAC complex in presence of Ssb from S. cerevisiae 2,other,,low
+train,7UMC_A,70,DENV1 SLA RNA (DenvSLATL),DENV1 SLA RNA (DenvSLATL),other,,low
+train,7UMD_A,40,DENV1 SLA three-way junction RNA (DenvSLAsh),DENV1 SLA three-way junction RNA (DenvSLAsh),other,,low
+train,7UME_A,28,DENV1 SLA top stemloop RNA (DenvTSL),DENV1 SLA top stemloop RNA (DenvTSL),other,,low
+train,7V59_C,115,Cryo-EM structure of spyCas9-sgRNA-DNA dimer,Cryo-EM structure of spyCas9-sgRNA-DNA dimer,other,,low
+train,7VTN_B,61,Cryo-EM structure of the Cas13bt3-crRNA-target RNA ternary complex,Cryo-EM structure of the Cas13bt3-crRNA-target RNA ternary complex,other,,low
+train,7PTL_B,720,Mature conformer of a 6-helix bundle of RNA with clasp,Mature conformer of a 6-helix bundle of RNA with clasp,other,,low
+train,7PTQ_C,544,RNA origami 5-helix tile,RNA origami 5-helix tile,other,,low
+train,7PTS_A,558,RNA origami 5-helix tile,RNA origami 5-helix tile,other,,low
+train,7OZS_3,119,Structure of the hexameric 5S RNP from C. thermophilum,Structure of the hexameric 5S RNP from C. thermophilum,other,,low
+train,7SHX_A,94,"A functional SNP regulates E-cadherin expression by dynamically remodeling the 3D structure of a promoter-associated non-coding RNA transcript, NMR, minimized average structure",A functional SNP regulates E-cadherin expression by dynamically remodeling the 3...,other,,low
+train,7RGU_H,28,The crystal structure of RocC bound to a transcriptional terminator,The crystal structure of RocC bound to a transcriptional terminator,other,,low
+train,8DVS_B,26,Cryo-EM structure of RIG-I bound to the end of OHSLR30 (+ATP),Cryo-EM structure of RIG-I bound to the end of OHSLR30 (+ATP),other,,low
+train,7QDU_Q,552,Twist-corrected RNA origami 5-helix Tile A,Twist-corrected RNA origami 5-helix Tile A,other,,low
+train,8DC2_B,52,Cryo-EM structure of CasLambda (Cas12l) bound to crRNA and DNA,Cryo-EM structure of CasLambda (Cas12l) bound to crRNA and DNA,other,,low
+train,8BTZ_A,238,Single-stranded Paranemic Crossover RNA Triangle (PXT),Single-stranded Paranemic Crossover RNA Triangle (PXT),other,,low
+train,8BD5_B,256,Cas12k-sgRNA-dsDNA-S15-TniQ-TnsC transposon recruitment complex,Cas12k-sgRNA-dsDNA-S15-TniQ-TnsC transposon recruitment complex,other,,low
+train,8D4A_B,41,Cas12a2 quaternary complex,Cas12a2 quaternary complex,other,,low
+train,8D49_B,26,Structure of Cas12a2 binary complex,Structure of Cas12a2 binary complex,other,,low
+train,7YOJ_B,174,Structure of CasPi with guide RNA and target DNA,Structure of CasPi with guide RNA and target DNA,other,,low
+train,8FCS_A,71,Structure of pre-miR-31 reveals an active role in Dicer processing,Structure of pre-miR-31 reveals an active role in Dicer processing,other,,low
+train,7XW2_C,73,Cryo-EM structure of human DICER-pre-miRNA in a dicing state,Cryo-EM structure of human DICER-pre-miRNA in a dicing state,other,,low
+train,7VW3_B,104,Cryo-EM structure of SaCas9-sgRNA-DNA ternary complex,Cryo-EM structure of SaCas9-sgRNA-DNA ternary complex,other,,low
+train,8G1I_B,98,SpCas9 with sgRNA and target DNA,SpCas9 with sgRNA and target DNA,other,,low
+train,8FZT_B,70,SpCas9 with dual-guide RNA and target DNA,SpCas9 with dual-guide RNA and target DNA,other,,low
+train,8G1S_R,47,Cryo-EM structure of 3DVA component 1 of Escherichia coli que-PEC (paused elongation complex) RNA Polymerase minus preQ1 ligand,Cryo-EM structure of 3DVA component 1 of Escherichia coli que-PEC (paused elonga...,other,,low
+train,8H69_5,19,Cryo-EM structure of influenza RNA polymerase,Cryo-EM structure of influenza RNA polymerase,other,,low
+train,8GAP_B,159,Structure of LARP7 protein p65-telomerase RNA complex in telomerase,Structure of LARP7 protein p65-telomerase RNA complex in telomerase,other,,low
+train,8SCH_A,68,TCEI_III NMR Structure,TCEI_III NMR Structure,other,,low
+train,8CI5_C,18,Structure of the SNV L protein bound to 5' RNA,Structure of the SNV L protein bound to 5' RNA,other,,low
+train,8IDF_B,53,Crystal structure of human TUT1 complexed with U6 snRNA,Crystal structure of human TUT1 complexed with U6 snRNA,other,,low
+train,8EWG_B,60,Cryo-EM structure of a riboendonclease,Cryo-EM structure of a riboendonclease,other,,low
+train,8HUD_B,75,Cryo-EM structure of the EvCas9-sgRNA-target DNA ternary complex,Cryo-EM structure of the EvCas9-sgRNA-target DNA ternary complex,other,,low
+train,8BU8_A,354,Double-motif Single-stranded Paranemic Crossover RNA Triangle (2PXT),Double-motif Single-stranded Paranemic Crossover RNA Triangle (2PXT),other,,low
+train,8PM4_B,58,Cryo-EM structure of the Cas12m-crRNA-target DNA complex,Cryo-EM structure of the Cas12m-crRNA-target DNA complex,other,,low
+train,8IEW_B,38,Cas005-crRNA-DNA complex,Cas005-crRNA-DNA complex,other,,low
+train,8TOC_R,4269,Acinetobacter phage AP205,Acinetobacter phage AP205,other,,low
+train,8QO3_A,118,Conserved Structures and Dynamics in 5-Proximal Regions of Betacoronavirus RNA Genomes,Conserved Structures and Dynamics in 5-Proximal Regions of Betacoronavirus RNA G...,other,,low
+train,8QO4_A,156,Conserved Structures and Dynamics in 5-Proximal Regions of Betacoronavirus RNA Genomes,Conserved Structures and Dynamics in 5-Proximal Regions of Betacoronavirus RNA G...,other,,low
+train,8QO5_A,145,Conserved Structures and Dynamics in 5-Proximal Regions of Betacoronavirus RNA Genomes,Conserved Structures and Dynamics in 5-Proximal Regions of Betacoronavirus RNA G...,other,,low
+train,8QO2_A,222,Conserved Structures and Dynamics in 5-Proximal Regions of Betacoronavirus RNA Genomes,Conserved Structures and Dynamics in 5-Proximal Regions of Betacoronavirus RNA G...,other,,low
+train,8TVZ_C,363,RNA origami 3-helix tile Traptamer,RNA origami 3-helix tile Traptamer,other,,low
+train,8Z85_D,18,Cryo-EM structure of Thogoto virus polymerase in transcription pre-initiation conformation 1,Cryo-EM structure of Thogoto virus polymerase in transcription pre-initiation co...,other,,low
+train,8Z90_D,18,Cryo-EM structure of Thogoto virus polymerase in transcription initiation conformation 2,Cryo-EM structure of Thogoto virus polymerase in transcription initiation confor...,other,,low
+train,8Z8N_D,18,Cryo-EM structure of Thogoto virus polymerase in transcription pre-initiation conformation 3,Cryo-EM structure of Thogoto virus polymerase in transcription pre-initiation co...,other,,low
+train,8KAI_I,65,Crystal structure of SpyCas9-crRNA-tracrRNA complex bound to 17nt target DNA,Crystal structure of SpyCas9-crRNA-tracrRNA complex bound to 17nt target DNA,other,,low
+train,8JTJ_B,139,Cryo-EM structure of GeoCas9-sgRNA-dsDNA ternary complex,Cryo-EM structure of GeoCas9-sgRNA-dsDNA ternary complex,other,,low
+train,8WUS_B,115,SpCas9-MMLV RT-pegRNA-target DNA complex (termination),SpCas9-MMLV RT-pegRNA-target DNA complex (termination),other,,low
+train,8YGJ_B,137,SpCas9-MMLV RT-pegRNA-target DNA complex (elongation 28-nt),SpCas9-MMLV RT-pegRNA-target DNA complex (elongation 28-nt),other,,low
+train,8JTR_B,139,Cryo-EM structure of GeoCas9-sgRNA binary complex,Cryo-EM structure of GeoCas9-sgRNA binary complex,other,,low
+train,8OPT_D,54,Human terminal uridylyltransferase 7 (TUT7/ZCCHC6) bound with pre-let7g miRNA and Lin28A - complex 2,Human terminal uridylyltransferase 7 (TUT7/ZCCHC6) bound with pre-let7g miRNA an...,other,,low
+train,8OPP_D,25,Structure of human terminal uridylyltransferase 7 (hTUT7/ZCCHC6) bound with pre-let7g miRNA and UTPalphaS,Structure of human terminal uridylyltransferase 7 (hTUT7/ZCCHC6) bound with pre-...,other,,low
+train,8OPS_C,71,Human terminal uridylyltransferase 7 (TUT7/ZCCHC6) bound with pre-let7g miRNA and Lin28A - complex 1,Human terminal uridylyltransferase 7 (TUT7/ZCCHC6) bound with pre-let7g miRNA an...,other,,low
+train,8I0P_F,107,The cryo-EM structure of human pre-Bact complex,The cryo-EM structure of human pre-Bact complex,other,,low
+train,9CF1_W,61,Parasitella parasitica Fanzor (PpFz) State 2,Parasitella parasitica Fanzor (PpFz) State 2,other,,low
+train,9CF3_W,61,Parasitella parasitica Fanzor (PpFz) State 4,Parasitella parasitica Fanzor (PpFz) State 4,other,,low
+train,8YE6_C,92,Cryo-EM structure of Cas9-sgRNA-A32 complex,Cryo-EM structure of Cas9-sgRNA-A32 complex,other,,low
+train,8KI7_E,10,Structure of Tomato spotted wilt virus L protein contained endoH domain binding to 3'5'vRNA,Structure of Tomato spotted wilt virus L protein contained endoH domain binding ...,other,,low
+train,8UBE_I,140,Diversity-generating retroelement (DGR) ribonucleoprotein reverse transcriptase - Resting State 1a,Diversity-generating retroelement (DGR) ribonucleoprotein reverse transcriptase ...,other,,low
+train,9G7C_A,224,Cryo-EM structure of raiA ncRNA from Clostridium reveals a new RNA 3D fold,Cryo-EM structure of raiA ncRNA from Clostridium reveals a new RNA 3D fold,other,,low
+train,9FO8_A,29,5_SL5b_GC of the 5_SL5 RNA,5_SL5b_GC of the 5_SL5 RNA,other,,low
+train,8XCA_B,60,"Cryo-EM structure of Cas12j19,crRNA and target DNA complex","Cryo-EM structure of Cas12j19,crRNA and target DNA complex",other,,low
+train,8XCC_B,60,"Cryo-EM structure of Cas12j19 (E100K), crRNA and target DNA complex","Cryo-EM structure of Cas12j19 (E100K), crRNA and target DNA complex",other,,low
+val,R1128,238,"6WJ
+Single-stranded Paranemic Crossover RNA Triangle (PXT)","6WJ
+Single-stranded Paranemic Crossover RNA Triangle (PXT)",other,,low
+val,R1138,720,"6HBC-Young
+Additional Information:        This is a co-transcriptional product. The structure observed in the cryo-EM grids immediately after the transcription and that around 8 hours later have alternative conformations. You can submit alternative conformations as separate models (we still stick to 5 models per target maximum).
+Young conformer of a 6-helix bundle of RNA with clasp","6HBC-Young
+Additional Information:        This is a co-transcriptional product. ...",other,,low
+test,R1128,238,"6WJ
+Single-stranded Paranemic Crossover RNA Triangle (PXT)","6WJ
+Single-stranded Paranemic Crossover RNA Triangle (PXT)",other,,low
+test,R1138,720,"6HBC-Young
+Additional Information:        This is a co-transcriptional product. The structure observed in the cryo-EM grids immediately after the transcription and that around 8 hours later have alternative conformations. You can submit alternative conformations as separate models (we still stick to 5 models per target maximum).
+Young conformer of a 6-helix bundle of RNA with clasp","6HBC-Young
+Additional Information:        This is a co-transcriptional product. ...",other,,low
