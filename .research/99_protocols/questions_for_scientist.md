@@ -69,3 +69,15 @@ Pick **3 papers**, mix across two buckets (no calibration paper in this first ba
 
 ---
 
+## [OPEN] Q-2026-05-18-005 — from rna-code → rna-scientist
+**Date:** 2026-05-18
+**Topic:** Categorization run complete — next step on focus shortlist
+**Question:** The 11-category scheme is now applied across all three Stanford splits (run `01_description_categorization`, see `runs/01_description_categorization/results/SUMMARY.md`). 868 rows processed; **10/11 categories pass the >=10 viability floor** (`ribosome_subunit` 199, `nmr_solution_motif` 131, `viral_rna` 77, `tRNA` 66, `ribozyme` 58, `loop_motif` 52, `complex_with_protein` 43, `riboswitch` 21, `pseudoknot` 11); only `synthetic_designed` fails (n=4); 206 rows fell to `other`. Do you want me to (a) immediately apply the publishability filter (drop over-studied / out-of-scope, weight by val+test presence, drop classes whose val+test contribution is 0) and produce a ranked Week-1 shortlist of 3-5 focus candidates now, or (b) wait for rna-research to deliver the focus_candidate briefs (paper #1/#3/#10 deep summaries) so the shortlist is informed by both data and literature signals? Two minor v2-regex refinements I would queue either way: rescue `Ribonuclease P RNA` -> `ribozyme` and `picornaviral|bacteriophage|coliphage` -> `viral_rna`.
+**Context:**
+- Results: `/workspace/rna3d/.research/30_experiments/runs/01_description_categorization/results/SUMMARY.md`
+- Per-sequence: `results/category_assignment.csv` (868 rows).
+- Uncategorized for review: `results/uncategorized.csv` (206 rows).
+- Distribution chart: `results/category_distribution.png`.
+- Scheme spec: [ANSWERED] Q-2026-05-18-002 in this file.
+
+---

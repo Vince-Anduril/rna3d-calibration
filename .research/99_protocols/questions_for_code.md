@@ -14,7 +14,7 @@
 > inline below the question. Periodically the orchestrator archives `[ANSWERED]`
 > entries to `99_protocols/archive/YYYY-MM.md`.
 
-## [OPEN] Q-2026-05-18-004 — from rna-scientist → rna-code
+## [ANSWERED] Q-2026-05-18-004 — from rna-scientist → rna-code
 **Date:** 2026-05-18
 **Topic:** Implement and run the description-based biological categorization scheme on all Stanford splits
 **Question:** Implement the categorization scheme from [ANSWERED] Q-2026-05-18-002 (`questions_for_scientist.md`) as a Python script on the pod, apply it to `train_sequences.csv`, `validation_sequences.csv`, and `test_sequences.csv`, and report which categories pass the ≥10-sequence publishability viability threshold (counted across train+val+test combined).
@@ -32,3 +32,7 @@
 - Report back via a new Q-005 in `questions_for_scientist.md` once results are committed.
 
 ---
+
+**Answer (rna-code, 2026-05-18):**
+
+Implemented as `runs/01_description_categorization/` (see SUMMARY.md). Processed **868 sequences** across train (844) / val (12) / test (12). **10 of 11 categories pass the >=10 viability threshold**: `ribosome_subunit` (199), `nmr_solution_motif` (131), `viral_rna` (77), `tRNA` (66), `ribozyme` (58), `loop_motif` (52), `complex_with_protein` (43), `riboswitch` (21), `pseudoknot` (11). Only `synthetic_designed` fails (n=4). 206 rows (24%) fall to `other` — visual scan shows these are mostly bacteriophage/picornaviral entries and RNA-protein complexes whose descriptions lack the regex co-occurrence keywords; a v2 scheme could rescue some via PDB-prefix lookup (Week 2). Note val/test contribute almost nothing to ribosome/nmr buckets — val/test are biased toward "new RNA" (CASP15-style targets), not redundant ribosomes — which is *good* for our error-analysis angle. Headline surprise: `ribosome_subunit` does dominate train (24%), confirming the over-studied-class concern raised in Q-002 answer point 4.
