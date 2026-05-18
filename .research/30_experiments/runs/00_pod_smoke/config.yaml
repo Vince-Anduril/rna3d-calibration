@@ -1,0 +1,9 @@
+run_id: 00_pod_smoke
+date: 2026-05-18
+hypothesis_ref: smoke
+model: synthetic
+seed: na
+git_commit: 0e98de4f75c0b01c92f9a536b1f9d08b651c9a3a
+notes: |
+  End-to-end pod execution + minimal description-word signal extraction
+  from train_sequences.csv. No model training; pandas + torch import check only.

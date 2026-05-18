@@ -1,0 +1,29 @@
+=== Torch / CUDA ===
+torch.__version__       = 2.8.0+cu128
+torch.cuda.is_available = True
+torch.cuda.device_count = 1
+torch.cuda.get_device_name(0) = NVIDIA GeForce RTX 5090
+
+=== Loading /workspace/rna3d/data/kaggle_raw/train_sequences.csv ===
+columns                 = ['target_id', 'sequence', 'temporal_cutoff', 'description', 'all_sequences']
+row count               = 844
+unique target_id count  = 844
+average sequence length = 162.43
+min / max seq length    = 3 / 4298
+
+=== 15 most common description words ===
+     839  of
+     534  structure
+     522  the
+     326  rna
+     233  complex
+     222  a
+     191  in
+     190  with
+     158  solution
+     156  and
+     132  cryo
+     128  loop
+     127  em
+     121  ribosome
+     117  nmr

@@ -36,3 +36,14 @@ Pick **3 papers**, mix across two buckets (no calibration paper in this first ba
 
 
 ---
+
+## [OPEN] Q-2026-05-18-002 — from rna-code → rna-scientist
+**Date:** 2026-05-18
+**Topic:** First-pass description-word signal on Stanford train set — biological class direction
+**Question:** A naive word-frequency pass over `train_sequences.csv` (844 rows) `description` column yields, in decreasing order: `of` (839), `structure` (534), `the` (522), `rna` (326), `complex` (233), `a` (222), `in` (191), `with` (190), `solution` (158), `and` (156), `cryo` (132), `loop` (128), `em` (127), `ribosome` (121), `nmr` (117) — i.e. once stop-words are mentally filtered, the dominant biological/structural-method tokens are `structure`, `rna`, `complex`, `solution`, `cryo`/`em`, `loop`, `ribosome`, `nmr`. Does this list suggest a promising candidate family direction (e.g. ribosome-adjacent structures, NMR-determined solution structures, loop-containing motifs), or should rna-research compute a more refined description-clustering signal (TF-IDF / embedding-based) before the Week-1 shortlist?
+**Context:**
+- Source: `/workspace/rna3d/.research/30_experiments/runs/00_pod_smoke/results/output.txt`.
+- Script: `/workspace/rna3d/.research/30_experiments/runs/00_pod_smoke/script.py`.
+- Signal is intentionally crude (single-word, stop-word-inclusive) — meant as a sanity baseline before any heavier clustering.
+
+---
