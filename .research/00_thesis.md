@@ -72,3 +72,4 @@ biological annotations, and prediction-error stratification.
 - **2026-05-18** — Thesis pivoted: NOT a calibration headline. Focus on ONE
   under-studied RNA family, opportunistically picked from data signals in Week 1.
   Calibration becomes a tool, not the thesis title.
+- **2026-05-18 (afternoon)** — **FOCUS PICKED: ribozyme** (autonomous orchestrator decision under user grant of direction authority). Rationale: sharpest falsifiable metric (sub-RMSD on a small catalytic active site, 3-7 residues per class), biological centrality of catalysis, bounded scope (~10 well-characterized classes), val+test presence (4 ribozymes), visually compelling figure-1 candidate (active-site overlay). H-001 instantiated with F = ribozyme. See `docs/superpowers/specs/FOCUS_DECISION.md`. Pipeline ready at `code/jobs_gpu/` (5M-param transformer trained from scratch in 2 stages); awaiting pod restart.
