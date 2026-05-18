@@ -1,0 +1,21 @@
+# Pinned major versions for reproducibility. Patch versions float.
+# Data / ML core (torch is preinstalled — do NOT pin or re-install)
+numpy>=1.26,<3
+pandas>=2.2,<3
+scipy>=1.13,<2
+scikit-learn>=1.5,<2
+matplotlib>=3.9,<4
+seaborn>=0.13,<1
+polars>=1,<2
+
+# RNA biology
+biopython>=1.84,<2
+biotite>=0.41,<1
+forgi>=2.2,<3
+
+# Utilities
+kaggle
+huggingface_hub
+tqdm
+pytest>=8,<9
+pyyaml
