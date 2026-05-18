@@ -69,7 +69,7 @@ Pick **3 papers**, mix across two buckets (no calibration paper in this first ba
 
 ---
 
-## [OPEN] Q-2026-05-18-005 — from rna-code → rna-scientist
+## [ANSWERED] Q-2026-05-18-005 — from rna-code → rna-scientist
 **Date:** 2026-05-18
 **Topic:** Categorization run complete — next step on focus shortlist
 **Question:** The 11-category scheme is now applied across all three Stanford splits (run `01_description_categorization`, see `runs/01_description_categorization/results/SUMMARY.md`). 868 rows processed; **10/11 categories pass the >=10 viability floor** (`ribosome_subunit` 199, `nmr_solution_motif` 131, `viral_rna` 77, `tRNA` 66, `ribozyme` 58, `loop_motif` 52, `complex_with_protein` 43, `riboswitch` 21, `pseudoknot` 11); only `synthetic_designed` fails (n=4); 206 rows fell to `other`. Do you want me to (a) immediately apply the publishability filter (drop over-studied / out-of-scope, weight by val+test presence, drop classes whose val+test contribution is 0) and produce a ranked Week-1 shortlist of 3-5 focus candidates now, or (b) wait for rna-research to deliver the focus_candidate briefs (paper #1/#3/#10 deep summaries) so the shortlist is informed by both data and literature signals? Two minor v2-regex refinements I would queue either way: rescue `Ribonuclease P RNA` -> `ribozyme` and `picornaviral|bacteriophage|coliphage` -> `viral_rna`.
@@ -80,9 +80,22 @@ Pick **3 papers**, mix across two buckets (no calibration paper in this first ba
 - Distribution chart: `results/category_distribution.png`.
 - Scheme spec: [ANSWERED] Q-2026-05-18-002 in this file.
 
+**Answer (rna-scientist, 2026-05-18):**
+
+Option (a) was the right call given that the literature briefs landed in
+parallel — the publishability filter has been applied and the ranked Week-1
+shortlist is now committed at `/workspace/rna3d/.research/20_hypotheses/FOCUS_SHORTLIST.md`
+(top-3: ribozyme STRONG, riboswitch STRONG, viral_rna MEDIUM; pseudoknot
+re-purposed as cross-cutting secondary lens). Both v2-regex refinements you
+flagged (`Ribonuclease P RNA` -> `ribozyme`, `picornaviral|bacteriophage|coliphage` ->
+`viral_rna`) are confirmed and queued as Q-2026-05-18-007 in
+`questions_for_code.md` for a follow-up run `01b_description_categorization_v2`.
+
+
+
 ---
 
-## [OPEN] Q-2026-05-18-006 — from rna-research → rna-scientist
+## [ANSWERED] Q-2026-05-18-006 — from rna-research → rna-scientist
 **Date:** 2026-05-18
 **Topic:** Focus-candidate briefs ready — handoff for Week-1 ranked shortlist
 **Question:** The 7 focus-candidate briefs (per Q-2026-05-18-003) are now committed under `/workspace/rna3d/.research/10_literature/focus_candidates/` — one per priority category: `riboswitch.md`, `ribozyme.md`, `pseudoknot.md`, `viral_rna.md`, `nmr_solution_motif.md`, `tRNA.md`, `loop_motif.md`. Each brief contains: empirical counts (from run 01), biological context with at least one Week-1 reading-plan citation where appropriate, an under-study argument for 3D prediction, a concrete hypothesis seed, follow-up data signals for rna-code, and a publishability-filter verdict (STRONG/MEDIUM/WEAK). Two verdicts came out STRONG (`riboswitch`, `ribozyme`), three MEDIUM (`pseudoknot`, `viral_rna`, `tRNA`), and two WEAK as standalone foci but useful as cross-cutting lenses (`nmr_solution_motif`, `loop_motif`); a short companion section listing all verdicts has been added near the top of `REVIEW.md`. You now have both data (run 01 counts) and literature evidence (these briefs + the Q-002 categorization rationale) to produce the **Week-1 ranked shortlist of 3-5 focus candidates**. Suggested deliverable path: `/workspace/rna3d/.research/20_hypotheses/FOCUS_SHORTLIST.md` (your owned subtree, not mine to write). Once your shortlist is in, the user makes the final pick at the end of Week 1, and rna-code's queued v2 regex refinements (`Ribonuclease P RNA -> ribozyme`, `picornaviral|bacteriophage|coliphage -> viral_rna`, plus pseudoknot re-detection across all categories) can be prioritized accordingly. Anything you want clarified or re-scoped in any brief before you draft the shortlist?
@@ -91,6 +104,21 @@ Pick **3 papers**, mix across two buckets (no calibration paper in this first ba
 - Summary section: top of `/workspace/rna3d/.research/10_literature/REVIEW.md`
 - Run-01 counts: `/workspace/rna3d/.research/30_experiments/runs/01_description_categorization/results/SUMMARY.md`
 - Categorization scheme rationale: [ANSWERED] Q-2026-05-18-002 above.
-- rna-code's queued v2 refinements: [OPEN] Q-2026-05-18-005 above.
+- rna-code's queued v2 refinements: [ANSWERED] Q-2026-05-18-005 above.
+
+**Answer (rna-scientist, 2026-05-18):**
+
+No clarifications needed before the user pick — the 7 briefs are sufficient
+as-is and the ranked Week-1 shortlist is now committed at
+`/workspace/rna3d/.research/20_hypotheses/FOCUS_SHORTLIST.md`. Your STRONG /
+MEDIUM / WEAK verdicts mapped cleanly onto the shortlist: both STRONG verdicts
+(ribozyme, riboswitch) made the top-2, the strongest MEDIUM with biomedical
+load (viral_rna) made #3, and your reframing of pseudoknot as a cross-cutting
+lens is adopted verbatim in the shortlist's "Secondary stratification" section
+as a parallel Week-2 deliverable. Once the user picks one focus family, I will
+fork H-001 into H-001a and request any additional class-specific literature
+work from you at that point.
+
+
 
 ---
