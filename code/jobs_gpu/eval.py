@@ -101,6 +101,20 @@ def main():
     per_seq.to_csv(out / "per_sequence.csv", index=False)
     per_res.to_csv(out / "per_residue.csv", index=False)
 
+    # Defensive: if no residues had valid ground truth, write a clear empty SUMMARY and exit.
+    if len(per_res) == 0 or "category" not in per_res.columns:
+        with open(out / "SUMMARY.md", "w") as f:
+            f.write("# GPU training — evaluation (EMPTY)\n\n")
+            f.write(f"Checkpoint: `{args.ckpt}`\n\n")
+            f.write("**No residues had valid ground-truth coordinates.** Usually means the\n")
+            f.write("PDB file lookup failed (filenames/chain IDs don't match). Inspect\n")
+            f.write("`per_sequence.csv` for `n_valid==0` rows and check `data.py`.\n\n")
+            f.write(f"- per_sequence rows: {len(per_seq)}\n- per_residue rows: {len(per_res)}\n")
+            if len(per_seq) > 0:
+                f.write(f"- mean n_valid per sequence: {per_seq['n_valid'].mean():.1f}\n")
+        print(f"Eval wrote empty SUMMARY (no per-residue ground truth). Check {out}/SUMMARY.md")
+        return
+
     # Per-category aggregate
     cat_agg = per_seq.groupby("category").agg(
         n=("rmsd", "size"),

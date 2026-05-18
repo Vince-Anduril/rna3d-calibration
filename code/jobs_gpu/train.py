@@ -280,9 +280,15 @@ def main():
         log("=== smoke DONE ===", log_fp)
         return
 
-    # Real pod run
-    stage1_pretrain(model, device, Path(args.data_root) / "kaggle_raw" / "train_sequences.v2.csv",
-                    out_dir, log_fp, deadline=deadline, max_len=args.max_len, batch_size=args.batch_mlm)
+    # Real pod run — resume from stage1 checkpoint if it exists (avoid redoing 30 min)
+    stage1_ckpt = out_dir / "stage1_final.pt"
+    if stage1_ckpt.exists():
+        ck = torch.load(str(stage1_ckpt), map_location=device, weights_only=False)
+        model.load_state_dict(ck["state_dict"])
+        log(f"Loaded existing stage1_final.pt (step={ck.get('step', '?')}); SKIPPING stage 1", log_fp)
+    else:
+        stage1_pretrain(model, device, Path(args.data_root) / "kaggle_raw" / "train_sequences.v2.csv",
+                        out_dir, log_fp, deadline=deadline, max_len=args.max_len, batch_size=args.batch_mlm)
 
     if time.time() >= deadline:
         log("Deadline reached after stage 1; skipping stage 2", log_fp)
