@@ -40,3 +40,34 @@ Run completed: 2026-05-18T20:18:17.169386+00:00
 - Overlap of top-5 (REAL & NULL): **[51]** (1 positions)
 
 **F-001 SURVIVES THE NULL CONTROL.** Top-5 changes meaningfully between mutations. The position-30 -> P1 cascade appears specific to the position-30 mutation, supporting a real biology/model alignment.
+
+
+---
+
+# RhoFold+ second-predictor results (added 2026-05-18T20:48:05.064163+00:00)
+
+## RhoFold+ RMSD vs 7QR3 chain C
+
+| target | RMSD (A) |
+|---|---|
+| R1107_human | 13.356 |
+| R1108_chimp | 7.699 |
+| null_pos41 | 14.465 |
+
+## RhoFold+ REAL case (R1107 vs R1108, pos 30 A->G)
+
+- Kabsch RMSD: 12.354 A
+- Position 30 delta: 14.243 A
+- mean/max delta: 10.92 / 25.79 A
+- Top-5 divergent residues: pos 48 (25.79A), pos 49 (24.77A), pos 50 (24.63A), pos 21 (24.61A), pos 51 (20.87A)
+
+## RhoFold+ NULL case (pos 41 A->C)
+
+- Kabsch RMSD: 13.319 A
+- Position 41 delta: 10.389 A
+- Top-5 divergent residues: pos 48 (32.11A), pos 49 (29.83A), pos 50 (29.24A), pos 21 (26.23A), pos 51 (23.87A)
+
+## RhoFold+ cross-validation verdict
+
+- Top-5 overlap (REAL & NULL): **[21, 48, 49, 50, 51]** (5 positions)
+- DRfold2 had overlap=1. If RhoFold+ overlap is also small (<=2) AND its REAL top-5 includes residues near 9 or 60 → **F-001 is cross-model reproduced**.
