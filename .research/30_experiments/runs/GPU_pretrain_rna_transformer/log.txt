@@ -17,3 +17,11 @@
 [08:54:12] step=550 loss=1.3728 mem=3.8GB elapsed=2.2min
 [08:54:24] step=600 loss=1.3740 mem=3.8GB elapsed=2.4min
 [08:54:42] step=650 loss=1.3695 mem=3.8GB elapsed=2.7min
+[08:54:54] step=700 loss=1.3649 mem=3.8GB elapsed=2.9min
+[08:55:08] step=750 loss=1.3648 mem=3.8GB elapsed=3.2min
+[08:55:18] step=800 loss=1.3660 mem=3.8GB elapsed=3.3min
+[08:55:34] step=850 loss=1.3592 mem=3.8GB elapsed=3.6min
+[08:55:44] step=900 loss=1.3633 mem=3.8GB elapsed=3.8min
+[08:55:53] step=950 loss=1.3609 mem=3.8GB elapsed=3.9min
+[08:56:06] step=1000 loss=1.3631 mem=3.8GB elapsed=4.1min
+[08:56:19] step=1050 loss=1.3596 mem=3.8GB elapsed=4.4min
