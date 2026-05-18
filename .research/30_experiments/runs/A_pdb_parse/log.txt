@@ -8,3 +8,5 @@
 [08:47:44] Progress: 3000/8672 (34.6%) elapsed=154s
 [08:48:39] Progress: 3500/8672 (40.4%) elapsed=209s
 [08:49:09] Progress: 4000/8672 (46.1%) elapsed=239s
+[08:49:59] Progress: 4500/8672 (51.9%) elapsed=289s
+[08:50:54] Progress: 5000/8672 (57.7%) elapsed=344s
