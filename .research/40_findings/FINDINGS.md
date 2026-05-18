@@ -9,8 +9,12 @@
 ## F-001 — DRfold2 places the predicted structural consequence of the CPEB3 single-nucleotide variant at the same P1/P1.1 region implicated by published biochemistry
 
 **Date promoted:** 2026-05-18
-**Last validated:** 2026-05-18 (NULL CONTROL passed)
-**Status:** **VALIDATED on the null-control axis.** Still pending reproduction with a second predictor + per-residue confidence channel inspection, but the null-control discrimination is strong enough to make F-001 paper-grade as a stand-alone finding. Position-30-specific cascade is NOT a model prior — confirmed by mutating the same predictor at a peripheral position 41 and observing a completely different, local cascade pattern (overlap of only 1 residue between the two top-5 sets).
+**Last validated:** 2026-05-19 (Experiment #1 geometric distance check)
+**Status:** **DOWNGRADED to a clean model-behavior observation, not a biological discovery.** After running Experiment #1, the F-001 claim reduces cleanly to: *DRfold2 correctly places the published P1.1↔P1 3D contact in its predicted structure and propagates a single-nt perturbation across that contact in a mutation-specific way.* Of the original top-5 divergent residues {9, 22, 24, 51, 60}:
+- Residues **9 and 60** are simultaneously (a) within 15 Å of position 30 in the predicted structure (direct geometric coupling, consistent with the published P1.1↔P1 contact) AND (b) specific to the real mutation (0/5 NULL controls have them in their top-5). These are the cleanly defensible cascade residues.
+- Residues **22, 24, 51** are at long distance from position 30 (>20 Å) AND each appears in 2/5 NULL control top-5 lists. These are DRfold2 *attractor positions* (residues the model tends to vary regardless of input), not mutation-specific responses.
+
+So the refined finding is parsimoniously explained by "the model correctly learned the documented 3D contact and propagates locally through it" — a sanity check on model fidelity, not evidence of any deeper mechanistic understanding.
 **Source runs:** initial inference `.research/30_experiments/runs/cpeb3_focused/SUMMARY.md`; NULL CONTROL was the same SUMMARY file after `scripts/run_cpeb3_full.sh` ran with the pos-41 sequence.
 
 **One-sentence claim:**
