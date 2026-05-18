@@ -89,3 +89,21 @@ Run completed: 2026-05-18T20:18:17.169386+00:00
 **Robustness:** REAL has P1 anchor in top-5 = True. NULL: 0/5 have P1 anchor.
 
 **STRONG SIGNAL**: P1 anchor appears specifically for the biologically functional position-30 mutation, in 0/5 arbitrary mutations. F-001 strengthened.
+
+
+---
+
+## Multi-null robustness analysis (5 null controls + 1 real, 2026-05-18T22:11:03.633460+00:00)
+
+| target | mutation | mean Δ (Å) | max Δ (Å) | Δ at mut | Δ pos 9 | Δ pos 60 | top-5 | P1 anchor? |
+|---|---|---|---|---|---|---|---|---|
+| R1107_human | pos 30 | 1.64 | 4.21 | 2.15 | 4.21 | 4.12 | {9,22,24,51,60} | yes |
+| null_pos5 | pos 5 | 2.22 | 5.79 | 3.82 | 1.57 | 4.14 | {1,2,3,22,23} | no |
+| null_pos20 | pos 20 | 1.30 | 3.85 | 1.28 | 0.78 | 1.90 | {23,24,26,48,50} | no |
+| null_pos41 | pos 41 | 1.69 | 5.47 | 1.70 | 1.48 | 2.23 | {48,49,50,51,52} | no |
+| null_pos55 | pos 55 | 4.02 | 10.39 | 3.38 | 2.03 | 3.72 | {22,23,24,25,51} | no |
+| null_pos64 | pos 64 | 2.40 | 8.95 | 8.95 | 1.85 | 1.76 | {50,64,65,66,67} | no |
+
+**Robustness:** REAL has P1 anchor in top-5 = True. NULL: 0/5 have P1 anchor.
+
+**STRONG SIGNAL**: P1 anchor appears specifically for the biologically functional position-30 mutation, in 0/5 arbitrary mutations. F-001 strengthened.
