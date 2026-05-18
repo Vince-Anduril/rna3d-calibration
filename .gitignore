@@ -61,3 +61,12 @@ extract.log
 /.research/30_experiments/runs/cpeb3_focused/*/drfold2/rets_dir/
 /.research/30_experiments/runs/cpeb3_focused/*/drfold2/folds/sel_*/
 /.research/30_experiments/runs/cpeb3_focused/*/drfold2/relax/
+
+# LaTeX build artifacts (keep the .pdf, ignore aux/log/out)
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.bbl
+paper/*.blg
+paper/*.synctex.gz
