@@ -63,9 +63,27 @@ biochemical activity gap.
    The position-30 → P1 cascade is therefore NOT a model prior; it is a
    specific response to the position-30 mutation that happens to put the
    structural consequence at the P1 helix endpoints.
-2. **Second predictor.** Still pending. Will use RhoFold+ or AlphaFold Server.
-   This would confirm whether the long-range cascade is DRfold2-specific or
-   a property visible across predictors.
+
+2. **Second predictor (RhoFold+, single-sequence mode). — CONDUCTED 2026-05-18,
+   produced a DIFFERENTIAL finding rather than a simple reproduction.**
+   RhoFold+ run without MSA (single-seq mode) gave:
+   - Much worse RMSD vs ground truth on chimp 7QR3: **7.699 Å (RhoFold+)** vs
+     3.726 Å (DRfold2). On the human variant: 13.356 Å vs 4.204 Å.
+   - REAL top-5 divergent residues: {48, 49, 50, 21, 51}
+   - NULL top-5 divergent residues: {48, 49, 50, 21, 51}
+   - Overlap = **5/5** (the same residues dominate the variance regardless of
+     which position was mutated).
+   RhoFold+ in single-seq mode therefore has a STRONG structural prior that
+   masks any mutation-specific response. This is the OPPOSITE pattern from
+   DRfold2 (1/5 overlap). The two predictors disagree on the structural
+   response to mutation. This is a richer finding than a clean reproduction:
+   it shows that whether a predictor reproduces the Skilandat 2016 P1/P1.1
+   anchor depends on the predictor itself (and likely on whether MSA is
+   provided). DRfold2's RCLM (language-model-based, no MSA needed by design)
+   does; RhoFold+ without MSA does not. Re-running RhoFold+ with a proper MSA
+   would clarify whether the prior collapses or not — that is the natural
+   next experiment.
+
 3. **Per-residue confidence.** Still pending. .ret files on the pod likely
    contain per-residue scores; need to inspect their format.
 
@@ -96,3 +114,23 @@ from the previous chained run):**
 - NULL top-5 divergent residues: **51, 52, 48, 50, 49** (local cluster around
   the mutation site at pos 41)
 - Overlap with REAL top-5 {9, 60, 51, 22, 24}: **{51}** — exactly one residue
+
+**Numbers (RhoFold+ single-seq, 2026-05-18, ~3 sec per inference):**
+
+- RhoFold+ R1108 vs 7QR3 chain C: 7.699 Å (DRfold2 was 3.726 Å)
+- RhoFold+ R1107 vs 7QR3 chain C: 13.356 Å (DRfold2 was 4.204 Å)
+- REAL top-5: {48, 49, 50, 21, 51}
+- NULL top-5: {48, 49, 50, 21, 51}
+- Overlap REAL/NULL = **5/5** — RhoFold+ in single-seq mode shows a strong
+  fixed structural prior; no mutation-specific response detectable.
+
+**Cross-predictor synthesis (paper-grade observation):**
+
+The two predictors give qualitatively different answers to the same question.
+DRfold2 (RCLM, no MSA needed) reproduces the Skilandat 2016 biochemical
+anchor. RhoFold+ (Evoformer-style, designed for MSA input) without MSA does
+not — its predicted variance is dominated by a small set of residues that do
+not respond to the input mutation. This is itself a calibration finding:
+single-sequence RNA prediction confidence is not uniformly meaningful across
+SOTA predictors, and the *kind* of response a predictor produces to a small
+input perturbation may be more informative than its raw RMSD ranking.
