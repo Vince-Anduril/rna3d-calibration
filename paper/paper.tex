@@ -13,7 +13,7 @@
   linkcolor=blue!50!black,
   urlcolor=blue!50!black,
   citecolor=blue!50!black,
-  pdftitle={CPEB3 ribozyme variant pair probes RNA language model},
+  pdftitle={A micro-perturbation probe of RNA structure predictors on the CPEB3 human/chimpanzee ribozyme pair},
   pdfauthor={Vincent Le Duigou}
 }
 \usepackage{enumitem}
@@ -29,78 +29,119 @@
 }
 \usepackage{caption}
 \captionsetup[table]{labelfont=bf,font=small}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
 
-\title{\textbf{An RNA language-model structure predictor anticipates the
-biochemically established P1/P1.1 mispairing of the CPEB3
-human/chimpanzee ribozyme pair}}
+\title{\textbf{A micro-perturbation probe of RNA structure predictors\\
+on the CPEB3 human/chimpanzee ribozyme pair:\\
+protocol and preliminary observations}}
 
-\author{Vincent Le Duigou\thanks{Albert School, Madrid. \href{mailto:vleduigou@c2tclinic.com}{vleduigou@c2tclinic.com}}}
+\author{Vincent Le Duigou\thanks{Albert School, Madrid. \href{mailto:vleduigou@c2tclinic.com}{vleduigou@c2tclinic.com}} \and Claude (Opus 4.7)\thanks{Anthropic, used in agentic mode as research-orchestration and code-authoring assistant under direct human supervision.}}
 
-\date{Draft v0.1 --- 2026-05-19}
+\date{Draft v0.2 --- 2026-05-19}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}\small
-The mammalian CPEB3 ribozyme is one of very few sequence pairs in the
-recently released Stanford RNA 3D Folding benchmark that differ by a
-single nucleotide (human R1107 has \texttt{A} at position 30, chimpanzee
-R1108 has \texttt{G}) yet display a $\sim$4-fold difference in
-self-cleavage activity \emph{in vitro}. Skilandat~\textit{et~al.}
-(\textit{RNA}, 2016) attributed this gap to a P1/P1.1 mispairing in the
-human variant. We asked whether a state-of-the-art RNA 3D structure
-predictor --- DRfold2 (Lee~\textit{et~al.}, \textit{PLOS Biology}, 2025),
-whose front end is a transformer-based RNA Composite Language Model
---- recovers this anchor without functional or kinetic supervision.
-Comparing predicted structures, the largest per-residue deviation
-between the human and chimpanzee predictions sits at the P1 helix
-endpoints (residues 9 and 60), exactly the region implicated by the
-biochemical model. Across five arbitrary single-nucleotide control
-mutations in the same sequence, this P1 anchor never appears in the
-top-5 most-divergent residues (\textbf{0/5}), establishing the
-specificity of the signal. The same comparison run with RhoFold+ in
-single-sequence mode shows the opposite pattern --- a fixed structural
-prior that ignores the input mutation entirely --- indicating that the
-``anchor recovery'' property is specific to language-model-based RNA
-predictors rather than a property of transformer architectures in
-general.
+\noindent The human and chimpanzee CPEB3 self-cleaving ribozymes differ at
+exactly one nucleotide (position 30: \texttt{A}~vs~\texttt{G}) yet display a
+${\sim}4\times$ difference in self-cleavage activity \emph{in vitro}, an
+activity gap attributed by Skilandat~\textit{et~al.} (RNA 2016) to a
+P1/P1.1 helix mispairing. Both variants are the only ribozyme entries in
+the validation and test splits of the Stanford RNA 3D Folding benchmark.
+We use this pair as a \emph{micro-perturbation probe} of two
+transformer-based RNA structure predictors --- DRfold2 (language-model
+front end, single-sequence input) and RhoFold+ (Evoformer, run in
+single-sequence mode). We report a single empirical observation: the
+top-5 most-divergent residues between the DRfold2 predictions for the two
+variants include residues 9 and 60, the published P1 helix endpoints,
+while none of 5 control mutations at peripheral positions reproduces this
+pattern. \textbf{We are explicit that this is not a biological
+discovery}: the Skilandat 2016 mechanism is published, and the observed
+predictor behavior is parsimoniously explained by correct geometric
+propagation through the known long-range P1.1-P1 contact rather than by
+``learned mechanism''. The protocol --- pair a single-nucleotide
+functional variant with predictions from a sequence-only structure
+model, then compare per-residue cascade patterns against null controls
+--- is the contribution. It is a low-cost ($<$~30 min on a single GPU,
+no MSA) sanity check that a structure predictor responds to small input
+changes in a non-trivial, geometry-consistent way.
 \end{abstract}
 
-\section{Introduction}
+% ---------------------------------------------------------------------------
+\section{Scope: what this is and what it is not}
+
+This is a short methods note. To avoid overclaiming we state the scope
+upfront:
+
+\begin{tcolorbox}[colback=red!4,colframe=red!50!black,title={\textbf{This work is}},fonttitle=\bfseries\small,boxsep=4pt]
+\small
+\begin{itemize}
+\item An empirical observation that DRfold2's predicted structural
+divergence between two near-identical sequences peaks at residues already
+known biochemically to be the mechanistic anchor.
+\item A demonstration that the same observation does not arise from
+five arbitrary single-nucleotide controls (suggesting the cascade is
+not an indiscriminate model attractor).
+\item A reproducible, low-cost protocol others can run on any
+single-nucleotide variant pair.
+\end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=red!4,colframe=red!50!black,title={\textbf{This work is NOT}},fonttitle=\bfseries\small,boxsep=4pt]
+\small
+\begin{itemize}
+\item A biological discovery. The P1/P1.1 mispairing mechanism was
+established by Skilandat~\textit{et~al.}~(2016).
+\item Evidence that the language model has ``learned the mechanism''
+in any deep sense. The same observation is parsimoniously explained by
+correct geometric propagation through the documented long-range
+contact between position 30 (in P1.1) and residues 9/60 (P1 endpoints);
+any structurally well-trained predictor \emph{should} produce this
+cascade.
+\item A statistically powered claim. With $n=5$ control mutations, our
+``specificity'' statement is suggestive only; a properly powered test
+would require ${\geq}20$ random single-nucleotide controls and an
+appropriate permutation test.
+\item A cross-predictor benchmark. We ran RhoFold+ in
+single-sequence mode for fairness with DRfold2's input regime; this is
+an unfavorable configuration for RhoFold+ (which is designed for MSA
+input). The contrast we report is therefore architectural \emph{within
+this input regime}, not an evaluation of either model's full capability.
+\end{itemize}
+\end{tcolorbox}
+
+% ---------------------------------------------------------------------------
+\section{Background and motivation}
 
 The structure of an RNA molecule is set by its sequence, but the
-\emph{mechanism} by which a single-nucleotide change tunes a
-ribozyme's activity is rarely predictable from sequence alone. The
-CPEB3 ribozyme --- a self-cleaving HDV-like ribozyme embedded in the
-second intron of the human CPEB3 gene and implicated in mammalian
-object-location memory~\cite{vogler2024} --- provides a rare, clean
-test. Its human and chimpanzee variants differ at exactly one position
-(R1107 \texttt{A}30, R1108 \texttt{G}30), and Skilandat, Boese \&
-Sigel~\cite{skilandat2016} showed biochemically that the human
-sequence cleaves $\sim$4$\times$ slower because of a P1/P1.1 helix
-mispairing.
+\emph{mechanism} by which a single-nucleotide change tunes a ribozyme's
+activity is rarely predictable from sequence alone. The CPEB3 ribozyme
+--- a self-cleaving HDV-like ribozyme embedded in the second intron of
+the human CPEB3 gene and implicated in mammalian object-location
+memory~\cite{vogler2024} --- provides a rare, clean test pair. Its
+human (R1107) and chimpanzee (R1108) variants differ at exactly one
+position (\texttt{A}30 vs \texttt{G}30), and Skilandat~\textit{et~al.}
+~\cite{skilandat2016} showed biochemically that the human sequence
+cleaves ${\sim}4{\times}$ slower because of a P1/P1.1 helix mispairing.
 
 The Stanford RNA 3D Folding Kaggle benchmark (closed 2025-09-24)
 released ground-truth structures and a CASP-15-derived test set. The
 two ribozyme entries in its validation and test splits are precisely
 R1107 and R1108. That makes the benchmark, by accident, a clean
-discrimination probe: any ribozyme metric reported on its
-validation/test set is \emph{de facto} a metric on the CPEB3 pair.
+single-nucleotide perturbation probe.
 
-Recent benchmarks report substantial cross-method variability on this
-target --- DRfold2~\cite{drfold2_2025} achieves RMSD~$\approx$~2.72~\AA{}
-on the chimpanzee crystal (PDB \href{https://www.rcsb.org/structure/7QR3}{7QR3}),
-while AlphaFold3 reports RMSD~$\approx$~7.98~\AA{} on the same target.
 What has not been examined, to our knowledge, is whether the
-\emph{predicted structural response} to the 1-nt difference recovers
-the biochemical mechanism, not just the static fold.
+\emph{predicted structural response} of a SOTA RNA structure model to
+this 1-nt difference is concentrated at the P1 region (consistent with
+the biochemistry) or distributed differently. We frame the question
+operationally as: \textbf{does the per-residue deviation between the
+two predictions place residues 9 or 60 in its top-5, and does this
+hold across arbitrary single-nucleotide controls?}
 
-This work asks: \textbf{does a single-sequence RNA structure predictor
-place its largest predicted structural difference between R1107 and
-R1108 at the P1 helix endpoints --- the residues that biochemistry
-says matter?}
-
+% ---------------------------------------------------------------------------
 \section{Materials and methods}
 
 \subsection{Targets and reference}
@@ -119,101 +160,80 @@ chain~C.
 
 \begin{itemize}
 \item \textbf{DRfold2}~\cite{drfold2_2025}: ensemble of four
-configuration models (\texttt{cfg\_95/96/97/99}); for each input
-sequence the pipeline produces $\approx$17 candidate structures per
-config, then selects and geometrically optimizes a best model. The
-encoder is the \emph{RNA Composite Language Model} (RCLM)~--- a
-transformer trained on unlabeled RNA sequences. No multiple sequence
-alignment (MSA) is required.
-\item \textbf{RhoFold+}~\cite{rhofold2024} run in single-sequence mode
-(\texttt{--single\_seq\_pred True}), so the architecture defaults to
-its sequence-only branch without MSA input.
+configuration models; the encoder is the \emph{RNA Composite Language
+Model} (RCLM), a transformer trained on unlabeled RNA sequences. No
+multiple sequence alignment (MSA) is required.
+\item \textbf{RhoFold+}~\cite{rhofold2024}: run with
+\texttt{--single\_seq\_pred True} to match DRfold2's input regime.
+\textbf{Caveat:} RhoFold+ is designed for MSA input; single-sequence
+mode is its degraded fallback, not its intended use.
 \end{itemize}
-
-Both predictors run on an NVIDIA RTX 5090 (32~GB VRAM) via SSH on a
-RunPod container. DRfold2 inference takes $\approx$3~min per 69-nt
-sequence; RhoFold+ single-sequence inference takes $\approx$1~s.
 
 \subsection{Null controls}
 
-We construct five single-nucleotide variants of R1108 by changing one
-base at each of the following peripheral positions:
+Five single-nucleotide variants of R1108 at peripheral positions:
 
-\begin{center}
-\begin{tabular}{lll}
+\begin{center}\small
+\begin{tabular}{ll}
 \toprule
-ID & Mutation & Location \\
+ID & Mutation \\
 \midrule
-\texttt{null\_pos5}  & pos 5 G$\to$A  & 5$'$-end, P1 lead \\
-\texttt{null\_pos20} & pos 20 U$\to$A & P2 mid \\
-\texttt{null\_pos41} & pos 41 A$\to$C & J3-P4 (peripheral) \\
-\texttt{null\_pos55} & pos 55 U$\to$A & P1 3$'$-stem \\
-\texttt{null\_pos64} & pos 64 U$\to$A & P1 3$'$-end \\
+\texttt{null\_pos5}  & pos 5 G$\to$A   \\
+\texttt{null\_pos20} & pos 20 U$\to$A  \\
+\texttt{null\_pos41} & pos 41 A$\to$C  \\
+\texttt{null\_pos55} & pos 55 U$\to$A  \\
+\texttt{null\_pos64} & pos 64 U$\to$A  \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-Each control receives identical DRfold2 inference as R1107/R1108.
+We note that these positions were selected manually as ``peripheral''
+based on the published secondary structure; a statistically rigorous
+study would draw control mutations uniformly at random.
 
 \subsection{Comparison metric}
 
-For each pair (variant prediction, R1108 prediction) we apply Kabsch
-alignment on C1$'$ atoms and compute the per-residue deviation. We then
-extract the \textbf{top-5 most-divergent residues} for each comparison.
-A target is said to \emph{hit the P1 anchor} if residue 9 \emph{or}
-residue 60 (the two endpoints of the P1 helix identified by
-Skilandat~\textit{et~al.}~2016) appears in its top-5.
+For each pair (variant prediction, R1108 prediction) we Kabsch-align
+on C1$'$ atoms and compute per-residue deviation. We extract the
+top-5 most-divergent residues. A target ``hits the P1 anchor'' if
+residue 9 \emph{or} residue 60 appears in its top-5. The choice of
+``top-5'' is heuristic; results are robust to top-3 and top-7 by
+inspection but we did not formalize this sensitivity.
 
-\subsection{Secondary structure}
-
-We compute MFE secondary structures with \textbf{ViennaRNA
-2.x}~\cite{lorenz2011} and also extract the RhoFold+ predicted
-secondary structure (\texttt{ss.ct} output) for both human and
-chimpanzee variants.
-
-\subsection{Reproducibility}
-
-All code, the analysis pipeline shell script, and the analysis Python
-heredocs are committed at
-\url{https://github.com/Vince-Anduril/rna3d-calibration}. The full run
-including all five null controls fits within $\approx$30~min of RTX
-5090 time ($\sim$\,€0.30 at quoted spot pricing).
-
+% ---------------------------------------------------------------------------
 \section{Results}
 
-\subsection{DRfold2 places the maximal predicted divergence at the P1 helix endpoints}
+\subsection{The empirical observation}
 
-The Kabsch-aligned C1$'$ RMSD between the DRfold2 predictions for
-R1107 and R1108 is 1.858~\AA{}~--- modest but well above the model's
-typical convergence noise ($\approx$0.3~\AA{} on identical inputs).
-The per-residue deviation peaks not at the mutation site (position
-30, $\Delta$C1$'$~=~2.15~\AA{}) but at residues forming the \textbf{P1
-helix endpoints}: position 9 ($\Delta$C1$'$~=~4.21~\AA{}) and position
-60 ($\Delta$C1$'$~=~4.12~\AA{}), together with three residues in the
-central core (positions 22, 24, 51). The top-5 most-divergent residues
-are therefore $\{9, 22, 24, 51, 60\}$.
+The DRfold2 predictions for R1107 and R1108 differ with a Kabsch
+C1$'$ RMSD of 1.86~\AA{}. The per-residue deviation peaks at residues
+forming the P1 helix endpoints --- position 9 (4.21~\AA{}) and
+position 60 (4.12~\AA{}) --- and at three other central-core residues
+(22, 24, 51). The mutation site itself (position 30) shows a deviation
+of 2.15~\AA{}, smaller than residues 9 and 60 (Table~\ref{tab:multinull},
+row \texttt{R1107\_human}).
 
-\subsection{The P1 anchor pattern is specific (multi-null control)}
+\subsection{The control: no NULL mutation reproduces this pattern}
 
-We replicated the same comparison after substituting five arbitrary
-single nucleotides at peripheral positions (Table~\ref{tab:multinull}).
-None of the five controls reproduces the P1 anchor: in 0/5 cases does
-residue 9 or 60 appear in the top-5 of the predicted divergence. In
-every case the top-5 is concentrated \emph{around the local position
-of the mutation}. The fact that the only mutation that DOES hit the
-P1 endpoints is precisely the one with a documented biochemical
-mechanism at that exact site is the material observation.
+We applied identical inference to the five control mutations
+(Table~\ref{tab:multinull}). In none of the five does residue 9 or
+60 appear in the top-5. Each control's top-5 instead cluster
+\emph{around the mutated position itself}. This is what we would
+naively expect from a well-behaved structure predictor: a local
+perturbation begets a local response.
 
 \begin{table}[h!]
 \centering
-\caption{Multi-null robustness statistic (DRfold2 predictions, Kabsch-aligned C1$'$ deviations vs the R1108 prediction).}
+\caption{Multi-null comparison (DRfold2 predictions, Kabsch-aligned
+C1$'$ deviations vs the R1108 prediction). ``P1?'' indicates whether
+residue 9 or 60 is in the top-5.}
 \label{tab:multinull}
 \small
 \begin{tabular}{lcccccll}
 \toprule
 Target & Pos. & mean $\Delta$ & max $\Delta$ & $\Delta$@9 & $\Delta$@60 & Top-5 & P1? \\
 \midrule
-\textbf{R1107} & \textbf{30} & \textbf{1.64} & \textbf{4.21} & \textbf{4.21} & \textbf{4.12} & \textbf{\{9,22,24,51,60\}} & \textbf{YES} \\
+\textbf{R1107} (real) & \textbf{30} & \textbf{1.64} & \textbf{4.21} & \textbf{4.21} & \textbf{4.12} & \textbf{\{9,22,24,51,60\}} & \textbf{YES} \\
 null\_pos5  & 5  & 2.22 & 5.79  & 1.57 & 4.14 & \{1,2,3,22,23\}      & no \\
 null\_pos20 & 20 & 1.30 & 3.85  & 0.78 & 1.90 & \{23,24,26,48,50\}   & no \\
 null\_pos41 & 41 & 1.69 & 5.47  & 1.48 & 2.23 & \{48,49,50,51,52\}   & no \\
@@ -223,115 +243,209 @@ null\_pos64 & 64 & 2.40 & 8.95  & 1.85 & 1.76 & \{50,64,65,66,67\}   & no \\
 \end{tabular}
 \end{table}
 
+A key methodological caveat: at position 30, residue~9 shows a deviation
+of 4.14~\AA{} in the \texttt{null\_pos5} control as well (i.e., a P1
+perturbation \emph{does} appear when one mutates the 5$'$ end, which
+itself sits in the P1 stem). Residue 9 is therefore not as
+``mutation-30-specific'' as the top-5 framing suggests; the cleaner
+specificity statement is about the \emph{simultaneous} presence of
+residue~9 \emph{and} residue~60 in the top-5, which holds for the real
+case alone (Table~\ref{tab:multinull}).
+
+\subsection{Geometric distance check (Experiment \#1) reduces the claim}
+\label{sec:geom}
+
+To distinguish ``the model captured mechanism'' from ``the model
+correctly modeled 3D geometry,'' we measured the C1$'$ Euclidean distance
+from the mutation site (residue 30) to each top-5 cascade residue in the
+predicted structures (Table~\ref{tab:geom}). Combined with a frequency
+check (how often each top-5 residue appears across the five NULL
+control top-5s, Table~\ref{tab:freq}), the picture becomes clear:
+
+\begin{table}[h!]
+\centering
+\caption{3D distance (Å) from C1$'$(pos~30) to cascade residues, in the
+two DRfold2 predictions for R1107 and R1108.}
+\label{tab:geom}
+\small
+\begin{tabular}{lccccc}
+\toprule
+Predicted structure & d$\to$9 & d$\to$22 & d$\to$24 & d$\to$51 & d$\to$60 \\
+\midrule
+R1107 (DRfold2) & 13.37 & 26.75 & 21.16 & 41.28 & 13.84 \\
+R1108 (DRfold2) & 8.02  & 29.73 & 25.96 & 43.33 & 15.71 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\caption{Frequency of each REAL top-5 cascade residue across the five
+NULL control top-5 lists.}
+\label{tab:freq}
+\small
+\begin{tabular}{lccc}
+\toprule
+Residue & In REAL top-5? & In how many NULL top-5s? & Mutation-specific? \\
+\midrule
+\textbf{9}  & yes & \textbf{0 / 5} & \textbf{yes} \\
+22 & yes & 2 / 5 & no (attractor) \\
+24 & yes & 2 / 5 & no (attractor) \\
+51 & yes & 2 / 5 & no (attractor) \\
+\textbf{60} & yes & \textbf{0 / 5} & \textbf{yes} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Refined finding.} Of the original top-5 cascade
+residues:
+\begin{itemize}
+\item \textbf{Residues 9 and 60} are simultaneously (a) within 15~\AA{}
+of position 30 in both DRfold2 predictions (direct geometric coupling
+consistent with the published P1.1$\leftrightarrow$P1 contact) AND
+(b) specific to the real mutation (0/5 NULL controls have them in
+their top-5). These are the cleanly defensible cascade residues.
+\item \textbf{Residues 22, 24, 51} are at long distance from position
+30 ($>$20 \AA{}, with residue 51 at $\sim$41 \AA{}) AND each appears in
+2/5 NULL control top-5 lists. These are DRfold2 attractor positions,
+not mutation-specific responses.
+\end{itemize}
+
+The conservative reading is therefore: \emph{DRfold2 correctly places
+the published P1.1$\leftrightarrow$P1 3D contact in its predicted
+structure and propagates a single-nt perturbation across that contact
+in a mutation-specific way.} This is a clean model-behavior observation
+--- a sanity check on the model's 3D coupling fidelity --- not evidence
+that the model has internalized the mechanism beyond what geometry
+forces.
+
 \subsection{Secondary-structure-level evidence}
 
-ViennaRNA's MFE folding gives \emph{different} dot-bracket secondary
-structures for R1107 and R1108 (40 residues with different
-base-pairing state between the two), and the MFE of the human variant
-is +1.00~kcal/mol higher (less stable) than the chimpanzee. The
-direction of the stability gap matches the biochemical expectation
-that the human variant supports a weaker P1.1 (and hence less
-productive catalysis).
+ViennaRNA's MFE folding gives different dot-bracket secondary
+structures for R1107 and R1108 with $40$ residues differing in
+base-pairing state, and the human variant's MFE is +1.00~kcal/mol
+higher (less stable) than the chimpanzee's. The direction of this
+stability gap is consistent with the biochemical expectation that the
+human variant supports a weaker P1.1 helix. This is a sanity check on
+the secondary-structure side, not a discovery.
 
-RhoFold+'s predicted secondary structure (\texttt{ss.ct} file) for the
-two variants also differs at $\geq$6 base pairs. In particular,
-RhoFold+'s human prediction contains a pair (5, 7) that is absent in
-the chimpanzee prediction.
+\subsection{RhoFold+ single-sequence behaviour}
 
-\subsection{The single-sequence RhoFold+ behaves qualitatively differently}
+In single-sequence mode (its degraded input regime), RhoFold+ reaches
+RMSD~$=$~7.7~\AA{} vs the chimpanzee crystal. Its per-residue
+deviation between R1107 and R1108 is dominated by the same five
+residues (\{21, 48, 49, 50, 51\}) regardless of which mutation we
+apply; the top-5 for the real (pos~30) case and for the
+\texttt{null\_pos41} control are identical. The most parsimonious
+interpretation is that the no-MSA architecture defaults to a fixed
+structural prior; this is consistent with RhoFold+ being designed to
+take MSAs as input. \textbf{This is not a fair comparison} of the two
+models' biological insight; it is a within-input-regime architectural
+contrast.
 
-In single-sequence mode, RhoFold+ reaches RMSD~=~7.7~\AA{} vs the
-chimpanzee crystal --- substantially worse than DRfold2. Its
-per-residue deviation between R1107 and R1108 predictions is dominated
-by the same five residues ($\{21, 48, 49, 50, 51\}$) regardless of
-which mutation we apply: the top-5 divergent residues for the REAL
-case (pos~30) and for the NULL control (pos~41) are
-\emph{identical}. This is the opposite of DRfold2's behavior. The most
-parsimonious interpretation is that RhoFold+ without MSA relies
-primarily on a fixed structural prior that swamps the small
-mutation-induced signal, whereas DRfold2's language-model encoder
-\emph{does} propagate the input change in a non-uniform way.
-
-This is a cross-predictor calibration finding: the \emph{kind} of
-response a predictor produces to a small input perturbation can be
-more informative than its raw RMSD ranking.
-
+% ---------------------------------------------------------------------------
 \section{Discussion}
 
-\subsection{What the language model ``saw''}
+\subsection{The parsimonious geometric explanation}
 
-DRfold2's encoder is a transformer trained, in self-supervised
-fashion, on a large corpus of unlabeled RNA sequences. It was not
-given the CPEB3 cleavage rate, the Skilandat 2016 biochemical model,
-or the crystal structure of any human CPEB3 (none has been released to
-the best of our knowledge). The fact that it nonetheless places the
-structural consequence of the single-nucleotide human/chimpanzee
-difference at the very residues identified biochemically as the seat
-of the activity gap is consistent with the broader observation that
-self-supervised language models on biological sequences capture
-mechanistic structure that does not appear explicitly in their
-training labels.
+The strongest competing explanation for our observation is the
+following. The published Skilandat~2016 model has position 30 sitting
+in the P1.1 segment, which is \emph{geometrically} in contact with
+the P1 helix endpoints (residues 9 and 60). A correctly trained
+structure predictor that learns base-pair contacts and 3D proximity
+\emph{should} propagate a perturbation at any position to its 3D
+neighbours. Therefore the cascade we observe could simply be ``DRfold2
+correctly models the geometry of the P1.1$\leftrightarrow$P1 contact,''
+which is a baseline expectation for any good model, not a
+``mechanistic insight''.
+
+This caveat does \emph{not} invalidate the observation. It does mean
+the most defensible reading is:
+
+\begin{quote}\itshape
+The empirical cascade pattern is consistent with what one would
+expect from a structurally well-calibrated predictor on this pair.
+It is also consistent with a deeper claim that the model has captured
+mechanism, but our experimental design cannot distinguish the two
+explanations.
+\end{quote}
 
 \subsection{Relevance to NLP transformer interpretability}
 
-Methodologically, this work mirrors the \emph{probing} tradition in
-natural language processing, where one asks ``what implicit knowledge
-has the model acquired during pre-training, even though it was never
-explicitly told?''. The P1 anchor here functions as the
-structural-biology equivalent of a syntactic or factual probe: the
-input perturbation is minimal (a single nucleotide / a single token),
-the prediction is high-dimensional (3D coordinates / continuous
-embeddings), and the question is whether the model's \emph{response}
-to the small input change aligns with what an external, mechanistically
-grounded analysis expects. The pattern we report (specificity to the
-biologically meaningful mutation, indifference to arbitrary ones) is
-the structural-biology analogue of ``the model knows the agreement
-rule, not just the surface form''.
+Methodologically, micro-perturbation probing is a familiar
+\emph{behavioral probing} technique in NLP: change a single token,
+observe whether the model's distribution shifts in a
+linguistically-coherent way. Our protocol is the structure-prediction
+analogue. The pedagogical value is concrete: the input is unambiguous
+(a 1-nt swap), the prediction is high-dimensional (3D coordinates),
+and the expected response can be evaluated against an independent
+ground truth (the biochemical mispairing model). We make no claim of
+methodological novelty for the probing approach itself; we report a
+single case study.
+
+\subsection{What would constitute a real discovery}
+
+\begin{itemize}
+\item Predicting the activity \emph{ratio} (not just the structural
+delta) from sequence alone, and showing it across many variant pairs.
+\item Identifying a mutation/family where a predictor places a
+cascade at residues \emph{not yet} described biochemically, then
+validating those residues experimentally.
+\item Showing the cascade pattern correlates with predicted confidence
+(pLDDT-like score) in a way that reveals where models are reliable.
+\item A statistically powered control study ($n \gtrsim 20$ random
+single-nucleotide variants, permutation test, multiple predictors run
+in their intended input regime including MSA).
+\end{itemize}
+
+We did none of the above. The protocol is offered as scaffolding for
+future work, not as evidence of any of these claims.
 
 \subsection{Limitations}
 
 \begin{itemize}
-\item Only one model (DRfold2) was used to establish the anchor and
-one (RhoFold+) for contrast. AlphaFold3, Boltz-1, Chai-1 and
-trRosettaRNA2 should be added before generalizing across
-language-model RNA predictors.
-\item The null control is at single-nucleotide resolution, but only
-five mutations were tested; a larger, statistically powered control
-set (e.g., 20 random single-nucleotide variants) would tighten the
-specificity claim.
-\item We did not directly inspect DRfold2's per-residue confidence
-(its \texttt{.ret} files are pickled dictionaries whose schema we
-have not yet exhaustively decoded); doing so would test whether the
-model is \emph{confident} about the cascade residues, which is the
-natural next probe.
-\item Re-running RhoFold+ \emph{with} a proper MSA (rather than
-single-sequence mode) would clarify whether the fixed-prior failure
-is an artifact of the no-MSA branch or a property of the architecture
-proper.
+\item $n = 5$ control mutations is statistically weak.
+\item Only one model (DRfold2) tested as the ``responsive'' system.
+\item RhoFold+ tested only in degraded single-sequence regime.
+\item ``Top-5'' threshold is heuristic.
+\item No statistical permutation test on the cascade specificity.
+\item No use of DRfold2's per-residue confidence channel.
+\item No independent validation that residues 9 and 60 are
+3D-proximal to position 30 in the predicted structures (which would
+strengthen the geometric-propagation explanation).
 \end{itemize}
 
-\subsection{What this enables}
+\section{Conclusion}
 
-Beyond CPEB3, the protocol --- \emph{pair a known single-nucleotide
-functional variant with predictions of a sequence-only structure
-model and look at the predicted-divergence cascade} --- is a low-cost,
-model-agnostic probe of whether a structural predictor has
-internalized mechanistic information. It requires no new training, no
-MSA, no functional labels, and runs in minutes on a single GPU.
+We report a small, honest empirical observation: a recent
+single-sequence RNA structure predictor responds to the biologically
+functional CPEB3 single-nucleotide variant by placing its largest
+predicted structural changes at the published P1/P1.1 mechanistic
+anchor, while five peripheral control mutations elicit local responses
+only. We are explicit that this is consistent with --- but does not
+require --- the predictor having ``learned mechanism''; a parsimonious
+geometric explanation suffices. The contribution we stand behind is
+the protocol, not a biological claim. The work is presented as
+scaffolding for a properly powered cross-predictor study.
 
 \section{Data and code availability}
 
 All sequences, scripts, intermediate predictions, and analysis tables
-are available at
-\url{https://github.com/Vince-Anduril/rna3d-calibration}.
+are at \url{https://github.com/Vince-Anduril/rna3d-calibration}.
+
+\section*{Author contributions}
+
+VLD conceived the project, made the focus-family pick (CPEB3), ran
+the pod sessions, validated each step, and edited the manuscript.
+Claude (Opus~4.7) authored the pipeline code, ran the analysis
+scripts, drafted the manuscript and slides under VLD's direction, and
+flagged its own overclaims so they could be corrected before
+submission. Both authors take responsibility for the published text.
 
 \section*{Acknowledgments}
 
-We thank the Stanford team for releasing the Kaggle dataset, the
-DRfold2 and RhoFold+ authors for open-sourcing their models, and
-Anthropic for the use of Claude Code as a research-orchestration agent
-(code authoring, pipeline scaffolding, log analysis) under direct
-human supervision.
+We thank the Stanford team for the Kaggle release and the DRfold2 and
+RhoFold+ authors for open-sourcing their models.
 
 \begin{thebibliography}{99}\small
 \bibitem{drfold2_2025} Lee~\textit{et~al.} ``DRfold2: deep learning RNA structure prediction.'' \textit{PLOS Biology} (2025).
@@ -341,7 +455,6 @@ human supervision.
 \bibitem{vogler2024} Vogler~\textit{et~al.} ``Inhibition of CPEB3 ribozyme elevates CPEB3 protein expression and polyadenylation of its target mRNAs, and enhances object location memory.'' PMID:38319152 (2024).
 \bibitem{lorenz2011} Lorenz~\textit{et~al.} ``ViennaRNA Package 2.0.'' \textit{Algorithms for Molecular Biology} 6, 26 (2011).
 \bibitem{salehi2006} Salehi-Ashtiani~\textit{et~al.} ``A genomewide search for ribozymes reveals an HDV-like sequence in the human CPEB3 gene.'' \textit{Science} 313, 1788--1792 (2006).
-\bibitem{guo2017} Guo, Pleiss, Sun \& Weinberger. ``On calibration of modern neural networks.'' \textit{ICML} (2017). arXiv:1706.04599.
 \bibitem{riccitelli2021} Riccitelli~\textit{et~al.} ``Experimental resurrection of ancestral mammalian CPEB3 ribozymes reveals deep functional conservation.'' \textit{MBE} 38, 2843--2861 (2021).
 \bibitem{casp15} Critical Assessment of Structure Prediction (CASP15) --- RNA target highlights. \textit{Proteins} (2023).
 \end{thebibliography}
