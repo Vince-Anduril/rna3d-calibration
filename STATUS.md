@@ -1,4 +1,4 @@
-# Pod run status — 2026-05-18T13:24:32Z
+# Pod run status — 2026-05-18T13:32:15Z
 
 - Training output: `.research/30_experiments/runs/GPU_training_stage2/`
 - Eval output: `.research/30_experiments/runs/GPU_training_eval/`
@@ -8,24 +8,24 @@
 ## Last 20 lines of log
 
 ```
-    raise ValueError(
-ValueError: num_samples should be a positive integer value, but got num_samples=0
+    main()
+  File "/workspace/rna3d/code/jobs_gpu/train.py", line 299, in main
+    stage2_structure(model, device, ds, out_dir, log_fp, deadline, batch_size=args.batch_struct)
+  File "/workspace/rna3d/code/jobs_gpu/train.py", line 181, in stage2_structure
+    struct = structure_loss(out["coords"].float(), coords, valid)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/rna3d/code/jobs_gpu/loss.py", line 64, in structure_loss
+    aligned = _kabsch_align(pred_coords, true_coords, valid_mask)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/rna3d/code/jobs_gpu/loss.py", line 41, in _kabsch_align
+    U, S, Vt = torch.linalg.svd(H)
+               ^^^^^^^^^^^^^^^^^^^
+NotImplementedError: "svd_cuda_gesvdjBatched" not implemented for 'BFloat16'
 --- starting eval on /workspace/rna3d/.research/30_experiments/runs/GPU_training_stage2/stage1_final.pt ---
 /usr/local/lib/python3.12/dist-packages/torch/nn/modules/transformer.py:392: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
   warnings.warn(
 Device: cuda
 Loaded checkpoint: step=151668, params=4.92M
-Traceback (most recent call last):
-  File "/workspace/rna3d/code/jobs_gpu/eval.py", line 206, in <module>
-    main()
-  File "/workspace/rna3d/code/jobs_gpu/eval.py", line 116, in main
-    for cat in ["all"] + sorted(per_res["category"].dropna().unique().tolist()):
-                                ~~~~~~~^^^^^^^^^^^^
-  File "/workspace/rna3d/venv/lib/python3.12/site-packages/pandas/core/frame.py", line 4113, in __getitem__
-    indexer = self.columns.get_loc(key)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/rna3d/venv/lib/python3.12/site-packages/pandas/core/indexes/range.py", line 417, in get_loc
-    raise KeyError(key)
-KeyError: 'category'
+Eval wrote empty SUMMARY (no per-residue ground truth). Check /workspace/rna3d/.research/30_experiments/runs/GPU_training_eval/SUMMARY.md
 --- final commit ---
 ```

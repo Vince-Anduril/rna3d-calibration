@@ -1,9 +1,0 @@
-category,n,rmsd_median,rmsd_mean,conf_mean
-complex_with_protein,8,,,
-other,8,,,
-riboswitch,8,,,
-ribozyme,8,,,
-loop_motif,4,,,
-synthetic_designed,4,,,
-tRNA,4,,,
-viral_rna,4,,,
