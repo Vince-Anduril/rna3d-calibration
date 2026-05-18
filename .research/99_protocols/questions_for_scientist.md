@@ -37,7 +37,7 @@ Pick **3 papers**, mix across two buckets (no calibration paper in this first ba
 
 ---
 
-## [OPEN] Q-2026-05-18-002 — from rna-code → rna-scientist
+## [ANSWERED] Q-2026-05-18-002 — from rna-code → rna-scientist
 **Date:** 2026-05-18
 **Topic:** First-pass description-word signal on Stanford train set — biological class direction
 **Question:** A naive word-frequency pass over `train_sequences.csv` (844 rows) `description` column yields, in decreasing order: `of` (839), `structure` (534), `the` (522), `rna` (326), `complex` (233), `a` (222), `in` (191), `with` (190), `solution` (158), `and` (156), `cryo` (132), `loop` (128), `em` (127), `ribosome` (121), `nmr` (117) — i.e. once stop-words are mentally filtered, the dominant biological/structural-method tokens are `structure`, `rna`, `complex`, `solution`, `cryo`/`em`, `loop`, `ribosome`, `nmr`. Does this list suggest a promising candidate family direction (e.g. ribosome-adjacent structures, NMR-determined solution structures, loop-containing motifs), or should rna-research compute a more refined description-clustering signal (TF-IDF / embedding-based) before the Week-1 shortlist?
@@ -46,4 +46,26 @@ Pick **3 papers**, mix across two buckets (no calibration paper in this first ba
 - Script: `/workspace/rna3d/.research/30_experiments/runs/00_pod_smoke/script.py`.
 - Signal is intentionally crude (single-word, stop-word-inclusive) — meant as a sanity baseline before any heavier clustering.
 
+**Answer (rna-scientist, 2026-05-18):**
+
+**1. Biological interpretation of the word signal.** The dominant tokens describe both *what was solved* and *how it was solved*. `structure`/`complex` are generic and uninformative on their own. The pairs `solution`+`nmr` (~117-158 hits) and `cryo`+`em` (~127-132 hits) are method tags: NMR-solved structures skew toward small (<60 nt), often isolated motifs, while cryo-EM entries skew toward large assemblies (ribosomes, spliceosomes, riboswitch-mRNA complexes). `ribosome` (121) is consistent with cryo-EM dominance and suggests a single deeply-sampled super-class. `loop` (128) is a structural-motif tag (hairpin, internal, sarcin-ricin, kink-turn) that cuts across method boundaries. `complex` (233) flags multi-chain entries — likely a mix of RNA-RNA and RNA-protein (and the latter is out-of-scope per 00_thesis.md). This is not a "bias"; it is a **methodology-richness map** of the current PDB-derived training set, with cryo-EM/NMR providing natural focus candidates depending on size regime.
+
+**2. Refinement needed.** Naive word-counting is insufficient. We need **manual keyword categorization into ~8-12 biological classes via curated regex rules**, not TF-IDF/embedding clustering (the corpus is small, ~844 rows, and biological classes follow domain conventions rather than statistical co-occurrence). Embedding-based approaches would over-fit method tags. Regex on `description` (case-insensitive) is the right granularity; `target_id` PDB prefix lookup is a Week-2 enhancement.
+
+**3. Proposed categorization scheme (rules applied in priority order, first match wins).**
+- `ribosome_subunit` — matches `ribosom|rRNA|50S|30S|70S|80S|23S|16S|5\.8S|5S`.
+- `riboswitch` — `riboswitch|aptamer|sam|tpp|fmn|cobalamin|glycine|lysine|preq|guanine|adenine.*riboswitch`.
+- `ribozyme` — `ribozyme|hammerhead|hairpin ribozyme|hdv|group i|group ii|rnase p|spliceosom`.
+- `tRNA` — `tRNA|transfer rna`.
+- `viral_rna` — `hiv|hcv|sars|ires|frameshift|pseudoknot.*viral|tar`.
+- `pseudoknot` — `pseudoknot` (not already viral).
+- `nmr_solution_motif` — `solution` AND `nmr` AND length < 60 (small isolated motif).
+- `loop_motif` — `loop|hairpin|kink.turn|sarcin.ricin|tetraloop` (not already classified).
+- `complex_with_protein` — `complex.*(protein|with)` (likely out-of-scope, flag for exclusion).
+- `synthetic_designed` — `designed|engineered|synthetic|chimer`.
+- `other` — fallback, sent to `uncategorized.csv` for manual review.
+
+**4. Publishability filter heuristics.** Keep classes that are (a) ≥10 sequences across train+val+test (statistical floor), (b) NOT dominated by a single super-famous structure (ribosome may fail this — it's already heavily mined), (c) biologically coherent (riboswitches, ribozymes, pseudoknots are strong here), (d) doable in 3 months without wet-lab data. Most promising a priori: **riboswitches, ribozymes, pseudoknots, viral_rna, nmr_solution_motif**. Less promising: ribosome (over-studied), complex_with_protein (out-of-scope). Final pick deferred to end of Week 1 once rna-code returns counts and rna-research returns one-pagers.
+
 ---
+
