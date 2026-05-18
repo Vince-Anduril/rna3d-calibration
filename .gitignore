@@ -56,3 +56,8 @@ extract.log
 
 # Pod-only scratch
 /tmp_/
+
+# CPEB3 focused study — keep only summary, fasta, and best-model PDB; exclude bulky intermediates
+/.research/30_experiments/runs/cpeb3_focused/*/drfold2/rets_dir/
+/.research/30_experiments/runs/cpeb3_focused/*/drfold2/folds/sel_*/
+/.research/30_experiments/runs/cpeb3_focused/*/drfold2/relax/
