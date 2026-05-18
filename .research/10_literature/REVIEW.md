@@ -4,6 +4,25 @@
 > finding paper. Each entry should cite a paper (full title + venue + year + link)
 > and summarize its relevance in 2–4 sentences.
 
+## Sprint 0 Week 1 focus-candidate briefs (companion files)
+
+Companion one-page briefs in `focus_candidates/`, produced 2026-05-18 by
+cross-referencing the 11-category scheme (Q-2026-05-18-002 ANSWERED) with the
+empirical category counts (run `01_description_categorization`) and the Week-1
+reading plan below. Verdicts apply the publishability filter from `00_thesis.md`:
+
+- [`riboswitch.md`](focus_candidates/riboswitch.md) — **STRONG** — biologically central, conformational duality angle, val+test=4.
+- [`ribozyme.md`](focus_candidates/ribozyme.md) — **STRONG** — active-site geometry is a sharp falsifiable lens, val+test=4.
+- [`pseudoknot.md`](focus_candidates/pseudoknot.md) — **MEDIUM** — strong biology but zero val/test rows; best deployed as a secondary lens on riboswitch/ribozyme.
+- [`viral_rna.md`](focus_candidates/viral_rna.md) — **MEDIUM** — heterogeneous super-class; needs sub-categorization to make a sharp claim.
+- [`tRNA.md`](focus_candidates/tRNA.md) — **MEDIUM** — canonical tRNA over-studied; story conditional on non-canonical sub-population being present in val+test.
+- [`nmr_solution_motif.md`](focus_candidates/nmr_solution_motif.md) — **WEAK** standalone — methodology bucket, zero val/test; best as a methodological appendix (ensemble-aware evaluation).
+- [`loop_motif.md`](focus_candidates/loop_motif.md) — **WEAK** standalone — heterogeneous motif bucket; best as a cross-cutting motif-accuracy lens on a biological focus family.
+
+Skipped: `ribosome_subunit` (over-studied + zero val/test) and `complex_with_protein` (out-of-scope per `00_thesis.md`).
+
+Handoff: rna-scientist will use these briefs plus run-01 counts to draft `20_hypotheses/FOCUS_SHORTLIST.md` (see Q-2026-05-18-006).
+
 ## Week 1 reading plan (2026-05-18)
 
 This is a **reading plan, not a synthesis**. Deep summaries are produced

@@ -81,3 +81,16 @@ Pick **3 papers**, mix across two buckets (no calibration paper in this first ba
 - Scheme spec: [ANSWERED] Q-2026-05-18-002 in this file.
 
 ---
+
+## [OPEN] Q-2026-05-18-006 — from rna-research → rna-scientist
+**Date:** 2026-05-18
+**Topic:** Focus-candidate briefs ready — handoff for Week-1 ranked shortlist
+**Question:** The 7 focus-candidate briefs (per Q-2026-05-18-003) are now committed under `/workspace/rna3d/.research/10_literature/focus_candidates/` — one per priority category: `riboswitch.md`, `ribozyme.md`, `pseudoknot.md`, `viral_rna.md`, `nmr_solution_motif.md`, `tRNA.md`, `loop_motif.md`. Each brief contains: empirical counts (from run 01), biological context with at least one Week-1 reading-plan citation where appropriate, an under-study argument for 3D prediction, a concrete hypothesis seed, follow-up data signals for rna-code, and a publishability-filter verdict (STRONG/MEDIUM/WEAK). Two verdicts came out STRONG (`riboswitch`, `ribozyme`), three MEDIUM (`pseudoknot`, `viral_rna`, `tRNA`), and two WEAK as standalone foci but useful as cross-cutting lenses (`nmr_solution_motif`, `loop_motif`); a short companion section listing all verdicts has been added near the top of `REVIEW.md`. You now have both data (run 01 counts) and literature evidence (these briefs + the Q-002 categorization rationale) to produce the **Week-1 ranked shortlist of 3-5 focus candidates**. Suggested deliverable path: `/workspace/rna3d/.research/20_hypotheses/FOCUS_SHORTLIST.md` (your owned subtree, not mine to write). Once your shortlist is in, the user makes the final pick at the end of Week 1, and rna-code's queued v2 regex refinements (`Ribonuclease P RNA -> ribozyme`, `picornaviral|bacteriophage|coliphage -> viral_rna`, plus pseudoknot re-detection across all categories) can be prioritized accordingly. Anything you want clarified or re-scoped in any brief before you draft the shortlist?
+**Context:**
+- Briefs: `/workspace/rna3d/.research/10_literature/focus_candidates/*.md`
+- Summary section: top of `/workspace/rna3d/.research/10_literature/REVIEW.md`
+- Run-01 counts: `/workspace/rna3d/.research/30_experiments/runs/01_description_categorization/results/SUMMARY.md`
+- Categorization scheme rationale: [ANSWERED] Q-2026-05-18-002 above.
+- rna-code's queued v2 refinements: [OPEN] Q-2026-05-18-005 above.
+
+---
