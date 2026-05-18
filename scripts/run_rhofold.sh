@@ -48,6 +48,26 @@ pip install -q -e . 2>&1 | tail -5 || echo "(pip install -e . issue — will con
 # Common deps that may be missing
 pip install -q einops dm-tree fair-esm omegaconf 2>&1 | tail -3
 
+# RhoFold inference.py top-level imports simtk.openmm via relax module.
+# We do NOT need relaxation (running with --single_seq_pred True for fast inference);
+# patch the import to be optional so missing simtk does not crash.
+INFER=/workspace/rna3d/models/RhoFold/inference.py
+if grep -q "^from rhofold.relax.relax import AmberRelaxation$" $INFER; then
+  echo "patching inference.py to make AmberRelaxation import optional"
+  python3 -c "
+p = '$INFER'
+s = open(p).read()
+s = s.replace(
+    'from rhofold.relax.relax import AmberRelaxation',
+    'try:\n    from rhofold.relax.relax import AmberRelaxation\nexcept Exception as _e:\n    AmberRelaxation = None\n    print(f\"[patch] AmberRelaxation unavailable: {_e}\")'
+)
+open(p, 'w').write(s)
+print('patched')
+"
+fi
+# Also patch any usage of AmberRelaxation(...) to be conditional
+# (we add a guard in the main loop later if needed; for now just protect the import)
+
 # ========== Step 2: download weights from HF ==========
 echo
 echo "--- [2] download RhoFold weights ---"
@@ -79,12 +99,17 @@ ${seq}
 EOF
   echo ">>> running RhoFold on $tid <<<"
   cd /workspace/rna3d/models/RhoFold
+  # --single_seq_pred True → no MSA, no relaxation
   python inference.py \
     --input_fas "$fasta" \
     --single_seq_pred True \
     --output_dir "$td" \
-    --ckpt pretrained/RhoFold_pretrained.pt 2>&1 | tail -10
+    --ckpt pretrained/RhoFold_pretrained.pt 2>&1 | tail -15
   ls "$td" 2>&1 | head -5
+  # Verify we got a PDB before moving on
+  if ! ls "$td"/*.pdb >/dev/null 2>&1; then
+    echo "[WARN] no PDB produced for $tid — see error above"
+  fi
 done
 
 # ========== Step 4: analyze and compare with DRfold2 ==========
