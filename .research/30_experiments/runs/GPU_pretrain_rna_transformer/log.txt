@@ -1,0 +1,11 @@
+[08:51:36] Loading v2 train sequences (313k)...
+[08:51:38] Loaded 5135 sequences
+[08:51:38] Dataset: 20540 examples, batch=64 → 320 batches/epoch
+[08:51:38] Building 12-layer transformer (d=384, heads=8)...
+[08:51:48] Model params: 21.3M
+[08:51:58] Training until 11:39:58 (2.8h)
+[08:52:14] step=50 loss=3.6872 mem=3.8GB elapsed=0.3min
+[08:52:32] step=100 loss=1.5327 mem=3.8GB elapsed=0.6min
+[08:52:46] step=150 loss=1.4569 mem=3.8GB elapsed=0.8min
+[08:52:55] step=200 loss=1.4257 mem=3.8GB elapsed=1.0min
+[08:53:04] step=250 loss=1.4205 mem=3.8GB elapsed=1.1min
