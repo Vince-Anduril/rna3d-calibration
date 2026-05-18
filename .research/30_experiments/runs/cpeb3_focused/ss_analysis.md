@@ -1,6 +1,6 @@
 # Secondary structure comparison — R1107 vs R1108
 
-Generated: 2026-05-18T21:24:45.186915+00:00
+Generated: 2026-05-18T22:11:14.298925+00:00
 
 ## Method 1: ViennaRNA RNAfold (MFE secondary structure)
 
