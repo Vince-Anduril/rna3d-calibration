@@ -1,0 +1,58 @@
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Large datasets — never tracked, live only on the pod
+/data/kaggle_raw/
+/data/annotations/
+*.zip
+*.tar.gz
+*.parquet
+*.feather
+
+# Model weights
+/models/*/weights*
+/models/*/*.bin
+/models/*/*.safetensors
+/models/*/*.ckpt
+/models/*/*.pt
+/models/*/*.pth
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+venv/
+.venv/
+*.egg-info/
+build/
+dist/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Secrets
+.kaggle/
+kaggle.json
+.huggingface/
+.netrc
+*.pem
+*.key
+*.token
+
+# Editor noise
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Generated artifacts
+download.log
+extract.log
+*.log
+
+# Pod-only scratch
+/tmp_/
