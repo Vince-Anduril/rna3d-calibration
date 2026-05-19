@@ -46,7 +46,8 @@ def parse_cif_chains(path: Path):
     return chains
 
 
-targets = ["9LJN", "9UW0", "9HRD", "12CI"]
+targets = ["9LJN", "9UW0", "9HRD", "12CI",
+           "9LKE", "9LKU", "9HRF", "9MFH", "9DE7", "9J4N", "9E9O"]
 
 manifest = []
 for tid in targets:

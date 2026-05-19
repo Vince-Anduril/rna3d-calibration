@@ -22,5 +22,47 @@
     "chain": "A",
     "length": 82,
     "sequence": "GGACGAUAGACUCCGUAAUUCGCGUGGAUAUGGCACGCAGUCAGGUGUUGGGCACCGUAAAUGUCCCACAUAGUAUCGUCCA"
+  },
+  {
+    "target": "9LKE",
+    "chain": "A",
+    "length": 70,
+    "sequence": "GGUUGUAUAAGCUCGUUAAUUUGGAAUGAGCGUAUCUACAGGCAACCGUAAAUUGCCCCAGGCUACAAUC"
+  },
+  {
+    "target": "9LKU",
+    "chain": "A",
+    "length": 63,
+    "sequence": "GCGUAUAUCCUUAAUGAUAUGGUUUAAGGGCAAUACAUAGAAACCACAAAUUUCUUACUGCGU"
+  },
+  {
+    "target": "9HRF",
+    "chain": "A",
+    "length": 70,
+    "sequence": "GGGCGCAUUUUGGUAGGUCGGUCGCUGCUUCGGCAGUGAGGGGUAGGCAUUGCUGGCCUAGGGUGCCCUU"
+  },
+  {
+    "target": "9MFH",
+    "chain": "A",
+    "length": 76,
+    "sequence": "GGUAAAAGCAUAGUGGGAAAGUGACGUGAAAUUCGUCCACACGAAAGUAAGGUCAUAGUCCGAAUGCCACCUACCA"
+  },
+  {
+    "target": "9DE7",
+    "chain": "A",
+    "length": 57,
+    "sequence": "GUCUCUCUGGUUAAGCCAGAUCUGAGCCGAAAAGCUCUCUGGCUAACUAGGGAACCA"
+  },
+  {
+    "target": "9J4N",
+    "chain": "A",
+    "length": 81,
+    "sequence": "GCGGGAGUGGCGAAAGGUAGACGCACCAGAUUGGUUCUGGCGCCGCAAGGUGUGCGAGUUCAAGUCUCGCCUCCCGCACCA"
+  },
+  {
+    "target": "9E9O",
+    "chain": "A",
+    "length": 101,
+    "sequence": "CUCGUCUAUCUUCUGCAGGCUGCUUACGGGAAACCGUGUUGCAGCCGAUCAUCAGCACAUCUAGGUUUCGUCCGGGUGUGACCGAAAGGUAAGAUGGAGAG"
   }
 ]
