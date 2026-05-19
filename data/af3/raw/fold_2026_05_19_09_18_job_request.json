@@ -1,0 +1,53 @@
+[{
+ "name": "2026-05-19_09:18",
+ "modelSeeds": [
+  "889649884"
+ ],
+ "sequences": [
+  {
+   "rnaSequence": {
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGCAGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU",
+    "count": 1
+   }
+  },
+  {
+   "rnaSequence": {
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU",
+    "count": 1
+   }
+  },
+  {
+   "rnaSequence": {
+    "sequence": "GGGGACCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU",
+    "count": 1
+   }
+  },
+  {
+   "rnaSequence": {
+    "sequence": "GGGGGCCACAGCAGAAGCGAUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU",
+    "count": 1
+   }
+  },
+  {
+   "rnaSequence": {
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCCGCCAUUGCACUCCGGCUGCGAAUUCUGCU",
+    "count": 1
+   }
+  },
+  {
+   "rnaSequence": {
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCAGCGAAUUCUGCU",
+    "count": 1
+   }
+  },
+  {
+   "rnaSequence": {
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUACUGCU",
+    "count": 1
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 3
+}
+]
