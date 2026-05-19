@@ -1,0 +1,142 @@
+[
+  {
+    "target_id": "null_rand_02",
+    "position": 2,
+    "original": "G",
+    "alt": "C",
+    "sequence": "GCGGGCCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_03",
+    "position": 3,
+    "original": "G",
+    "alt": "C",
+    "sequence": "GGCGGCCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_04",
+    "position": 4,
+    "original": "G",
+    "alt": "A",
+    "sequence": "GGGAGCCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_06",
+    "position": 6,
+    "original": "C",
+    "alt": "G",
+    "sequence": "GGGGGGCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_07",
+    "position": 7,
+    "original": "C",
+    "alt": "A",
+    "sequence": "GGGGGCAACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_09",
+    "position": 9,
+    "original": "C",
+    "alt": "G",
+    "sequence": "GGGGGCCAGAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_14",
+    "position": 14,
+    "original": "G",
+    "alt": "C",
+    "sequence": "GGGGGCCACAGCACAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_15",
+    "position": 15,
+    "original": "A",
+    "alt": "C",
+    "sequence": "GGGGGCCACAGCAGCAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_28",
+    "position": 28,
+    "original": "G",
+    "alt": "C",
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCCCGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_29",
+    "position": 29,
+    "original": "C",
+    "alt": "U",
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGUGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_33",
+    "position": 33,
+    "original": "C",
+    "alt": "A",
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGCGGCACCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_36",
+    "position": 36,
+    "original": "U",
+    "alt": "G",
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGCGGCCCCGGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_37",
+    "position": 37,
+    "original": "G",
+    "alt": "C",
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGCGGCCCCUCUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_39",
+    "position": 39,
+    "original": "C",
+    "alt": "U",
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUUAGCCAUUGCACUCCGGCUGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_45",
+    "position": 45,
+    "original": "U",
+    "alt": "A",
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAAUGCACUCCGGCUGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_49",
+    "position": 49,
+    "original": "A",
+    "alt": "U",
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCUCUCCGGCUGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_57",
+    "position": 57,
+    "original": "U",
+    "alt": "C",
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCCGCGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_59",
+    "position": 59,
+    "original": "C",
+    "alt": "U",
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCUGUGAAUUCUGCU"
+  },
+  {
+    "target_id": "null_rand_63",
+    "position": 63,
+    "original": "U",
+    "alt": "G",
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAGUCUGCU"
+  },
+  {
+    "target_id": "null_rand_69",
+    "position": 69,
+    "original": "U",
+    "alt": "G",
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCG"
+  }
+]
