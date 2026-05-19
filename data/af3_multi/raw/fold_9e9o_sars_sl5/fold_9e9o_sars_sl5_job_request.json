@@ -1,0 +1,17 @@
+[{
+ "name": "9E9O_SARS_SL5",
+ "modelSeeds": [
+  "806527986"
+ ],
+ "sequences": [
+  {
+   "rnaSequence": {
+    "sequence": "CUCGUCUAUCUUCUGCAGGCUGCUUACGGGAAACCGUGUUGCAGCCGAUCAUCAGCACAUCUAGGUUUCGUCCGGGUGUGACCGAAAGGUAAGAUGGAGAG",
+    "count": 1
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 3
+}
+]

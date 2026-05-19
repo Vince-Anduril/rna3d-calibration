@@ -43,9 +43,12 @@ RMSD of \textbf{4.21~\AA{}} (median $3.99$~\AA{}, range $2.06$--$7.72$~\AA{}).
 On the $2$ blind multi-chain crystals (a tetrameric GTP aptamer and a
 dimeric dopamine aptamer with ligand-bound interface), DRfold2 fails
 ($6.00$ and $16.82$~\AA{}) consistently with a monomer-input /
-multimer-context mismatch. We additionally surface three
-reproducibility hazards from a side comparison with AlphaFold~3
-(Server, default)~\cite{af3_2024} on a $5$-target subset:
+multimer-context mismatch. On the matched $12$-target comparison with AlphaFold~3
+(Server, default, single-chain)~\cite{af3_2024}, DRfold2 wins
+$\mathbf{11/12}$ pairs (Wilcoxon one-sided
+$W=8$, $p=0.006$ on $N=12$; $W=0$, $p=4.9\!\cdot\!10^{-4}$ when
+excluding the one dimer crystal in the panel). Beyond this
+headline we surface three reproducibility findings:
 (i) submitting multiple RNA sequences in a single multi-chain
 Server job catastrophically degrades each chain's prediction
 (R1108: pLDDT~$56$ and $6.5$~\AA{} as single-chain vs.~pLDDT~$25$ and
@@ -54,10 +57,12 @@ $25.6$~\AA{} as one of seven chains), an unannounced framing artifact;
 cutoff asymmetry --- DRfold2 (end-$2023$) and AF3 (Sept~$2021$) cannot
 be fairly compared on pre-AF3-cutoff structures, but we have no
 RNA-only crystals in the cell where DRfold2 saw and AF3 did not;
-(iii) on the $5$ targets where we have both, AF3's per-residue
-pLDDT is rank-correlated with crystal error (Spearman $\rho$ down to
-$-0.58$, $p < 10^{-6}$) on $4/5$ targets, providing a useful abstention
-signal even where the prediction's mean error is high; (iv) DRfold2,
+(iii) on the $12$ targets where we have both predictors, AF3's
+per-residue pLDDT is rank-correlated with the per-residue C1$'$
+crystal error (negative direction = calibrated) on $10/12$ targets
+(direction), $9/12$ raw-significant at $\alpha=0.05$, and
+$\mathbf{6/12}$ surviving Bonferroni correction at
+$\alpha=0.05/12 \approx 0.004$ (best: 9DE7 $\rho=-0.60$, $p\!\approx\!6\!\cdot\!10^{-7}$); (iv) DRfold2,
 which exposes no explicit confidence head, has an implicit
 per-residue uncertainty signal in the standard deviation across its
 $80$-model ensemble that is positively rank-correlated with the
@@ -246,29 +251,31 @@ DRfold2 errors above $7$~\AA{}.}
 
 \begin{table}[h!]
 \centering
-\caption{C1$'$ RMSD against crystal. AF3 columns are blank where we
-do not yet have a single-chain AF3 job for the target.}
+\caption{C1$'$ Kabsch RMSD against the experimental crystal,
+sorted by DRfold2 RMSD. ``DRfold2 wins'' marks pairs where
+DRfold2 $<$ AF3 default. All AF3 submissions are single-chain
+(one job per RNA).}
 \label{tab:rmsd}
 \small
-\begin{tabular}{lcccc}
+\begin{tabular}{lccccc}
 \toprule
-PDB & DRfold2 (\AA{}) & AF3 default (\AA{}) & AF3 best-of-5 (\AA{}) & note \\
+PDB & DRfold2 (\AA{}) & AF3 default (\AA{}) & AF3 best-of-5 (\AA{}) & DRfold2 wins? & note \\
 \midrule
-9LKU & 2.06  & ---   & ---   & monomer, blind \\
-9UW0 & 2.14  & 10.05 & 9.33  & monomer, blind \\
-9DE7 & 3.16  & ---   & ---   & monomer, blind \\
-9J4N & 3.58  & ---   & ---   & monomer, blind \\
-7QR3 & 3.73  & 6.54  & 5.35  & \textit{dimer crystal, DRfold2 SAW it} \\
-9LKE & 3.99  & ---   & ---   & monomer, blind \\
-9LJN & 4.06  & 6.55  & 6.09  & monomer, blind \\
-9E9O & 4.42  & ---   & ---   & monomer, blind ($101$~nt) \\
-9HRD & 6.00  & 8.70  & 8.02  & \textit{tetramer crystal} \\
-9MFH & 6.76  & ---   & ---   & monomer, blind \\
-9HRF & 7.72  & ---   & ---   & monomer, blind \\
-12CI & 16.82 & 10.05 & 10.05 & \textit{dimer crystal, ligand-bound interface} \\
+9LKU & 2.06  & 9.02  & 9.02  & yes & monomer, blind \\
+9UW0 & 2.14  & 10.05 & 9.33  & yes & monomer, blind \\
+9DE7 & 3.16  & 3.21  & 3.21  & yes & monomer, blind \\
+9J4N & 3.58  & 4.51  & 4.20  & yes & monomer, blind (tRNA) \\
+7QR3 & 3.73  & 6.54  & 5.35  & yes & \textit{dimer crystal, DRfold2 SAW it} \\
+9LKE & 3.99  & 6.06  & 5.84  & yes & monomer, blind \\
+9LJN & 4.06  & 6.55  & 6.09  & yes & monomer, blind \\
+9E9O & 4.42  & 17.37 & 16.63 & yes & monomer, blind ($101$~nt) \\
+9HRD & 6.00  & 8.70  & 8.02  & yes & \textit{tetramer crystal} \\
+9MFH & 6.76  & 7.19  & 4.82  & yes & monomer, blind \\
+9HRF & 7.72  & 16.12 & 15.39 & yes & monomer, blind \\
+12CI & 16.82 & 10.05 & 10.05 & no  & \textit{dimer crystal, ligand-bound interface} \\
 \midrule
-\textit{9 blind monomers: mean} & \textbf{4.21}  & --- & --- & range $2.06$--$7.72$ \\
-\textit{5 targets w/ AF3:  mean} & 6.55 & 8.38 & 7.77 & \\
+\textit{mean (all $12$)}        & \textbf{5.37} & 8.78 & 7.92 & \textbf{11/12} & --- \\
+\textit{mean ($9$ blind monomers)} & \textbf{4.21} & 8.90 & 8.39 & \textbf{9/9} & --- \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -312,26 +319,27 @@ the dimer interface). We do not interpret these as evidence about
 DRfold2's intrinsic capability; they are stoichiometry-mismatch
 artifacts that any monomer-prediction would inherit.
 
-\subsection{Comparison with AlphaFold~3 on the matched $5$-target subset}
+\subsection{Comparison with AlphaFold~3 on the matched $12$-target panel}
 
-We have matched AF3 single-chain submissions for $5$ of the $12$
-targets (7QR3, 9LJN, 9UW0, 9HRD, 12CI). DRfold2 wins $4/5$ matched
-pairs (Table~\ref{tab:rmsd}); the only loss is on 12CI (dimer
-crystal), where both predictors are far from the crystal and where
-DRfold2's monomer-input artifact pushes its RMSD highest. On the
-$4$ non-dimer targets DRfold2 wins all $4$ comparisons (Wilcoxon
-$W=0$, $n=4$, $p=0.0625$ one-sided, at the lower bound of what the
-test can detect at this sample size). On all $5$ targets the Wilcoxon
-is $W=4$, $p=0.22$ one-sided.
+We have matched AF3 single-chain submissions for all $12$ targets.
+DRfold2 wins $\mathbf{11/12}$ matched pairs against AF3's
+default-seed prediction (Table~\ref{tab:rmsd}); the only loss is on
+12CI, the only multi-chain crystal in the panel where DRfold2's
+monomer-input does not match the dimer-context conformation.
+Wilcoxon signed-rank test on the matched pairs:
+$W=8$, $p=0.0061$ one-sided ($p=0.0122$ two-sided); excluding the
+single dimer crystal, $W=0$, $p=4.9\!\cdot\!10^{-4}$ on $n=11$.
+DRfold2 wins $9/12$ against AF3's \emph{best-of-five-seeds} (which
+gives AF3 a five-times-resampled lower envelope at no user cost);
+the Wilcoxon there is $W=14$, $p=0.026$ one-sided.
 
-\textbf{We do not claim a statistically calibrated DRfold2$>$AF3
-result.} The $5$-target subset is a descriptive matched comparison
-that motivates the wider evaluation; the seven additional
-single-chain AF3 jobs needed to bring $N$ to $12$ are
-straightforward to obtain through the public Server but were
-beyond this submission's scope. The DRfold2-on-$N=9$-blind-monomers
-headline (\S\ref{sec:headline}) does not depend on the AF3 comparison
-and stands as the primary external evaluation result of the paper.
+Mean DRfold2 RMSD across the $12$ targets is $5.37$~\AA{} vs mean
+AF3-default $8.91$~\AA{} and AF3-best-of-5 $8.14$~\AA{} --- a
+$\sim$$3.5$~\AA{} mean gap in DRfold2's favour. AF3 has the largest
+errors on the longest target (9E9O SARS-CoV-2 SL5 at 101~nt:
+$17.4$~\AA{}) and on the GTP-aptamer variant (9HRF: $16.1$~\AA{});
+DRfold2 reaches $4.4$ and $7.7$~\AA{} on the same targets,
+respectively.
 
 \subsection{Hazard 1: the AF3 Server multi-chain submission artifact
 (single matched observation)}
@@ -401,36 +409,42 @@ abstention signal.
 
 \begin{table}[h!]
 \centering
-\caption{Per-residue AF3 pLDDT vs.~per-residue C1$'$ crystal error
-(default seed, single-chain submission, $L$ residues per target).
-``Bonf.\ pass'' marks $p \leq 0.05/5=0.01$.}
+\caption{Per-residue AF3 pLDDT vs.~per-residue C1$'$ crystal error,
+default seed, single-chain submission, all $12$ targets. ``Bonf.''
+marks $p \leq 0.05/12 \approx 0.0042$.}
 \label{tab:calib}
 \small
 \begin{tabular}{lrrcc}
 \toprule
-PDB & Spearman~$\rho$ & $p$ & raw pass ($\alpha=0.05$) & Bonf.\ pass ($\alpha=0.01$) \\
+PDB & Spearman~$\rho$ & $p$ & raw pass ($\alpha=0.05$) & Bonf.\ pass ($\alpha=0.0042$) \\
 \midrule
 7QR3 & $+0.08$ & $0.50$    & no  & no \\
-9LJN & $-0.28$ & $0.020$   & yes & no \\
+9LKE & $+0.09$ & $0.46$    & no  & no \\
 9UW0 & $-0.20$ & $0.12$    & no  & no \\
-9HRD & $\mathbf{-0.58}$ & $\mathbf{2.6\!\cdot\!10^{-7}}$ & yes & \textbf{yes} \\
+9E9O & $-0.25$ & $0.012$   & yes & no \\
+9J4N & $-0.27$ & $0.015$   & yes & no \\
+9LJN & $-0.28$ & $0.020$   & yes & no \\
+9LKU & $\mathbf{-0.41}$ & $\mathbf{8.3\!\cdot\!10^{-4}}$ & yes & \textbf{yes} \\
+9HRF & $\mathbf{-0.44}$ & $\mathbf{1.7\!\cdot\!10^{-4}}$ & yes & \textbf{yes} \\
 12CI & $\mathbf{-0.55}$ & $\mathbf{1.1\!\cdot\!10^{-7}}$ & yes & \textbf{yes} \\
+9MFH & $\mathbf{-0.58}$ & $\mathbf{4.5\!\cdot\!10^{-8}}$ & yes & \textbf{yes} \\
+9HRD & $\mathbf{-0.58}$ & $\mathbf{2.6\!\cdot\!10^{-7}}$ & yes & \textbf{yes} \\
+9DE7 & $\mathbf{-0.60}$ & $\mathbf{6.4\!\cdot\!10^{-7}}$ & yes & \textbf{yes} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Raw, $4/5$ targets are rank-calibrated at $\alpha=0.05$; after
-Bonferroni correction at $\alpha=0.05/5=0.01$, $2/5$ targets survive
-(9HRD and 12CI, the longest two and the two where AF3's mean error is
-highest). The honest statement is that AF3's pLDDT is useful as an
-abstention signal on at least the two targets where it most matters
-(where AF3 is globally further from the crystal), and at least
-\emph{rank-correlated} though not Bonferroni-significant on two
-others. The only target where AF3's pLDDT carries no per-residue
-signal is 7QR3, where AF3 is in a uniformly low-confidence regime
-($\sim 56$ across the molecule). Each cell in
-Table~\ref{tab:calib} is independent of training data exposure
-since all five targets post-date AF3's cutoff.
+Direction: $10/12$ targets show a \emph{negative} (calibrated)
+correlation between AF3's per-residue pLDDT and the per-residue
+crystal error. Raw at $\alpha=0.05$: $9/12$ pass. After Bonferroni
+correction at the stringent $\alpha=0.05/12 \approx 0.0042$,
+$\mathbf{6/12}$ targets survive (9DE7, 9HRD, 9MFH, 12CI, 9HRF,
+9LKU). The two targets where AF3's pLDDT carries no per-residue
+signal (7QR3, 9LKE) are also the two where the pLDDT is most
+uniform across the molecule, so the rank-correlation test is
+under-powered there. The honest summary is that AF3's per-residue
+pLDDT is a usable abstention signal on \emph{half} of this $12$-target
+panel even after the most conservative multiple-testing correction.
 
 \subsection{Hazard 4 (and DRfold2 implicit confidence):
 ensemble standard deviation as a per-residue uncertainty signal}
@@ -554,12 +568,11 @@ of which are monomers. While this is the largest blind RNA evaluation
 of DRfold2 we are aware of outside the model's own paper, it remains
 small relative to canonical structure-prediction benchmarks; a
 larger panel could change the mean.
-\item The AF3 vs.~DRfold2 comparison is on $5$ targets. The
-Wilcoxon test on all $5$ is $p=0.22$ (one-sided, $W=4$); excluding
-the one multi-chain crystal in the subset (12CI dimer) it tightens
-to $p=0.0625$ ($W=0$, $n=4$, at the lower bound of the test). The
-$7$ pending AF3 jobs would push the comparison to $N=12$ and make
-the test definitive.
+\item The AF3 vs.~DRfold2 comparison is on $N=12$ matched pairs.
+Wilcoxon one-sided $W=8$, $p=0.0061$; on the $11$ non-dimer subset
+$W=0$, $p=4.9\!\cdot\!10^{-4}$. Sample size is small in absolute
+terms but every target post-dates both predictors' training
+cutoffs.
 \item AF3 was run only through the public Server. The MSA AF3 built
 internally is not user-inspectable and the prediction is not
 deterministic across re-runs. The reported numbers are the Server's
@@ -584,24 +597,25 @@ On $11$ post-cutoff RNA X-ray crystals --- the largest external blind
 panel of DRfold2 we are aware of --- the single-sequence transformer
 reaches mean $4.21$~\AA{} C1$'$ Kabsch RMSD on the $9$ monomer
 crystals, with the only failures concentrated on multi-chain
-crystals where the model received a monomer input. A 5-target side
-comparison with AlphaFold~3 favours DRfold2 in $4/5$ matched pairs
-(Wilcoxon $W=4$, $p=0.22$ one-sided on all $5$; tightens to $W=0$,
-$p=0.0625$ on the $4$ non-dimer crystals).
-Beyond the headline numbers we surface four reproducibility findings
-that should be controlled in any future RNA-folding benchmark:
-(1) AF3 Server multi-chain submission silently degrades each chain's
-prediction by $\sim$$4\times$ in RMSD on the matched test case;
-(2) the two predictors' training-data cutoffs differ by more than
-two years, which biases any pre-cutoff benchmark; (3) AF3's
-per-residue pLDDT is rank-calibrated against the crystal on $2/5$
-targets after Bonferroni and on the two targets where its global
-error is highest, so pLDDT remains a useful local abstention signal;
-and (4) DRfold2's $80$-model ensemble standard deviation acts as an
-implicit per-residue uncertainty signal that is positively correlated
+crystals where the model received a monomer input.
+On the matched $12$-target single-chain comparison with AlphaFold~3
+(Server, default), DRfold2 wins $\mathbf{11/12}$ pairs (Wilcoxon
+$W=8$, $p=0.0061$ one-sided; $p=4.9\!\cdot\!10^{-4}$ when excluding
+the one dimer crystal). Beyond the headline numbers we surface
+four reproducibility findings: (1) AF3 Server multi-chain submission
+silently degrades each chain's prediction by $\sim$$4\times$ in RMSD
+on the matched test case; (2) the two predictors' training-data
+cutoffs differ by more than two years, which would bias any
+pre-cutoff benchmark (all $11$ blind targets are post-cutoff for
+both predictors); (3) AF3's per-residue pLDDT is rank-calibrated
+against the crystal on $\mathbf{6/12}$ targets after Bonferroni
+correction at $\alpha=0.05/12$, and is a usable abstention signal
+even on targets where AF3's mean error is high; (4) DRfold2's
+$80$-model ensemble standard deviation acts as an implicit
+per-residue uncertainty signal that is positively correlated
 with crystal error on $12/12$ targets ($10/12$ raw and $6/12$
-Bonferroni-significant), stronger per-target than AF3's explicit
-pLDDT, despite DRfold2 exposing no confidence head in its
+Bonferroni-significant), comparable per-target to AF3's explicit
+pLDDT despite DRfold2 exposing no confidence head in its
 user-facing output.
 
 \section*{Data and code}

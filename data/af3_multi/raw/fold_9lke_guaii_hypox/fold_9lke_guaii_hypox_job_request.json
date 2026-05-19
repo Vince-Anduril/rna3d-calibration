@@ -1,0 +1,17 @@
+[{
+ "name": "9LKE_GuaII_hypox",
+ "modelSeeds": [
+  "1804755512"
+ ],
+ "sequences": [
+  {
+   "rnaSequence": {
+    "sequence": "GGUUGUAUAAGCUCGUUAAUUUGGAAUGAGCGUAUCUACAGGCAACCGUAAAUUGCCCCAGGCUACAAUC",
+    "count": 1
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 3
+}
+]

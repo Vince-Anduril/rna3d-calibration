@@ -1,0 +1,17 @@
+[{
+ "name": "9HRF_GTP_UU",
+ "modelSeeds": [
+  "1159191031"
+ ],
+ "sequences": [
+  {
+   "rnaSequence": {
+    "sequence": "GGGCGCAUUUUGGUAGGUCGGUCGCUGCUUCGGCAGUGAGGGGUAGGCAUUGCUGGCCUAGGGUGCCCUU",
+    "count": 1
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 3
+}
+]

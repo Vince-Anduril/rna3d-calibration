@@ -1,0 +1,17 @@
+[{
+ "name": "9DE7 HIVTARfulllength57nt",
+ "modelSeeds": [
+  "1505127771"
+ ],
+ "sequences": [
+  {
+   "rnaSequence": {
+    "sequence": "GUCUCUCUGGUUAAGCCAGAUCUGAGCCGAAAAGCUCUCUGGCUAACUAGGGAACCA",
+    "count": 1
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 3
+}
+]

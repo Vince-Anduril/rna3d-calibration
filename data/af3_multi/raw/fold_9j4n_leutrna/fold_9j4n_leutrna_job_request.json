@@ -1,0 +1,17 @@
+[{
+ "name": "9J4N_LeuTRNA",
+ "modelSeeds": [
+  "356524979"
+ ],
+ "sequences": [
+  {
+   "rnaSequence": {
+    "sequence": "GCGGGAGUGGCGAAAGGUAGACGCACCAGAUUGGUUCUGGCGCCGCAAGGUGUGCGAGUUCAAGUCUCGCCUCCCGCACCA",
+    "count": 1
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 3
+}
+]

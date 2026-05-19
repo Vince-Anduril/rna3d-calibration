@@ -1,0 +1,17 @@
+[{
+ "name": "9MFH_cobalamin_apo",
+ "modelSeeds": [
+  "947163790"
+ ],
+ "sequences": [
+  {
+   "rnaSequence": {
+    "sequence": "GGUAAAAGCAUAGUGGGAAAGUGACGUGAAAUUCGUCCACACGAAAGUAAGGUCAUAGUCCGAAUGCCACCUACCA",
+    "count": 1
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 3
+}
+]

@@ -1,0 +1,17 @@
+[{
+ "name": "9LKU_2dG_guano",
+ "modelSeeds": [
+  "344241590"
+ ],
+ "sequences": [
+  {
+   "rnaSequence": {
+    "sequence": "GCGUAUAUCCUUAAUGAUAUGGUUUAAGGGCAAUACAUAGAAACCACAAAUUUCUUACUGCGU",
+    "count": 1
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 3
+}
+]

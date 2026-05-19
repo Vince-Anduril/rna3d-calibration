@@ -1,0 +1,17 @@
+[{
+ "name": "9DE7_HIV_TAR",
+ "modelSeeds": [
+  "1309916280"
+ ],
+ "sequences": [
+  {
+   "rnaSequence": {
+    "sequence": "GUCUCUCUGGUUAAGCCAGAUCUGAGCCGAAAAGCUCUCUGGCUAACUAGGGAACCA",
+    "count": 1
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 3
+}
+]
