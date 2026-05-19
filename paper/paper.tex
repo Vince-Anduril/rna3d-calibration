@@ -26,8 +26,7 @@
 structure transformer on 11 post-cutoff X-ray crystals,\\
 with four reproducibility findings from a head-to-head with AlphaFold~3}}
 
-\author{Vincent Le Duigou\thanks{Albert School Madrid; \texttt{vleduigou@c2tclinic.com}.}
- \and Claude (Opus 4.7)\thanks{Anthropic. Authored pipeline code and analysis, drafted manuscript under VLD's direction. Both authors take responsibility for the published text.}}
+\author{Vincent Le Duigou\thanks{Albert School Madrid; \texttt{vleduigou@c2tclinic.com}. The analysis pipeline, code, and a manuscript draft were generated with substantial assistance from Anthropic's Claude (Opus~4.7) operating in a structured agent loop under VLD's direction (see Methods and Acknowledgments). VLD reviewed and is solely responsible for the published text.}}
 \date{May 2026}
 
 \begin{document}
@@ -110,6 +109,10 @@ RhoFold+~\cite{rhofold2024} is an
 RNA-specific MSA-based predictor whose intended regime requires an
 MSA we could not assemble for the orphan-like targets in this
 study. Boltz-1~\cite{boltz_2024} is an open-source AF3 reproduction.
+CASP15~\cite{casp15_rna} is the community blind benchmark of RNA 3D
+structure prediction; it documented the gap between MSA-based and
+single-sequence regimes on orphan-like short RNAs and motivates
+the post-cutoff evaluation we report.
 
 \paragraph{Training-data exposure.} The protein-folding community has
 documented that public benchmarks can over-state generalisation when
@@ -138,7 +141,35 @@ falls inside DRfold2's training horizon. Final panel: $12$ targets
 cutoff; all $12$ post-date the AF3 cutoff (September~$2021$).
 For the ground-truth comparison we use the C1$'$ atoms of standard
 A/U/G/C residues only and exclude modified terminal nucleotides
-(e.g.~GTP/CCC in $9$UW$0$).
+(e.g.~GTP/CCC in $9$UW$0$). For each crystal we report the C1$'$
+RMSD against a single reference chain (chain C for 7QR3 to follow
+the convention of the depositors~\cite{przytula2022}, chain A for
+all other entries by default). For the three crystals with more
+than one RNA copy in the asymmetric unit (7QR3 dimer, 9HRD tetramer,
+12CI dimer) we audited the choice of reference chain in
+Table~\ref{tab:chain_robust}: with one exception (7QR3 where chain C
+and chain D differ by $\sim 1$~\AA{} in their C4$'$ RMSD vs the
+single DRfold2 prediction), the reference choice changes the RMSD
+by $\leq 0.3$~\AA{}.
+
+\begin{table}[h!]
+\centering
+\caption{Sensitivity of the per-target RMSD to the choice of crystal
+reference chain (C4$'$ Kabsch RMSD vs the single DRfold2 prediction).
+Only 7QR3 has a non-negligible chain dependence ($1.02$~\AA{} range);
+both 9HRD and 12CI multimers are stable to the chain pick.}
+\label{tab:chain_robust}
+\small
+\begin{tabular}{lcc}
+\toprule
+PDB (multimer)        & per-chain RMSDs (\AA{})  & range (\AA{}) \\
+\midrule
+7QR3 (2-chain dimer)  & C: 3.76 ; D: 2.75        & 1.02 \\
+9HRD (4-chain tetra)  & A: 5.88 ; B: 6.00 ; C: 5.84 ; D: 6.05 & 0.21 \\
+12CI (2-chain dimer)  & A: 17.66 ; B: 17.94      & 0.28 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \begin{table}[h!]
 \centering
@@ -281,27 +312,36 @@ the dimer interface). We do not interpret these as evidence about
 DRfold2's intrinsic capability; they are stoichiometry-mismatch
 artifacts that any monomer-prediction would inherit.
 
-\subsection{Comparison with AlphaFold~3 on the $5$-target subset}
+\subsection{Comparison with AlphaFold~3 on the matched $5$-target subset}
 
-On the five targets where we have both predictors, DRfold2 wins $4/5$
-matched pairs (Table~\ref{tab:rmsd}). The only loss is on 12CI (dimer
+We have matched AF3 single-chain submissions for $5$ of the $12$
+targets (7QR3, 9LJN, 9UW0, 9HRD, 12CI). DRfold2 wins $4/5$ matched
+pairs (Table~\ref{tab:rmsd}); the only loss is on 12CI (dimer
 crystal), where both predictors are far from the crystal and where
 DRfold2's monomer-input artifact pushes its RMSD highest. On the
 $4$ non-dimer targets DRfold2 wins all $4$ comparisons (Wilcoxon
 $W=0$, $n=4$, $p=0.0625$ one-sided, at the lower bound of what the
 test can detect at this sample size). On all $5$ targets the Wilcoxon
-is $W=4$, $p=0.22$ one-sided. The honest summary is that DRfold2
-ranks above AF3 on the $5$-target subset in mean but not at
-calibrated statistical significance; the headline question across
-the full $11$ blind targets requires seven additional AF3
-single-chain jobs that are pending.
+is $W=4$, $p=0.22$ one-sided.
 
-\subsection{Hazard 1: the AF3 Server multi-chain submission artifact}
+\textbf{We do not claim a statistically calibrated DRfold2$>$AF3
+result.} The $5$-target subset is a descriptive matched comparison
+that motivates the wider evaluation; the seven additional
+single-chain AF3 jobs needed to bring $N$ to $12$ are
+straightforward to obtain through the public Server but were
+beyond this submission's scope. The DRfold2-on-$N=9$-blind-monomers
+headline (\S\ref{sec:headline}) does not depend on the AF3 comparison
+and stands as the primary external evaluation result of the paper.
+
+\subsection{Hazard 1: the AF3 Server multi-chain submission artifact
+(single matched observation)}
 \label{sec:multichain}
 
-To save against the $20$ jobs/day Server quota, an early run of the
-seven CPEB3-panel sequences was submitted as a single multi-chain
-job (seven RNA entities in one Server request, default settings).
+We report a single matched-pair observation, which we present as
+a usability warning rather than a benchmarked hazard. To save
+against the $20$ jobs/day Server quota, an early run of the seven
+CPEB3-panel sequences was submitted as a single multi-chain job
+(seven RNA entities in one Server request, default settings).
 That job returned mean per-residue pLDDT in the $25$--$27$ range
 across all seven chains, well below AF3's standard ``low confidence''
 threshold of $50$. On the matched chimpanzee sequence (chain~B of the
@@ -313,7 +353,11 @@ fourfold improvement with no change in sequence
 (Table~\ref{tab:multichain}). The Server emits no user-visible
 warning about this framing dependence; users wishing to compare
 predictors should be aware that multi-chain framing is not the same
-as the sum of single-chain calls.
+as the sum of single-chain calls. We have not replicated this on
+more than one matched sequence; the size of the effect on this
+single case justifies reporting it but a 2--3-sequence replication
+would convert this from a case note into a benchmarked usability
+hazard.
 
 \begin{table}[h!]
 \centering
@@ -412,7 +456,7 @@ error of the final selected structure against the crystal.
 \toprule
 PDB & ens-std mean (\AA{}) & err mean (\AA{}) & Spearman~$\rho$ & $p$ \\
 \midrule
-7QR3 & 3.46 & 3.46  & $+0.22$ & $0.074$ \\
+7QR3 & 3.459 & 3.460 & $+0.22$ & $0.074$ \\
 9DE7 & 0.82 & 2.60  & $\mathbf{+0.49}$ & $\mathbf{9.7\!\cdot\!10^{-5}}$ \\
 9HRD & 3.31 & 4.71  & $+0.18$ & $0.14$ \\
 9HRF & 4.90 & 6.82  & $+0.33$ & $0.0052$ \\
@@ -430,7 +474,12 @@ PDB & ens-std mean (\AA{}) & err mean (\AA{}) & Spearman~$\rho$ & $p$ \\
 
 All $12/12$ targets show \emph{positive} correlation between
 ensemble disagreement and crystal error --- the direction is correct
-on every target. Raw, $10/12$ targets are significant at $\alpha=0.05$.
+on every target, though the only target where the signal collapses
+to no-correlation is 9MFH (env2 cobalamin apo riboswitch,
+$\rho = +0.02$, $p = 0.88$), where the ensemble disagrees on regions
+that turn out to be no further from the crystal than the consensus
+regions. We have no mechanistic explanation for this outlier and
+report it as an honest exception to the pattern. Raw, $10/12$ targets are significant at $\alpha=0.05$.
 After Bonferroni correction at $\alpha = 0.05/12 \approx 0.0042$,
 $6/12$ targets survive. By contrast, the AF3 pLDDT comparison from
 \S\ref{sec:calib} was on $5$ targets and survived Bonferroni
@@ -453,9 +502,12 @@ DRfold2's top-5 most-divergent C1$'$ residues between the two
 predictions are $\{9, 22, 24, 51, 60\}$, where residues $9$ and $60$
 are the published P1 helix endpoints. Of $n=20$ random
 single-nucleotide null mutations of R1108, zero put \emph{both}
-residues $9$ and $60$ into the top-5 (add-1-smoothed
-$p_{\mathrm{emp}}=0.048$, conservative; we are extending to $n=100$
-NULLs to tighten this bound). The crystal itself confirms the
+residues $9$ and $60$ into the top-5
+($p_{\mathrm{emp}} = 1/(n+1) \approx 0.048$ by add-1 smoothing,
+which is at the lower bound of what this test can detect at
+$n=20$; the case study should be read as illustrative of the
+protocol, not as a calibrated hypothesis test, until $n$ is
+expanded). The crystal itself confirms the
 geometric basis: in $7$QR$3$:C, residue~$9$ sits at $8.27$~\AA{}
 from residue~$30$ (direct contact), residue~$60$ at $17.78$~\AA{}
 (weak coupling), and residues $22, 24, 51$ at $28$--$48$~\AA{}
@@ -516,11 +568,14 @@ output of one run with one seed selection each.
 or a Boltz-1 head-to-head would close the architecture-vs-input-regime
 question.
 \item The CPEB3 case-study null is at $n=20$ ($p_{\mathrm{emp}} =
-1/21 \approx 0.048$, at the lower bound of the design); we are
-extending to $n=100$ to deliver $p \lesssim 0.01$.
-\item AI co-authorship: Claude (Opus~4.7) is listed as co-author
-per the contributions in the back-matter. The target venue's
-policy on this should be verified.
+1/21 \approx 0.048$, at the lower bound of the design); it should
+be read as illustrative of the protocol, not as a calibrated
+hypothesis test.
+\item Use of AI assistance: the analysis pipeline, code, and
+manuscript draft were generated with substantial assistance from
+Claude (Opus~4.7); see the Acknowledgments section. We follow
+ICMJE recommendations and do \emph{not} list the model as a
+co-author.
 \end{itemize}
 
 \section{Conclusion}
@@ -557,18 +612,32 @@ All DRfold2 runs are reproducible on a single RTX-class GPU
 ($\sim$3~min per target). AF3 runs are reproducible from the public
 Server with the sequences in Table~\ref{tab:targets}.
 
-\section*{Author contributions}
-VLD scoped the project, chose the target panel, submitted the
-AlphaFold Server jobs, validated each pipeline step, and edited the
-manuscript. Claude (Opus~4.7) implemented the analysis code, ran
-DRfold2 on the pod, executed the cross-family comparisons,
-drafted the manuscript, and flagged caveats for VLD's review.
-Both authors take responsibility for the published text.
+\section*{Acknowledgments and use of AI assistance}
+This work was substantially scaffolded by Anthropic's Claude (Opus~4.7)
+operating in a structured agent loop, which authored the analysis
+code (\texttt{paper/scripts/exp\_*.py} in the repository), executed
+the DRfold2 pipeline on a remote GPU, ran the cross-family
+comparisons, generated the figures and tables, and drafted text
+sections of the manuscript under VLD's iterative review. VLD scoped
+the project, chose the target panel, submitted the AlphaFold Server
+jobs, validated each pipeline step, audited the AI-generated outputs,
+edited every section of the final manuscript, and is solely
+responsible for the published text. We follow ICMJE recommendations
+that artificial-intelligence systems do not qualify for authorship
+on peer-reviewed work, and disclose the assistance here for full
+transparency.
 
 \begin{thebibliography}{9}\small
 \bibitem{drfold2_2025} Lee, Y.~\textit{et~al.} ``DRfold2: a deep
 learning method for RNA tertiary structure prediction using
-single-sequence input.'' \textit{PLOS Biology} (2026).
+single-sequence input.'' \textit{PLOS Biology} (2026). Training set
+declared in Methods to ``only include RNA structures released
+before 2024'' with $<80\%$ sequence identity filter.
+\bibitem{casp15_rna} Das, R.~\textit{et~al.} ``Assessment of three-dimensional
+RNA structure prediction in CASP15.'' \textit{Proteins:
+Structure, Function, and Bioinformatics} (2023). Community
+benchmark documenting the difficulty of orphan-like short RNAs
+for MSA-based predictors.
 \bibitem{af3_2024} Abramson, J.~\textit{et~al.} ``Accurate structure
 prediction of biomolecular interactions with AlphaFold~3.''
 \textit{Nature} 630, 493--500 (2024).
