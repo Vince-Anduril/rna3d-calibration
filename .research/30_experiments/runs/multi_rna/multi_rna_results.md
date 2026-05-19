@@ -1,6 +1,6 @@
 # Cross-family analysis — Experiment G
 
-Generated: 2026-05-19T13:01:39.952857+00:00
+Generated: 2026-05-19T13:08:47.250199+00:00
 
 All AF3 runs in this table are **single-chain** (one job per RNA).
 
@@ -12,7 +12,7 @@ All AF3 runs in this table are **single-chain** (one job per RNA).
 | 9LJN | Guanine-II riboswitch | riboswitch | 71 | 2025-01 | unlikely | no | 4.06 | 6.55 | 6.09 |
 | 9UW0 | 2'-dG-III riboswitch | riboswitch | 63 | 2025-05 | unlikely | no | 2.14 | 10.05 | 9.33 |
 | 9HRD | Class V GTP aptamer | aptamer | 67 | 2024-12 | unlikely | no | 6.00 | 8.70 | 8.02 |
-| 12CI | Dopamine aptamer DGR-1A | aptamer | 82 | 2026-03 | no | no | 16.79 | 10.05 | 10.05 |
+| 12CI | Dopamine aptamer DGR-1A | aptamer | 82 | 2026-03 | no | no | 16.82 | 10.05 | 10.05 |
 
 ## AF3 per-residue pLDDT calibration vs crystal
 
