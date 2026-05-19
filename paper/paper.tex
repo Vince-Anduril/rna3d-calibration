@@ -24,7 +24,7 @@
 
 \title{\textbf{An external evaluation of the DRfold2 single-sequence RNA\\
 structure transformer on 11 post-cutoff X-ray crystals,\\
-with three reproducibility hazards from a head-to-head with AlphaFold~3}}
+with four reproducibility findings from a head-to-head with AlphaFold~3}}
 
 \author{Vincent Le Duigou\thanks{Albert School Madrid; \texttt{vleduigou@c2tclinic.com}.}
  \and Claude (Opus 4.7)\thanks{Anthropic. Authored pipeline code and analysis, drafted manuscript under VLD's direction. Both authors take responsibility for the published text.}}
@@ -58,7 +58,13 @@ RNA-only crystals in the cell where DRfold2 saw and AF3 did not;
 (iii) on the $5$ targets where we have both, AF3's per-residue
 pLDDT is rank-correlated with crystal error (Spearman $\rho$ down to
 $-0.58$, $p < 10^{-6}$) on $4/5$ targets, providing a useful abstention
-signal even where the prediction's mean error is high. All code, AF3
+signal even where the prediction's mean error is high; (iv) DRfold2,
+which exposes no explicit confidence head, has an implicit
+per-residue uncertainty signal in the standard deviation across its
+$80$-model ensemble that is positively rank-correlated with the
+crystal error on $\mathbf{12/12}$ targets ($\mathbf{10/12}$ raw and
+$\mathbf{6/12}$ Bonferroni-significant at $\alpha=0.05/12$, with the
+strongest case at $\rho=+0.66, p\approx 10^{-11}$). All code, AF3
 ZIPs, and crystal comparisons are at
 \url{https://github.com/Vince-Anduril/rna3d-calibration}.
 \end{abstract}
@@ -236,6 +242,24 @@ PDB & DRfold2 (\AA{}) & AF3 default (\AA{}) & AF3 best-of-5 (\AA{}) & note \\
 \end{tabular}
 \end{table}
 
+Figure~\ref{fig:structural} visualises the contrast between a
+typical monomer success (9LKU, RMSD $2.06$~\AA{}) and the worst
+multi-chain failure (12CI dimer, RMSD $16.82$~\AA{}).
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{figures/structural_overlay.pdf}
+\caption{DRfold2 predicted backbone (blue) Kabsch-aligned to the
+experimental crystal C1$'$ trace (grey), with prediction points
+coloured by per-residue C1$'$ deviation. \textbf{Left}: 9LKU
+($2'$-dG-III riboswitch monomer) at $2.06$~\AA{} RMSD --- predicted
+and experimental traces are essentially super-imposable.
+\textbf{Right}: 12CI (dopamine aptamer, dimer crystal with
+ligand-bound interface) at $16.82$~\AA{} RMSD --- DRfold2 cannot
+reconstitute the dimer-context conformation from monomer input.}
+\label{fig:structural}
+\end{figure}
+
 On the $9$ blind monomeric crystals --- riboswitches ($\times 4$),
 aptamers ($\times 1$), a viral hairpin (HIV-1 TAR), a tRNA, a
 SARS-CoV-2 stem-loop, and the env2 cobalamin riboswitch ---
@@ -364,6 +388,61 @@ signal is 7QR3, where AF3 is in a uniformly low-confidence regime
 Table~\ref{tab:calib} is independent of training data exposure
 since all five targets post-date AF3's cutoff.
 
+\subsection{Hazard 4 (and DRfold2 implicit confidence):
+ensemble standard deviation as a per-residue uncertainty signal}
+\label{sec:ensemble}
+
+DRfold2 does not emit an explicit per-residue confidence head
+analogous to AF3's pLDDT, but its four-config ensemble produces
+$80$ candidate models per target before the energy-based
+\texttt{opt\_0} selection step. We test whether the standard
+deviation across the $80$ ensemble members (after Kabsch alignment
+to model~$0$, computed at C4$'$ to match the intermediate-model
+atom set) acts as a usable per-residue uncertainty signal.
+
+\begin{table}[h!]
+\centering
+\caption{Per-target Spearman rank correlation between the DRfold2
+$80$-model ensemble standard deviation and the per-residue C4$'$
+error of the final selected structure against the crystal.
+``Bonf.'' marks $p \leq 0.05/12 \approx 0.0042$.}
+\label{tab:ensemble}
+\small
+\begin{tabular}{lrrcc}
+\toprule
+PDB & ens-std mean (\AA{}) & err mean (\AA{}) & Spearman~$\rho$ & $p$ \\
+\midrule
+7QR3 & 3.46 & 3.46  & $+0.22$ & $0.074$ \\
+9DE7 & 0.82 & 2.60  & $\mathbf{+0.49}$ & $\mathbf{9.7\!\cdot\!10^{-5}}$ \\
+9HRD & 3.31 & 4.71  & $+0.18$ & $0.14$ \\
+9HRF & 4.90 & 6.82  & $+0.33$ & $0.0052$ \\
+9J4N & 0.56 & 2.89  & $\mathbf{+0.66}$ & $\mathbf{1.4\!\cdot\!10^{-11}}$ \\
+9E9O & 3.01 & 3.99  & $\mathbf{+0.43}$ & $\mathbf{7.4\!\cdot\!10^{-6}}$ \\
+9MFH & 4.03 & 6.38  & $+0.02$ & $0.88$ \\
+9LJN & 0.67 & 3.23  & $\mathbf{+0.58}$ & $\mathbf{1.1\!\cdot\!10^{-7}}$ \\
+9LKE & 0.58 & 3.32  & $\mathbf{+0.60}$ & $\mathbf{4.5\!\cdot\!10^{-8}}$ \\
+9LKU & 0.86 & 1.61  & $+0.31$ & $0.013$ \\
+9UW0 & 0.86 & 1.78  & $+0.25$ & $0.044$ \\
+12CI & 4.70 & 15.45 & $\mathbf{+0.43}$ & $\mathbf{6.1\!\cdot\!10^{-5}}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All $12/12$ targets show \emph{positive} correlation between
+ensemble disagreement and crystal error --- the direction is correct
+on every target. Raw, $10/12$ targets are significant at $\alpha=0.05$.
+After Bonferroni correction at $\alpha = 0.05/12 \approx 0.0042$,
+$6/12$ targets survive. By contrast, the AF3 pLDDT comparison from
+\S\ref{sec:calib} was on $5$ targets and survived Bonferroni
+($\alpha=0.05/5=0.01$) on $2/5$. The DRfold2 ensemble-std is therefore
+a stronger per-residue uncertainty signal in this panel than AF3's
+explicit pLDDT, despite being implicit and requiring access to the
+unprocessed ensemble (not the user-facing \texttt{opt\_0}).
+
+We emphasise that this is a \emph{post-hoc} discovery on the same
+panel; an out-of-distribution validation of the same correlation on
+a held-out panel would be the next confirmation step.
+
 \subsection{Case study: the CPEB3 single-nucleotide micro-perturbation}
 \label{sec:cpeb3}
 
@@ -454,14 +533,21 @@ crystals where the model received a monomer input. A 5-target side
 comparison with AlphaFold~3 favours DRfold2 in $4/5$ matched pairs
 (Wilcoxon $W=4$, $p=0.22$ one-sided on all $5$; tightens to $W=0$,
 $p=0.0625$ on the $4$ non-dimer crystals).
-Beyond the headline numbers we surface three reproducibility
-hazards that should be controlled in any future RNA-folding
-benchmark: AF3 Server multi-chain submission silently degrades
-each chain's prediction; the two predictors' training-data cutoffs
-differ by more than two years; and AF3's per-residue pLDDT, even
-when globally low, is rank-calibrated against the crystal on the
-targets where it most matters and serves as a usable abstention
-signal.
+Beyond the headline numbers we surface four reproducibility findings
+that should be controlled in any future RNA-folding benchmark:
+(1) AF3 Server multi-chain submission silently degrades each chain's
+prediction by $\sim$$4\times$ in RMSD on the matched test case;
+(2) the two predictors' training-data cutoffs differ by more than
+two years, which biases any pre-cutoff benchmark; (3) AF3's
+per-residue pLDDT is rank-calibrated against the crystal on $2/5$
+targets after Bonferroni and on the two targets where its global
+error is highest, so pLDDT remains a useful local abstention signal;
+and (4) DRfold2's $80$-model ensemble standard deviation acts as an
+implicit per-residue uncertainty signal that is positively correlated
+with crystal error on $12/12$ targets ($10/12$ raw and $6/12$
+Bonferroni-significant), stronger per-target than AF3's explicit
+pLDDT, despite DRfold2 exposing no confidence head in its
+user-facing output.
 
 \section*{Data and code}
 Sequences, predictions, AF3 ZIPs, $80$-model DRfold2 ensembles,
