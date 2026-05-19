@@ -1,0 +1,10 @@
+2026-05-18 20:47:49,718 - INFO: Constructing RhoFold
+2026-05-18 20:47:50,051 - INFO:     downloading pretrained/RhoFold_pretrained.pt
+2026-05-18 20:47:50,373 - INFO:     loading pretrained/RhoFold_pretrained.pt
+2026-05-18 20:47:50,661 - INFO: Input_fas /workspace/rna3d/.research/30_experiments/runs/cpeb3_focused/R1108_chimp/rhofold/input.fasta
+2026-05-18 20:47:50,662 - INFO: Input_a3m is None, the modeling will run using single sequence only (input_fas)
+2026-05-18 20:47:50,662 - INFO: Started RhoFold Inference
+2026-05-18 20:47:50,778 - INFO:     Inference using device cuda
+2026-05-18 20:47:51,629 - INFO:     Export PDB file to /workspace/rna3d/.research/30_experiments/runs/cpeb3_focused/R1108_chimp/rhofold/unrelaxed_model.pdb
+2026-05-18 20:47:51,629 - INFO: Finished RhoFold Inference in 0.967 seconds
+2026-05-18 20:47:51,629 - INFO: Started Amber Relaxation : 1000 iterations
