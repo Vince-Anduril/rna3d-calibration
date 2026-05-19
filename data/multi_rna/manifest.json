@@ -1,0 +1,26 @@
+[
+  {
+    "target": "9LJN",
+    "chain": "A",
+    "length": 71,
+    "sequence": "GGGUUGUAUAAGCUCGUUAAUUUGGAAUGAGCGUAUCUACAGGCAACCGUAAAUUGCCCCAGGCUACAAUC"
+  },
+  {
+    "target": "9UW0",
+    "chain": "A",
+    "length": 63,
+    "sequence": "GCGUAUAUCCUUAAUGAUAUGGUUUAAGGGCAAUACAUAGAAACCACAAAUUUCUUACUGCGU"
+  },
+  {
+    "target": "9HRD",
+    "chain": "A",
+    "length": 67,
+    "sequence": "GGCGCAUUUUGGUAGGUCGGUCGCUGCUUCGGCAGUGAGGGGUAGGCAUUGCUGGCCUAGGGUGCCC"
+  },
+  {
+    "target": "12CI",
+    "chain": "A",
+    "length": 82,
+    "sequence": "GGACGAUAGACUCCGUAAUUCGCGUGGAUAUGGCACGCAGUCAGGUGUUGGGCACCGUAAAUGUCCCACAUAGUAUCGUCCA"
+  }
+]
