@@ -17,33 +17,70 @@ import numpy as np
 ROOT = Path("/Users/leduigouvincent/rna3d-mirror")
 
 # --- Target manifest ---
+# DRfold2 cutoff verified end-2023 (Lee et al. PLOS Biology 2026 Methods).
+# AF3 cutoff Sept 2021. All 11 post-cutoff targets are blind to BOTH models,
+# except 7QR3 (Dec 2021, borderline for AF3, definitely seen by DRfold2).
 TARGETS = [
     {"id": "7QR3",  "crystal": ROOT / "data/crystal/7QR3.cif", "crystal_chain": "C",
      "af3_dir": ROOT / "data/af3_multi/raw/fold_r1108_chimp_single",
      "drf_dir": ROOT / ".research/30_experiments/runs/cpeb3_focused/R1108_chimp/drfold2",
-     "name": "CPEB3 ribozyme (R1108)", "family": "HDV ribozyme", "deposit": "2021-12", "length": 69,
-     "drfold_seen": "likely yes (Lee 2025 trained post-2022)",
-     "af3_seen": "unlikely (cutoff Sep 2021)"},
+     "name": "CPEB3 ribozyme (R1108)", "family": "ribozyme", "deposit": "2021-12", "length": 69,
+     "n_crystal_chains": 2, "drfold_seen": "yes", "af3_seen": "borderline"},
     {"id": "9LJN",  "crystal": ROOT / "data/multi_rna/9LJN.cif", "crystal_chain": "A",
      "af3_dir": ROOT / "data/af3_multi/raw/fold_9ljn_guanineii",
      "drf_dir": ROOT / ".research/30_experiments/runs/multi_rna/9LJN/drfold2",
      "name": "Guanine-II riboswitch", "family": "riboswitch", "deposit": "2025-01", "length": 71,
-     "drfold_seen": "unlikely", "af3_seen": "no"},
+     "n_crystal_chains": 1, "drfold_seen": "no", "af3_seen": "no"},
     {"id": "9UW0",  "crystal": ROOT / "data/multi_rna/9UW0.cif", "crystal_chain": "A",
      "af3_dir": ROOT / "data/af3_multi/raw/fold_9uw0_2dg",
      "drf_dir": ROOT / ".research/30_experiments/runs/multi_rna/9UW0/drfold2",
      "name": "2'-dG-III riboswitch", "family": "riboswitch", "deposit": "2025-05", "length": 63,
-     "drfold_seen": "unlikely", "af3_seen": "no"},
+     "n_crystal_chains": 1, "drfold_seen": "no", "af3_seen": "no"},
     {"id": "9HRD",  "crystal": ROOT / "data/multi_rna/9HRD.cif", "crystal_chain": "A",
      "af3_dir": ROOT / "data/af3_multi/raw/fold_9hrd_gtpapt",
      "drf_dir": ROOT / ".research/30_experiments/runs/multi_rna/9HRD/drfold2",
-     "name": "Class V GTP aptamer", "family": "aptamer", "deposit": "2024-12", "length": 67,
-     "drfold_seen": "unlikely", "af3_seen": "no"},
+     "name": "Class V GTP aptamer (tetramer)", "family": "aptamer", "deposit": "2024-12", "length": 67,
+     "n_crystal_chains": 4, "drfold_seen": "no", "af3_seen": "no"},
     {"id": "12CI",  "crystal": ROOT / "data/multi_rna/12CI.cif", "crystal_chain": "A",
      "af3_dir": ROOT / "data/af3_multi/raw/fold_12ci_dopamine",
      "drf_dir": ROOT / ".research/30_experiments/runs/multi_rna/12CI/drfold2",
-     "name": "Dopamine aptamer DGR-1A", "family": "aptamer", "deposit": "2026-03", "length": 82,
-     "drfold_seen": "no", "af3_seen": "no"},
+     "name": "Dopamine aptamer DGR-1A (dimer)", "family": "aptamer", "deposit": "2026-03", "length": 82,
+     "n_crystal_chains": 2, "drfold_seen": "no", "af3_seen": "no"},
+    {"id": "9LKE",  "crystal": ROOT / "data/multi_rna/9LKE.cif", "crystal_chain": "A",
+     "af3_dir": None,
+     "drf_dir": ROOT / ".research/30_experiments/runs/multi_rna/9LKE/drfold2",
+     "name": "Guanine-II + hypoxanthine", "family": "riboswitch", "deposit": "2025-01", "length": 70,
+     "n_crystal_chains": 1, "drfold_seen": "no", "af3_seen": "no"},
+    {"id": "9LKU",  "crystal": ROOT / "data/multi_rna/9LKU.cif", "crystal_chain": "A",
+     "af3_dir": None,
+     "drf_dir": ROOT / ".research/30_experiments/runs/multi_rna/9LKU/drfold2",
+     "name": "2'-dG-III + Guanosine", "family": "riboswitch", "deposit": "2025-01", "length": 65,
+     "n_crystal_chains": 1, "drfold_seen": "no", "af3_seen": "no"},
+    {"id": "9HRF",  "crystal": ROOT / "data/multi_rna/9HRF.cif", "crystal_chain": "A",
+     "af3_dir": None,
+     "drf_dir": ROOT / ".research/30_experiments/runs/multi_rna/9HRF/drfold2",
+     "name": "Class V GTP UU variant (monomer)", "family": "aptamer", "deposit": "2024-12", "length": 70,
+     "n_crystal_chains": 1, "drfold_seen": "no", "af3_seen": "no"},
+    {"id": "9MFH",  "crystal": ROOT / "data/multi_rna/9MFH.cif", "crystal_chain": "A",
+     "af3_dir": None,
+     "drf_dir": ROOT / ".research/30_experiments/runs/multi_rna/9MFH/drfold2",
+     "name": "env2 cobalamin riboswitch (apo)", "family": "riboswitch", "deposit": "2024-12", "length": 76,
+     "n_crystal_chains": 1, "drfold_seen": "no", "af3_seen": "no"},
+    {"id": "9DE7",  "crystal": ROOT / "data/multi_rna/9DE7.cif", "crystal_chain": "A",
+     "af3_dir": None,
+     "drf_dir": ROOT / ".research/30_experiments/runs/multi_rna/9DE7/drfold2",
+     "name": "HIV-1 TAR full-length", "family": "viral RNA", "deposit": "2024-08", "length": 57,
+     "n_crystal_chains": 1, "drfold_seen": "no", "af3_seen": "no"},
+    {"id": "9J4N",  "crystal": ROOT / "data/multi_rna/9J4N.cif", "crystal_chain": "A",
+     "af3_dir": None,
+     "drf_dir": ROOT / ".research/30_experiments/runs/multi_rna/9J4N/drfold2",
+     "name": "E. coli Leucine tRNA", "family": "tRNA", "deposit": "2024-08", "length": 81,
+     "n_crystal_chains": 1, "drfold_seen": "no", "af3_seen": "no"},
+    {"id": "9E9O",  "crystal": ROOT / "data/multi_rna/9E9O.cif", "crystal_chain": "A",
+     "af3_dir": None,
+     "drf_dir": ROOT / ".research/30_experiments/runs/multi_rna/9E9O/drfold2",
+     "name": "SARS-CoV-2 SL5", "family": "viral RNA", "deposit": "2024-11", "length": 101,
+     "n_crystal_chains": 1, "drfold_seen": "no", "af3_seen": "no"},
 ]
 
 CASCADE = [9, 22, 24, 51, 60]
@@ -83,8 +120,14 @@ def parse_cif_c1(path: Path, chain_filter: str | None = None, standard_only: boo
         by_chain.setdefault(ch, []).append((ri, xyz))
     out = {}
     for c, lst in by_chain.items():
-        lst.sort()
-        out[c] = np.stack([x for _, x in lst], axis=0)
+        lst.sort(key=lambda r: r[0])
+        # de-duplicate residues (some CIFs have alt locs)
+        seen = {}
+        for ri, xyz in lst:
+            if ri not in seen:
+                seen[ri] = xyz
+        ordered = [seen[k] for k in sorted(seen.keys())]
+        out[c] = np.stack(ordered, axis=0)
     return out
 
 
@@ -156,7 +199,10 @@ def analyze_target(t):
         out["drfold2_rmsd_vs_crystal"] = rmsd(drf_c1, cry)
         print(f"  DRfold2 vs crystal: {out['drfold2_rmsd_vs_crystal']:.2f} Å")
 
-    # AF3 single-chain — 5 seeds
+    # AF3 single-chain — 5 seeds (skip if no AF3 dir yet)
+    if t.get("af3_dir") is None:
+        print(f"  [skip AF3] no af3_dir yet for {t['id']}")
+        return out
     af3_cifs = sorted(t["af3_dir"].glob("*model_*.cif"))
     af3_rmsds = []
     af3_plddts = []

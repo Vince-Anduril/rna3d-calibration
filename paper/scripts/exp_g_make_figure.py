@@ -23,8 +23,13 @@ rows = [r for r in rows if r.get("drfold2_rmsd_vs_crystal") not in (None, "", "N
 ids = [r["id"] for r in rows]
 names = [r["name"] for r in rows]
 drf = [float(r["drfold2_rmsd_vs_crystal"]) for r in rows]
-af3_def = [float(r["af3_rmsd_default"]) if r.get("af3_rmsd_default") not in (None, "", "None") else np.nan for r in rows]
-af3_best = [float(r["af3_rmsd_best"]) if r.get("af3_rmsd_best") not in (None, "", "None") else np.nan for r in rows]
+def _val(r, k):
+    v = r.get(k)
+    if v in (None, "", "None"): return np.nan
+    try: return float(v)
+    except (TypeError, ValueError): return np.nan
+af3_def = [_val(r, "af3_rmsd_default") for r in rows]
+af3_best = [_val(r, "af3_rmsd_best") for r in rows]
 def _seen(s: str) -> bool:
     s = s.lower()
     return ("likely yes" in s) or s.strip() == "yes" or s.strip().startswith("yes")
