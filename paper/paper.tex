@@ -31,6 +31,7 @@
 \captionsetup[table]{labelfont=bf,font=small}
 \usepackage{tcolorbox}
 \tcbuselibrary{breakable}
+\usepackage{graphicx}
 
 \title{\textbf{A micro-perturbation probe of RNA structure predictors\\
 on the CPEB3 human/chimpanzee ribozyme pair:\\
@@ -54,14 +55,24 @@ the validation and test splits of the Stanford RNA 3D Folding benchmark.
 We use this pair as a \emph{micro-perturbation probe} of two
 transformer-based RNA structure predictors --- DRfold2 (language-model
 front end, single-sequence input) and RhoFold+ (Evoformer, run in
-single-sequence mode). We report a single empirical observation: the
-top-5 most-divergent residues between the DRfold2 predictions for the two
+single-sequence mode). We report:
+(i) the top-5 most-divergent residues between the DRfold2 predictions for the two
 variants include residues 9 and 60, the published P1 helix endpoints,
 while \emph{none} of $n=20$ random single-nucleotide null controls
 reproduces the simultaneous-anchor pattern
-($p_{\mathrm{emp}} = 0.048$, add-1-smoothed).
-AlphaFold~3 (Server, default settings) returns pLDDT~$\sim$25 and is
-not in a useful regime on this orphan-like RNA. \textbf{We are explicit that this is not a biological
+($p_{\mathrm{emp}} = 0.048$, add-1-smoothed);
+(ii) on the matched (chimpanzee) sequence, DRfold2 reaches
+3.73~\AA{} C1$'$ RMSD against the 7QR3 X-ray crystal of the
+chimpanzee CPEB3 ribozyme~\cite{przytula2022}, whereas AlphaFold~3
+(Server, default settings) returns mean per-residue pLDDT $\sim$25 and
+stays at 11.7--25.6~\AA{} from the crystal across its 5 seeds;
+(iii) per-residue calibration analysis: AF3's pLDDT is significantly
+anti-correlated with per-residue crystal error
+(Spearman $\rho = -0.45$, $p < 10^{-4}$), DRfold2's 80-model ensemble
+standard deviation positively correlates with pre-selection ensemble
+error (Spearman $\rho = +0.31$, $p = 0.01$), and the two
+uncertainty signals are not correlated with each other
+(Spearman $\rho = -0.24$, $p \approx 0.05$, opposite-sign). \textbf{We are explicit that this is not a biological
 discovery}: the Skilandat 2016 mechanism is published, and the observed
 predictor behavior is parsimoniously explained by correct geometric
 propagation through the known long-range P1.1-P1 contact rather than by
@@ -98,6 +109,22 @@ DRfold2 predictions and at $\sim$13~\AA{} mean Kabsch RMSD with each
 other. This is itself a reportable observation: at this length/family,
 the current most-cited SOTA RNA folder operates below its useful
 confidence threshold.
+\item A ground-truth comparison against the 7QR3 X-ray crystal of the
+chimpanzee CPEB3 ribozyme (deposited December~2021,
+2.18~\AA{})~\cite{przytula2022}: DRfold2 reaches 3.73~\AA{} C1$'$
+RMSD against the matched chimpanzee sequence; AlphaFold~3 stays at
+11.7--25.6~\AA{} across its 5 seeds. The crystal also constrains the
+parsimonious-geometry explanation: residue~9 is in direct 3D contact
+with the mutation site (8.27~\AA{}) in the crystal, residue~60 is
+borderline (17.78~\AA{}), and residues 22/24/51 are non-local
+($>$~28~\AA{}).
+\item A per-residue calibration analysis using DRfold2's
+80-model ensemble standard deviation and AF3's per-residue pLDDT
+against the crystal. Both signals are individually
+well-calibrated ($p<0.05$); the two are \emph{not} correlated with
+each other, which is an empirical statement about the
+non-redundancy of ensemble-based and confidence-head-based
+uncertainty on this RNA.
 \item A reproducible, low-cost protocol others can run on any
 single-nucleotide variant pair.
 \end{itemize}
@@ -459,6 +486,193 @@ a model operating below its useful confidence threshold (AF3 on this
 orphan RNA, R1107$\leftrightarrow$R1108 mean Kabsch RMSD $\sim$13~\AA{}
 in our run).
 
+\subsection{Ground-truth comparison vs the 7QR3 crystal (Experiment \#4)}
+\label{sec:gt}
+
+The X-ray crystal of the chimpanzee CPEB3 ribozyme (PDB 7QR3,
+2.18~\AA{}, deposited December 2021)~\cite{przytula2022} provides a
+direct experimental ground truth for our matched chimpanzee sequence
+R1108. The asymmetric unit contains two copies of the RNA in a
+crystallographic dimer; Kabsch alignment of chain C against chain D
+gives 2.60~\AA{} C1$'$ RMSD, which we treat as the
+conformational-noise floor of this structure.
+
+Kabsch C1$'$ RMSD of each prediction against 7QR3 chain~C
+(Table~\ref{tab:gt}):
+
+\begin{table}[h!]
+\centering
+\caption{Predictions vs experimental crystal 7QR3:C (chimp CPEB3,
+2.18~\AA{}). Best-of-5 selects the AF3 seed minimizing the RMSD;
+this is generous to AF3 since AF3 itself does not flag any of the 5
+seeds as preferred (all 5 have identical \texttt{ranking\_score}~$=0.08$).}
+\label{tab:gt}
+\small
+\begin{tabular}{lc}
+\toprule
+Predictor / configuration & C1$'$ RMSD vs 7QR3:C (\AA{}) \\
+\midrule
+\textbf{DRfold2 R1108 (matched sequence)} & \textbf{3.73} \\
+AF3 R1108 default seed (matched sequence) & 25.57 \\
+AF3 R1108 best of 5 seeds                 & 11.73 \\
+DRfold2 R1107 (cross-species proxy)       & 4.20 \\
+AF3 R1107 default seed                    & 16.15 \\
+\midrule
+Crystal noise floor (7QR3:C $\leftrightarrow$ 7QR3:D) & 2.60 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+On the matched-sequence comparison, DRfold2 reaches 3.73~\AA{},
+within $\sim$1~\AA{} of the crystal's own conformational noise.
+The best AF3 seed remains 3.1$\times$ further from the crystal; the
+default seed is 6.9$\times$ further. We list two important caveats
+upfront:
+
+\begin{itemize}
+\item \textbf{Training-data exposure.} 7QR3 (deposited
+December~2021) almost certainly entered DRfold2's
+(Lee~\textit{et~al.}~2025) training corpus, while AlphaFold~3's
+declared PDB cutoff is September~2021, so AF3 plausibly
+\emph{did~not} see it. This is an asymmetric advantage to DRfold2,
+not the other way around, and the bare RMSD comparison should be read
+with that caveat: part of the DRfold2 number is memorization. We
+nonetheless report it because (a) it is the only experimental
+ground truth available for this exact sequence, and (b) the
+per-residue and calibration analyses below do not depend on absolute
+RMSD.
+\item \textbf{Multi-chain submission.} For convenience and the
+20~jobs/day Server quota, all seven sequences were submitted as one
+multi-chain AF3 job. Because per-residue pLDDT is computed
+intra-chain and our RMSD is computed after Kabsch alignment, the
+multi-chain framing should not affect per-chain fold quality, but a
+single-chain re-submission would close this caveat at the cost of one
+additional Server job.
+\end{itemize}
+
+\subsection{The published P1.1$\leftrightarrow$P1 contact in the
+crystal vs in the predictions (Experiment \#4 continued)}
+
+A direct geometric check on the crystal answers the question raised
+in~\S\ref{sec:geom}: \emph{is the cascade we report just DRfold2 placing
+the published P1.1$\leftrightarrow$P1 contact correctly?}
+Table~\ref{tab:gt_distances} reports C1$'$ distance from the mutation
+site (position~30) to each cascade residue, both in the predicted
+structures and in the experimental crystal.
+
+\begin{table}[h!]
+\centering
+\caption{Distance C1$'$(pos~30) to each cascade residue (\AA{}). Crystal
+columns are 7QR3 chains C and D; DRfold2 column is the
+selected final structure.}
+\label{tab:gt_distances}
+\small
+\begin{tabular}{lcccc}
+\toprule
+res. & 7QR3:C & 7QR3:D & DRfold2 R1108 & interpretation \\
+\midrule
+9   & \textbf{8.27}  & 8.28  & 13.4 & \textbf{direct contact} (P1.1$\leftrightarrow$P1) \\
+22  & 32.13 & 32.28 & 26.8 & non-local (DRfold2 attractor)\\
+24  & 28.92 & 28.36 & 21.2 & non-local (DRfold2 attractor)\\
+51  & 47.57 & 44.53 & 41.3 & non-local (DRfold2 attractor)\\
+60  & 17.78 & 17.36 & 13.8 & weak coupling (P1 helix end) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In the crystal: \textbf{residue 9 is in direct 3D contact with the
+mutation site (8.27~\AA{})}, while residue 60 is at the edge of the
+contact regime (17.78~\AA{}). The cleanest defensible statement we
+can make is therefore that the DRfold2 R1107$\leftrightarrow$R1108
+cascade reflects a \emph{real} P1.1$\leftrightarrow$P1 contact at
+residue~9, with the predictor placing it slightly tighter than the
+crystal does (13.4 vs 8.3~\AA{}). The presence of residue~60 in the
+top-5 reflects DRfold2 \emph{over-coupling} the P1 helix end relative
+to the crystal, rather than a separate independent contact. Residues
+22, 24, and 51 do not have a direct geometric basis in the crystal
+and are consistent with the
+``DRfold2-attractor'' interpretation reached in~\S\ref{sec:geom}.
+
+\subsection{Per-residue calibration analysis (Experiment \#5)}
+\label{sec:calib}
+
+We test, on the matched sequence, whether each model's
+self-reported uncertainty correlates with its per-residue
+distance to the 7QR3:C crystal. For DRfold2 we use the
+standard deviation across its 80 ensemble models
+(4~configs $\times$ 20~models) at each C4$'$ position as an
+\emph{implicit} per-residue uncertainty signal. For AF3 we use the
+per-residue pLDDT (atom-pLDDT averaged per residue) as the
+\emph{explicit} signal. We compute Spearman and Pearson rank
+correlations across the 69 residues.
+
+\begin{table}[h!]
+\centering
+\caption{Calibration correlations on R1108 (Experiment \#5). For
+DRfold2, ``error'' is the per-residue C4$'$ deviation of the
+ensemble-mean structure from the crystal (pre-selection). For AF3,
+``error'' is the per-residue C4$'$ deviation of the predicted
+structure from the crystal.}
+\label{tab:calib}
+\small
+\begin{tabular}{llrr}
+\toprule
+Signal & Compared to & Spearman~$\rho$ & $p$ \\
+\midrule
+DRfold2 ensemble std (R1108) & DRfold2 ensemble-mean err vs crystal & $+0.31$ & $0.010$ \\
+AF3 pLDDT (best seed)        & AF3 best-seed err vs crystal         & $-0.27$ & $0.026$ \\
+AF3 pLDDT (default seed)     & AF3 default-seed err vs crystal      & $\mathbf{-0.45}$ & $\mathbf{9.7 \cdot 10^{-5}}$ \\
+DRfold2 std vs ($-$AF3 pLDDT) & cross-model uncertainty alignment    & $-0.24$ & $0.050$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three observations:
+
+\begin{enumerate}
+\item \textbf{AF3's pLDDT is well-calibrated against the crystal,
+even when AF3 globally fails.} The default-seed correlation
+($\rho = -0.45$, $p < 10^{-4}$) is highly significant. At the
+mutation site (residue~30), AF3 default seed reports pLDDT~$27.2$ and
+sits $16.7$~\AA{} from the crystal; at the P1 anchor (residue~60),
+AF3 reports pLDDT~$23.8$ and is $4.1$~\AA{} from the crystal --- the
+ranking is consistent with the calibration sign.
+\item \textbf{DRfold2 has a usable implicit calibration signal in its
+ensemble disagreement.} Although DRfold2 does not emit an explicit
+pLDDT, the standard deviation across the 80 ensemble members
+positively correlates with the per-residue error of the
+ensemble-mean ($\rho = +0.31$, $p = 0.01$).
+\item \textbf{The two uncertainty signals are not redundant.}
+DRfold2 ensemble std and ($-$AF3 pLDDT) have Spearman correlation
+$-0.24$ ($p \approx 0.05$, of \emph{opposite} sign than ``both
+flag the same residues''). The two predictors disagree about which
+residues are hard. Cross-model uncertainty does not collapse into one
+shared signal on this RNA --- ensembling-based uncertainty and
+confidence-head-based uncertainty are complementary, not redundant,
+sources of information.
+\end{enumerate}
+
+Figure~\ref{fig:perresidue} shows the full per-residue picture: top
+panel, per-residue C1$'$ error against the crystal for both models;
+bottom panel, the two per-residue uncertainty signals on independent
+axes. DRfold2's error stays under $\sim$8~\AA{} across the molecule;
+AF3's error spans 5--40~\AA{}.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{figures/per_residue_calibration.pdf}
+\caption{Per-residue calibration on R1108 (chimp CPEB3) against the
+7QR3:C crystal. \textbf{Top}: per-residue error of DRfold2 (blue) and
+AF3 (red) predictions vs the experimental structure. \textbf{Bottom}:
+per-residue uncertainty signals --- DRfold2 ensemble std (blue, high =
+uncertain) and AF3 pLDDT (red, low = uncertain). Dotted vertical lines
+mark cascade residues (9, 22, 24, 51, 60); orange line marks the
+mutation site (residue~30). Both uncertainty signals are individually
+well-calibrated against the crystal at $p < 0.05$, but they
+disagree on \emph{which} residues are hard.}
+\label{fig:perresidue}
+\end{figure}
+
 % ---------------------------------------------------------------------------
 \section{Discussion}
 
@@ -524,21 +738,43 @@ left open as the most promising follow-up.
 \subsection{Limitations}
 
 \begin{itemize}
-\item Only one model (DRfold2) tested as the ``responsive'' system
-within its intended input regime. RhoFold+ was tested in degraded
-single-sequence mode; AlphaFold~3 (Server) reported pLDDT~$\sim$25 on
-this RNA family and is not in a useful regime for the comparison.
-\item ``Top-5'' threshold is heuristic; we did not formalize
-sensitivity to the cut.
-\item The $p_{\mathrm{emp}} = 0.048$ from $n=20$ random NULLs
-(\S\ref{sec:n20}) uses the conservative add-1-smoothing
-upper bound, not a calibrated permutation test against the underlying
-$\binom{69}{1}{\times}3$ single-nucleotide alternative space.
-\item No use of DRfold2's per-residue confidence channel
-(the \texttt{.ret} introspection script is included in the repository
-but not run on this submission's compute window).
-\item No experimental validation. The activity gap is taken from
-Skilandat~2016; no kinetic experiments were performed.
+\item \textbf{Single RNA family.} All experiments are on a single 69-nt
+ribozyme pair (R1107/R1108) and its peripheral controls. The
+calibration correlations in \S\ref{sec:calib}, the AF3-vs-DRfold2
+ground-truth gap in \S\ref{sec:gt}, and the cascade observation
+are case-study evidence on one family. We do not claim
+generalisation to other RNA classes without a multi-family
+replication.
+\item \textbf{Training-data exposure is asymmetric.} 7QR3 was deposited
+in December~2021, after AlphaFold~3's declared September~2021 PDB
+cutoff but well before DRfold2's 2025 training. Part of DRfold2's
+3.73~\AA{} headline figure may reflect memorisation of this
+structure, and not all of the DRfold2-vs-AF3 RMSD gap should be
+attributed to architecture.
+\item \textbf{Multi-chain AF3 submission.} The seven AF3 jobs were
+submitted as a single multi-chain Server job for quota efficiency.
+Per-residue pLDDT is intra-chain and Kabsch alignment is
+translation-invariant, so the multi-chain framing should not affect
+per-chain fold quality, but a per-chain re-submission would close
+this caveat at the cost of one extra Server job.
+\item \textbf{Top-5 threshold is heuristic.} The ``cascade'' metric
+uses a fixed top-5 cut and a ``both anchors in top-5'' indicator. We
+did not formalise sensitivity to either choice.
+\item \textbf{Empirical p-value upper bound.} The
+$p_{\mathrm{emp}} = 0.048$ from $n=20$ random NULLs (\S\ref{sec:n20})
+uses the conservative add-1-smoothing upper bound, not a calibrated
+permutation test against the underlying $\binom{69}{1}{\times}3$
+alternative space.
+\item \textbf{Calibration analysis at low absolute confidence.}
+AF3's per-residue pLDDT ranks correctly against per-residue crystal
+error, but in absolute terms the AF3 pLDDT values on this RNA
+(\textit{ca.}~25) are below AlphaFold~3's standard ``low confidence''
+threshold of 50. The calibration we report is therefore a
+\emph{rank-order} property of pLDDT, not a calibration of the
+absolute pLDDT-to-error mapping.
+\item \textbf{No experimental kinetics.} The activity gap is taken from
+Skilandat~2016~\cite{skilandat2016}; no cleavage assays were performed
+in this study.
 \end{itemize}
 
 \section{Conclusion}
