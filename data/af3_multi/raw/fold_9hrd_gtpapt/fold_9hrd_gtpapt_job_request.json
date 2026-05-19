@@ -1,0 +1,17 @@
+[{
+ "name": "9HRD_GTPapt",
+ "modelSeeds": [
+  "987812496"
+ ],
+ "sequences": [
+  {
+   "rnaSequence": {
+    "sequence": "GGCGCAUUUUGGUAGGUCGGUCGCUGCUUCGGCAGUGAGGGGUAGGCAUUGCUGGCCUAGGGUGCCC",
+    "count": 1
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 3
+}
+]

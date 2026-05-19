@@ -1,0 +1,17 @@
+[{
+ "name": "9UW0_2dG",
+ "modelSeeds": [
+  "1262612543"
+ ],
+ "sequences": [
+  {
+   "rnaSequence": {
+    "sequence": "GCGUAUAUCCUUAAUGAUAUGGUUUAAGGGCAAUACAUAGAAACCACAAAUUUCUUACUGCGU",
+    "count": 1
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 3
+}
+]

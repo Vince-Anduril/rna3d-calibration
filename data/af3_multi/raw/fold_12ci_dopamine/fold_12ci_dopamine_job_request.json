@@ -1,0 +1,17 @@
+[{
+ "name": "12CI_dopamine",
+ "modelSeeds": [
+  "47512558"
+ ],
+ "sequences": [
+  {
+   "rnaSequence": {
+    "sequence": "GGACGAUAGACUCCGUAAUUCGCGUGGAUAUGGCACGCAGUCAGGUGUUGGGCACCGUAAAUGUCCCACAUAGUAUCGUCCA",
+    "count": 1
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 3
+}
+]

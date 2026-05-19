@@ -1,0 +1,17 @@
+[{
+ "name": "R1108_chimp_single",
+ "modelSeeds": [
+  "81751748"
+ ],
+ "sequences": [
+  {
+   "rnaSequence": {
+    "sequence": "GGGGGCCACAGCAGAAGCGUUCACGUCGCGGCCCCUGUCAGCCAUUGCACUCCGGCUGCGAAUUCUGCU",
+    "count": 1
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 3
+}
+]

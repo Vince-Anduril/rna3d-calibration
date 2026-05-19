@@ -1,0 +1,17 @@
+[{
+ "name": "9LJN_GuanineII",
+ "modelSeeds": [
+  "1022170766"
+ ],
+ "sequences": [
+  {
+   "rnaSequence": {
+    "sequence": "GGGUUGUAUAAGCUCGUUAAUUUGGAAUGAGCGUAUCUACAGGCAACCGUAAAUUGCCCCAGGCUACAAUC",
+    "count": 1
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 3
+}
+]
