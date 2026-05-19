@@ -195,14 +195,15 @@ R1108 (chimp) : ...UCGC<span style="color:#10b981;">G</span>GCCC...   pos 30 = G
 
   <div class="stats-row" style="margin-top: 1.2em;">
     <div style="background: #f0fdf4; border-color: #10b981;">
-      <span class="bignum" style="color: var(--positive);">0/5</span>
-      <span class="biglabel">control mutations hit P1</span>
+      <span class="bignum" style="color: var(--positive);">0/20</span>
+      <span class="biglabel">random NULLs &mdash; <em>both</em> anchors in top-5</span>
     </div>
     <div style="background: #fef9c3; border-color: var(--accent);">
-      <span class="bignum" style="color: var(--accent);">1/1</span>
-      <span class="biglabel">the biological mutation alone hits P1</span>
+      <span class="bignum" style="color: var(--accent);">p<sub>emp</sub> = 0.048</span>
+      <span class="biglabel">add-1, significant at 0.05 threshold</span>
     </div>
   </div>
+  <p style="font-size: 0.7em; text-align:center; margin-top:0.5em; color:var(--muted);">5 peripheral NULLs + 15 uniform random positions &mdash; n=20 total.</p>
 </section>
 
 <!-- Slide 6: Exp #1 nuances the result -->
@@ -252,7 +253,7 @@ R1108 (chimp) : ...UCGC<span style="color:#10b981;">G</span>GCCC...   pos 30 = G
     </svg>
   </div>
 
-  <p style="font-size: 0.78em;"><strong>Key reading:</strong> only residues <strong>9 and 60</strong> are simultaneously <strong>(a)</strong> in direct 3D contact with the mutation AND <strong>(b)</strong> specific to the real case (0/5 NULLs hit them). Residues 22, 24, 51 are DRfold2 <em>attractor positions</em> (they also appear in 2/5 NULLs).</p>
+  <p style="font-size: 0.78em;"><strong>Key reading:</strong> only residues <strong>9 and 60</strong> are simultaneously <strong>(a)</strong> in direct 3D contact with the mutation AND <strong>(b)</strong> specific to the real case (0/20 random NULLs hit <em>both</em>). Residues 22, 24, 51 are DRfold2 <em>attractor positions</em>.</p>
 </section>
 
 <!-- Slide 7: Honest verdict -->
@@ -264,7 +265,7 @@ R1108 (chimp) : ...UCGC<span style="color:#10b981;">G</span>GCCC...   pos 30 = G
       <h3>✓ What we showed (defensible)</h3>
       <ul>
         <li>DRfold2 places the <strong>P1.1 ↔ P1 3D contact (~13 Å)</strong> correctly in its predicted structure.</li>
-        <li>It propagates the single-nt mutation through this contact <strong>in a mutation-specific way</strong> (0/5 NULLs).</li>
+        <li>It propagates the single-nt mutation through this contact <strong>in a mutation-specific way</strong> (0/20 random NULLs, <strong>p<sub>emp</sub> = 0.048</strong>).</li>
         <li>Reproducible probing protocol (<strong>~30 min, ~€0.30</strong>).</li>
       </ul>
     </div>
@@ -273,10 +274,33 @@ R1108 (chimp) : ...UCGC<span style="color:#10b981;">G</span>GCCC...   pos 30 = G
       <ul>
         <li><strong>Not a biological discovery.</strong> Mechanism already in Skilandat 2016.</li>
         <li><strong>Not proof that the LM "understands".</strong> Parsimonious explanation: correct geometry + local propagation.</li>
-        <li>n=5 NULLs, low statistical power.</li>
+        <li>No activity measurements done by us.</li>
       </ul>
     </div>
   </div>
+</section>
+
+<!-- Slide 7bis: AlphaFold 3 cross-check -->
+<section>
+  <h2><em style="color: var(--accent-2);">AlphaFold 3</em> cross-check &mdash; reported observation</h2>
+  <p style="font-size: 0.78em;">All 7 sequences submitted to the <strong>AlphaFold Server</strong> (free, default settings). What AF3 itself reports:</p>
+
+  <div class="cards" style="grid-template-columns: 1fr 1fr 1fr;">
+    <div class="card danger">
+      <h3 style="font-size:0.95em;">AF3 pLDDT ≈ 25</h3>
+      <p style="font-size:0.8em;">Across the 7 sequences, AF3 reports mean confidence <strong>~25 / 100</strong>. The ``low confidence'' threshold is 50. AF3 itself signals: <em>``I don't know.''</em></p>
+    </div>
+    <div class="card danger">
+      <h3 style="font-size:0.95em;">R1107 ↔ R1108 (1 nt diff)</h3>
+      <p style="font-size:0.8em;">DRfold2: ~1.86 Å global RMSD.<br>AF3: <strong>~13 Å global RMSD</strong>, and <strong>Δ@9 = 39 Å</strong>. Two incompatible folds for 1 nt of difference.</p>
+    </div>
+    <div class="card">
+      <h3 style="font-size:0.95em;">Top-5 divergent residues</h3>
+      <p style="font-size:0.8em;">DRfold2: <strong>{9, 22, 24, 51, 60}</strong> (the P1).<br>AF3: <strong>{1, 8, 9, 10, 11}</strong> (5′ terminus). Only shared residue: <strong>9</strong>.</p>
+    </div>
+  </div>
+
+  <p style="font-size: 0.78em; margin-top:0.8em;"><strong>Honest reading:</strong> AF3 on this short orphan-like ribozyme (~69 nt, no usable MSA) is <em>not</em> in a useful regime. The protocol surfaces this regime &mdash; itself a reportable observation. No biological interpretation drawn from AF3.</p>
 </section>
 
 <!-- Slide 8: NLP / transformer link -->
@@ -326,12 +350,12 @@ R1108 (chimp) : ...UCGC<span style="color:#10b981;">G</span>GCCC...   pos 30 = G
         <td>Pattern across <strong>N variant/activity pairs</strong> in an annotated dataset</td>
       </tr>
       <tr>
-        <td>5 NULL controls</td>
-        <td>n ≥ 20 + permutation test</td>
+        <td>20 NULL controls → p<sub>emp</sub> = 0.048 ✓</td>
+        <td>n ≥ 100 + calibrated permutation across 69×3 space</td>
       </tr>
       <tr>
-        <td>RhoFold without MSA (biased test)</td>
-        <td>RhoFold WITH MSA + AlphaFold3 + Boltz-1</td>
+        <td>AF3 tested → pLDDT~25 (not in useful regime)</td>
+        <td>AF3 / Boltz-1 / RhoFold <strong>with MSA</strong> on a less orphan-like family</td>
       </tr>
     </tbody>
   </table>

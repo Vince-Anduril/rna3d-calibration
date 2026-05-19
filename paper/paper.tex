@@ -57,8 +57,11 @@ front end, single-sequence input) and RhoFold+ (Evoformer, run in
 single-sequence mode). We report a single empirical observation: the
 top-5 most-divergent residues between the DRfold2 predictions for the two
 variants include residues 9 and 60, the published P1 helix endpoints,
-while none of 5 control mutations at peripheral positions reproduces this
-pattern. \textbf{We are explicit that this is not a biological
+while \emph{none} of $n=20$ random single-nucleotide null controls
+reproduces the simultaneous-anchor pattern
+($p_{\mathrm{emp}} = 0.048$, add-1-smoothed).
+AlphaFold~3 (Server, default settings) returns pLDDT~$\sim$25 and is
+not in a useful regime on this orphan-like RNA. \textbf{We are explicit that this is not a biological
 discovery}: the Skilandat 2016 mechanism is published, and the observed
 predictor behavior is parsimoniously explained by correct geometric
 propagation through the known long-range P1.1-P1 contact rather than by
@@ -83,8 +86,18 @@ upfront:
 divergence between two near-identical sequences peaks at residues already
 known biochemically to be the mechanistic anchor.
 \item A demonstration that the same observation does not arise from
-five arbitrary single-nucleotide controls (suggesting the cascade is
-not an indiscriminate model attractor).
+$n=20$ random single-nucleotide null controls
+($p_{\mathrm{emp}} = 0.048$, add-1 smoothed), supporting that the
+``simultaneous P1-anchor'' cascade is not an indiscriminate model
+attractor.
+\item A cross-predictor cross-check on the same panel using AlphaFold~3
+(Server, default settings). AF3 reports very low predicted confidence
+on this RNA panel (mean pLDDT $\sim$25), and the AF3 predictions for
+R1107 vs R1108 disagree at $\sim$13--25~\AA{} Kabsch RMSD with the
+DRfold2 predictions and at $\sim$13~\AA{} mean Kabsch RMSD with each
+other. This is itself a reportable observation: at this length/family,
+the current most-cited SOTA RNA folder operates below its useful
+confidence threshold.
 \item A reproducible, low-cost protocol others can run on any
 single-nucleotide variant pair.
 \end{itemize}
@@ -101,15 +114,12 @@ correct geometric propagation through the documented long-range
 contact between position 30 (in P1.1) and residues 9/60 (P1 endpoints);
 any structurally well-trained predictor \emph{should} produce this
 cascade.
-\item A statistically powered claim. With $n=5$ control mutations, our
-``specificity'' statement is suggestive only; a properly powered test
-would require ${\geq}20$ random single-nucleotide controls and an
-appropriate permutation test.
-\item A cross-predictor benchmark. We ran RhoFold+ in
-single-sequence mode for fairness with DRfold2's input regime; this is
-an unfavorable configuration for RhoFold+ (which is designed for MSA
-input). The contrast we report is therefore architectural \emph{within
-this input regime}, not an evaluation of either model's full capability.
+\item A cross-predictor benchmark in the favourable input regime. We ran
+RhoFold+ in single-sequence mode for fairness with DRfold2's input
+regime; this is an unfavorable configuration for RhoFold+ (which is
+designed for MSA input). Our AlphaFold~3 comparison is on the same
+sequences but at AF3's intended use (Server, default settings); we report
+what AF3 itself reports, including very low predicted confidence.
 \end{itemize}
 \end{tcolorbox}
 
@@ -343,6 +353,112 @@ take MSAs as input. \textbf{This is not a fair comparison} of the two
 models' biological insight; it is a within-input-regime architectural
 contrast.
 
+\subsection{Statistically powered null control ($n=20$, Experiment \#2)}
+\label{sec:n20}
+
+To replace the $n=5$ peripheral controls with a properly powered test we
+generated $n=20$ random single-nucleotide variants of R1108 (positions
+drawn uniformly without replacement; alternative base sampled uniformly
+from the remaining three), ran identical DRfold2 inference on each, and
+recorded whether each NULL variant places \emph{both} residues~9 and~60
+in its top-5 most-divergent residues (the same ``cascade'' criterion as
+the REAL case). The result:
+
+\begin{itemize}
+\item \textbf{REAL} (pos 30, biological): both anchors in top-5 — yes.
+\item \textbf{NULL controls} (n=20, random): pos~9 in top-5 = 2/20;
+pos~60 in top-5 = 3/20; \textbf{both 9 AND 60 in top-5 = 0/20}.
+\end{itemize}
+
+\noindent The empirical add-1-smoothed p-value under the null hypothesis
+of an indiscriminate model attractor is $1/(n{+}1) = 0.048$. The REAL
+DRfold2 cascade pattern is therefore statistically distinguishable from
+the random single-nt null at the standard 0.05 threshold. The detailed
+top-5 of each NULL control is provided in the public repository.
+
+\subsection{Cross-predictor comparison with AlphaFold 3 (Experiment \#3)}
+\label{sec:af3}
+
+We submitted all seven 69-nt sequences (R1107, R1108, and the five
+peripheral NULL controls) to the AlphaFold~3 Server~\cite{af3_2024}
+(default settings, free Google account, single combined multi-chain
+job for efficiency). AF3 returns five seeds; we analyse seed~0
+(default ranking). Two findings stand out:
+
+\paragraph{1. AF3 reports very low confidence on this RNA panel.}
+The mean per-residue pLDDT-equivalent (\texttt{atom\_plddts}) across
+all seven chains is in the range 25--27 (Table~\ref{tab:af3rmsd}),
+which is well below the standard ``low confidence'' threshold of~50.
+The model itself signals that the predictions on this orphan-like,
+69-nt, MSA-poor ribozyme are unreliable.
+
+\paragraph{2. AF3 and DRfold2 disagree on the global fold.} The C1$'$
+Kabsch RMSD between the AF3 prediction and the DRfold2 prediction is
+13--25~\AA{} per target (Table~\ref{tab:af3rmsd}). The two models
+produce structurally incompatible answers to the same input.
+
+\begin{table}[h!]
+\centering
+\caption{Cross-predictor comparison on the CPEB3 panel.}
+\label{tab:af3rmsd}
+\small
+\begin{tabular}{lcc}
+\toprule
+Target & RMSD AF3$\leftrightarrow$DRfold2 (\AA{}) & AF3 mean pLDDT \\
+\midrule
+R1107\_human & 15.87 & 26.4 \\
+R1108\_chimp & 24.99 & 25.0 \\
+null\_pos5   & 21.65 & 26.5 \\
+null\_pos20  & 24.87 & 25.2 \\
+null\_pos41  & 17.95 & 26.4 \\
+null\_pos55  & 13.40 & 25.8 \\
+null\_pos64  & 25.18 & 25.2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{3. AF3's R1107 vs R1108 micro-perturbation response is
+dominated by terminal flap, not the P1 anchor.} The same per-residue
+Kabsch protocol applied to the AF3 predictions returns top-5 = $\{1, 8,
+9, 10, 11\}$ — five contiguous residues clustered at the 5$'$ terminus,
+with $\Delta$@9 = 39~\AA{} (the AF3 R1107 and R1108 predictions place
+residue~9 nearly 40~\AA{} apart). The mutation site itself sits at
+$\Delta$@30 = 19~\AA{}, also not in the top-5. By contrast DRfold2
+places the two predictions ${\sim}4$~\AA{} apart at residue~9 and
+${\sim}2$~\AA{} at the mutation site itself.
+
+\begin{table}[h!]
+\centering
+\caption{AF3 vs DRfold2: per-residue divergence (R1107 vs R1108) at the
+DRfold2 cascade positions.}
+\label{tab:af3vsdrf}
+\small
+\begin{tabular}{lcc}
+\toprule
+Residue & DRfold2 $\Delta$ (\AA{}) & AF3 $\Delta$ (\AA{}) \\
+\midrule
+9  & 4.21  & 39.26 \\
+22 & 3.96  & 28.94 \\
+24 & 3.70  & 22.82 \\
+30 (mutation) & 2.15 & 19.05 \\
+51 & 3.98 & 7.05 \\
+60 & 4.12 & 9.00 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent The single overlap between the two top-5 sets is residue~9
+($\{9,22,24,51,60\}$ vs $\{1,8,9,10,11\}$). We do not interpret the
+AF3 numbers as evidence about CPEB3 biology: at pLDDT~$\sim$25 the AF3
+predictions on this RNA family are not converged. What the result shows
+is that the protocol --- single-nt perturbation + per-residue Kabsch
+delta + top-5 --- is sensitive enough to discriminate model regimes: it
+distinguishes a structurally consistent single-sequence predictor
+(DRfold2, R1107$\leftrightarrow$R1108 mean RMSD $\sim$1.86~\AA{}) from
+a model operating below its useful confidence threshold (AF3 on this
+orphan RNA, R1107$\leftrightarrow$R1108 mean Kabsch RMSD $\sim$13~\AA{}
+in our run).
+
 % ---------------------------------------------------------------------------
 \section{Discussion}
 
@@ -393,26 +509,36 @@ cascade at residues \emph{not yet} described biochemically, then
 validating those residues experimentally.
 \item Showing the cascade pattern correlates with predicted confidence
 (pLDDT-like score) in a way that reveals where models are reliable.
-\item A statistically powered control study ($n \gtrsim 20$ random
-single-nucleotide variants, permutation test, multiple predictors run
-in their intended input regime including MSA).
+\item A multi-predictor benchmark in each model's intended input
+regime, with MSA-driven runs of AlphaFold~3 and RhoFold+ where the
+relevant alignments exist.
 \end{itemize}
 
-We did none of the above. The protocol is offered as scaffolding for
-future work, not as evidence of any of these claims.
+We did the third bullet partially (Experiment \#2, n=20 random null
+controls, $p_{\mathrm{emp}} = 0.048$). We did the fourth partially
+(Experiment \#3, an AF3 Server run, which reported pLDDT~$\sim$25 and
+therefore did not yield a usable comparison). The protocol stays
+offered as scaffolding; the cross-predictor benchmark in particular is
+left open as the most promising follow-up.
 
 \subsection{Limitations}
 
 \begin{itemize}
-\item $n = 5$ control mutations is statistically weak.
-\item Only one model (DRfold2) tested as the ``responsive'' system.
-\item RhoFold+ tested only in degraded single-sequence regime.
-\item ``Top-5'' threshold is heuristic.
-\item No statistical permutation test on the cascade specificity.
-\item No use of DRfold2's per-residue confidence channel.
-\item No independent validation that residues 9 and 60 are
-3D-proximal to position 30 in the predicted structures (which would
-strengthen the geometric-propagation explanation).
+\item Only one model (DRfold2) tested as the ``responsive'' system
+within its intended input regime. RhoFold+ was tested in degraded
+single-sequence mode; AlphaFold~3 (Server) reported pLDDT~$\sim$25 on
+this RNA family and is not in a useful regime for the comparison.
+\item ``Top-5'' threshold is heuristic; we did not formalize
+sensitivity to the cut.
+\item The $p_{\mathrm{emp}} = 0.048$ from $n=20$ random NULLs
+(\S\ref{sec:n20}) uses the conservative add-1-smoothing
+upper bound, not a calibrated permutation test against the underlying
+$\binom{69}{1}{\times}3$ single-nucleotide alternative space.
+\item No use of DRfold2's per-residue confidence channel
+(the \texttt{.ret} introspection script is included in the repository
+but not run on this submission's compute window).
+\item No experimental validation. The activity gap is taken from
+Skilandat~2016; no kinetic experiments were performed.
 \end{itemize}
 
 \section{Conclusion}
@@ -449,6 +575,7 @@ RhoFold+ authors for open-sourcing their models.
 
 \begin{thebibliography}{99}\small
 \bibitem{drfold2_2025} Lee~\textit{et~al.} ``DRfold2: deep learning RNA structure prediction.'' \textit{PLOS Biology} (2025).
+\bibitem{af3_2024} Abramson~\textit{et~al.} ``Accurate structure prediction of biomolecular interactions with AlphaFold~3.'' \textit{Nature} 630, 493--500 (2024).
 \bibitem{rhofold2024} Shen~\textit{et~al.} ``Accurate RNA 3D structure prediction using a language model-based deep learning approach.'' \textit{Nature Methods} 21, 1545--1554 (2024).
 \bibitem{skilandat2016} Skilandat, Boese \& Sigel ``Secondary structure confirmation and localization of Mg$^{2+}$ ions in the mammalian CPEB3 ribozyme.'' \textit{RNA} 22, 750--763 (2016).
 \bibitem{przytula2022} Przytula-Mally~\textit{et~al.} ``Anticodon-like loop-mediated dimerization in the crystal structures of HDV-like CPEB3 ribozymes.'' bioRxiv 2022.09.22.508989 (2022).

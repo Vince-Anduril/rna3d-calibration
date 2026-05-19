@@ -239,14 +239,15 @@ R1108 (chimp)  : ...UCGC<span style="color:#10b981;">G</span>GCCC...   pos 30 = 
 
   <div class="stats-row" style="margin-top: 1.2em;">
     <div style="background: #f0fdf4; border-color: #10b981;">
-      <span class="bignum" style="color: var(--positive);">0/5</span>
-      <span class="biglabel">mutations contrôles ne touchent P1</span>
+      <span class="bignum" style="color: var(--positive);">0/20</span>
+      <span class="biglabel">NULLs aléatoires &mdash; <em>les deux</em> ancres dans le top-5</span>
     </div>
     <div style="background: #fef9c3; border-color: var(--accent);">
-      <span class="bignum" style="color: var(--accent);">1/1</span>
-      <span class="biglabel">la mutation biologique seule&nbsp;y touche</span>
+      <span class="bignum" style="color: var(--accent);">p<sub>emp</sub> = 0.048</span>
+      <span class="biglabel">add-1, significatif au seuil 0.05</span>
     </div>
   </div>
+  <p style="font-size: 0.7em; text-align:center; margin-top:0.5em; color:var(--muted);">5 NULLs périphériques + 15 positions aléatoires uniformes &mdash; n=20 au total.</p>
 </section>
 
 <!-- =================================================================== -->
@@ -311,7 +312,7 @@ R1108 (chimp)  : ...UCGC<span style="color:#10b981;">G</span>GCCC...   pos 30 = 
     </svg>
   </div>
 
-  <p style="font-size: 0.78em;"><strong>Lecture clé&nbsp;:</strong> seuls les résidus <strong>9 et 60</strong> sont simultanément <strong>(a)</strong> en contact 3D direct avec la mutation ET <strong>(b)</strong> spécifiques au cas réel (0/5 NULLs les ont). Les résidus 22, 24, 51 sont des <em>attractor positions</em> de DRfold2 (ils apparaissent dans 2/5 NULLs aussi).</p>
+  <p style="font-size: 0.78em;"><strong>Lecture clé&nbsp;:</strong> seuls les résidus <strong>9 et 60</strong> sont simultanément <strong>(a)</strong> en contact 3D direct avec la mutation ET <strong>(b)</strong> spécifiques au cas réel (0/20 NULLs aléatoires ont <em>les deux</em>). Les résidus 22, 24, 51 sont des <em>attractor positions</em> de DRfold2.</p>
 </section>
 
 <!-- =================================================================== -->
@@ -325,7 +326,7 @@ R1108 (chimp)  : ...UCGC<span style="color:#10b981;">G</span>GCCC...   pos 30 = 
       <h3>✓ Ce qu'on a montré (défendable)</h3>
       <ul>
         <li>DRfold2 place le contact 3D <strong>P1.1 ↔ P1 (~13 Å)</strong> correctement dans sa structure prédite.</li>
-        <li>Il propage la mutation single-nt à travers ce contact <strong>de manière spécifique</strong> (0/5 NULLs).</li>
+        <li>Il propage la mutation single-nt à travers ce contact <strong>de manière spécifique</strong> (0/20 NULLs aléatoires, <strong>p<sub>emp</sub> = 0.048</strong>).</li>
         <li>Protocole de probing reproductible (<strong>~30 min, ~0.30 €</strong>).</li>
       </ul>
     </div>
@@ -334,10 +335,35 @@ R1108 (chimp)  : ...UCGC<span style="color:#10b981;">G</span>GCCC...   pos 30 = 
       <ul>
         <li><strong>Pas une découverte biologique.</strong> Mécanisme déjà Skilandat 2016.</li>
         <li><strong>Pas une preuve que le LM comprend.</strong> L'explication parsimonieuse&nbsp;: bonne géométrie + propagation locale.</li>
-        <li>n=5 NULLs, faible puissance statistique.</li>
+        <li>Pas de test expérimental d'activité fait par nous.</li>
       </ul>
     </div>
   </div>
+</section>
+
+<!-- =================================================================== -->
+<!-- Slide 7bis: AlphaFold 3 cross-check                                  -->
+<!-- =================================================================== -->
+<section>
+  <h2>Cross-check <em style="color: var(--accent-2);">AlphaFold 3</em> — l'observation reportée</h2>
+  <p style="font-size: 0.78em;">Les 7 séquences soumises au <strong>AlphaFold Server</strong> (gratuit, default settings). Ce qu'AF3 lui-même rapporte&nbsp;:</p>
+
+  <div class="cards" style="grid-template-columns: 1fr 1fr 1fr;">
+    <div class="card danger">
+      <h3 style="font-size:0.95em;">pLDDT AF3 ≈ 25</h3>
+      <p style="font-size:0.8em;">Sur les 7 séquences, AF3 sort une confiance moyenne de <strong>~25 / 100</strong>. Le seuil ``low confidence'' est 50. AF3 lui-même signale&nbsp;: <em>« je ne sais pas ».</em></p>
+    </div>
+    <div class="card danger">
+      <h3 style="font-size:0.95em;">R1107 ↔ R1108 (1 nt de diff.)</h3>
+      <p style="font-size:0.8em;">DRfold2&nbsp;: ~1.86 Å RMSD global.<br>AF3&nbsp;: <strong>~13 Å RMSD global</strong>, et <strong>Δ@9 = 39 Å</strong>. Deux folds incompatibles pour 1 nt de différence.</p>
+    </div>
+    <div class="card">
+      <h3 style="font-size:0.95em;">Top-5 résidus divergents</h3>
+      <p style="font-size:0.8em;">DRfold2&nbsp;: <strong>{9, 22, 24, 51, 60}</strong> (le P1).<br>AF3&nbsp;: <strong>{1, 8, 9, 10, 11}</strong> (extrémité 5′). Seul résidu en commun&nbsp;: <strong>9</strong>.</p>
+    </div>
+  </div>
+
+  <p style="font-size: 0.78em; margin-top:0.8em;"><strong>Lecture honnête&nbsp;:</strong> AF3 sur ce ribozyme orphelin court (~69 nt, sans MSA exploitable) n'est <em>pas</em> dans un régime utilisable. Le protocole révèle ce régime — c'est en soi reportable. Pas d'interprétation biologique tirée d'AF3.</p>
 </section>
 
 <!-- =================================================================== -->
@@ -391,12 +417,12 @@ R1108 (chimp)  : ...UCGC<span style="color:#10b981;">G</span>GCCC...   pos 30 = 
         <td>Pattern sur <strong>N paires variants/activité</strong> dans une base annotée</td>
       </tr>
       <tr>
-        <td>5 NULL contrôles</td>
-        <td>n ≥ 20 + test de permutation</td>
+        <td>20 NULL contrôles → p<sub>emp</sub> = 0.048 ✓</td>
+        <td>n ≥ 100 + permutation calibrée sur l'espace 69×3</td>
       </tr>
       <tr>
-        <td>RhoFold sans MSA (test biaisé)</td>
-        <td>RhoFold AVEC MSA + AlphaFold3 + Boltz-1</td>
+        <td>AF3 testé → pLDDT~25 (régime non-utile)</td>
+        <td>AF3 / Boltz-1 / RhoFold <strong>avec MSA</strong> sur une famille moins orpheline</td>
       </tr>
     </tbody>
   </table>
