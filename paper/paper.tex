@@ -259,16 +259,18 @@ artifacts that any monomer-prediction would inherit.
 
 \subsection{Comparison with AlphaFold~3 on the $5$-target subset}
 
-On the five targets where we have both predictors, DRfold2 wins all
-five (Table~\ref{tab:rmsd}, AF3 columns). Mean DRfold2 $=6.55$~\AA{}
-vs.~mean AF3-default $=8.38$~\AA{}. With $n=5$ the Wilcoxon signed-rank
-test on the matched pairs is $W=0$ with $p=0.0625$ (one-sided), at
-the edge of significance and consistent with the model's
-\emph{rank-order} advantage on this subset; the sample is too small
-for a calibrated effect-size claim. The headline AF3 vs.~DRfold2
-question across all $12$ targets requires the seven AF3 single-chain
-jobs that are pending; we report the $5$-target sub-comparison as
-descriptive evidence.
+On the five targets where we have both predictors, DRfold2 wins $4/5$
+matched pairs (Table~\ref{tab:rmsd}). The only loss is on 12CI (dimer
+crystal), where both predictors are far from the crystal and where
+DRfold2's monomer-input artifact pushes its RMSD highest. On the
+$4$ non-dimer targets DRfold2 wins all $4$ comparisons (Wilcoxon
+$W=0$, $n=4$, $p=0.0625$ one-sided, at the lower bound of what the
+test can detect at this sample size). On all $5$ targets the Wilcoxon
+is $W=4$, $p=0.22$ one-sided. The honest summary is that DRfold2
+ranks above AF3 on the $5$-target subset in mean but not at
+calibrated statistical significance; the headline question across
+the full $11$ blind targets requires seven additional AF3
+single-chain jobs that are pending.
 
 \subsection{Hazard 1: the AF3 Server multi-chain submission artifact}
 \label{sec:multichain}
@@ -422,9 +424,11 @@ of DRfold2 we are aware of outside the model's own paper, it remains
 small relative to canonical structure-prediction benchmarks; a
 larger panel could change the mean.
 \item The AF3 vs.~DRfold2 comparison is on $5$ targets. The
-Wilcoxon test is at $p=0.0625$ (one-sided, $n=5$), at the edge of
-significance; the $7$ pending AF3 jobs would push the comparison to
-$N=12$ and make the test definitive.
+Wilcoxon test on all $5$ is $p=0.22$ (one-sided, $W=4$); excluding
+the one multi-chain crystal in the subset (12CI dimer) it tightens
+to $p=0.0625$ ($W=0$, $n=4$, at the lower bound of the test). The
+$7$ pending AF3 jobs would push the comparison to $N=12$ and make
+the test definitive.
 \item AF3 was run only through the public Server. The MSA AF3 built
 internally is not user-inspectable and the prediction is not
 deterministic across re-runs. The reported numbers are the Server's
@@ -447,8 +451,9 @@ panel of DRfold2 we are aware of --- the single-sequence transformer
 reaches mean $4.21$~\AA{} C1$'$ Kabsch RMSD on the $9$ monomer
 crystals, with the only failures concentrated on multi-chain
 crystals where the model received a monomer input. A 5-target side
-comparison with AlphaFold~3 favours DRfold2 in mean (Wilcoxon
-$W=0$, $n=5$, $p=0.0625$ one-sided), at the edge of significance.
+comparison with AlphaFold~3 favours DRfold2 in $4/5$ matched pairs
+(Wilcoxon $W=4$, $p=0.22$ one-sided on all $5$; tightens to $W=0$,
+$p=0.0625$ on the $4$ non-dimer crystals).
 Beyond the headline numbers we surface three reproducibility
 hazards that should be controlled in any future RNA-folding
 benchmark: AF3 Server multi-chain submission silently degrades
