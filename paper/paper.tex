@@ -242,11 +242,12 @@ C1$'$ Kabsch RMSD against each of the $12$ crystals.
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\linewidth]{figures/multi_rna_rmsd.pdf}
-\caption{C1$'$ Kabsch RMSD against the experimental crystal. DRfold2
-(blue) on all $12$ targets; AlphaFold~3 (red/yellow) on the five
-targets for which we have single-chain Server submissions. The two
-multi-chain crystals (9HRD tetramer, 12CI dimer) are the only two
-DRfold2 errors above $7$~\AA{}.}
+\caption{C1$'$ Kabsch RMSD against the experimental crystal for all
+$12$ targets. DRfold2 (blue) and AlphaFold~3 single-chain submissions
+(red = default seed, yellow = best of 5 seeds). The two multi-chain
+crystals (9HRD tetramer, 12CI dimer) are the only two DRfold2 errors
+above $7$~\AA{}; 12CI is also the single target where AF3 beats
+DRfold2 ($10.05$~vs~$16.82$~\AA{}).}
 \label{fig:cross}
 \end{figure}
 
