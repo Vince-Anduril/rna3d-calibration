@@ -224,8 +224,9 @@ primary scalar. For the per-residue calibration test we report
 Spearman rank correlation between AF3's per-residue pLDDT
 (\texttt{atom\_plddts} aggregated to per-residue means) and the
 per-residue C1$'$ deviation, on the default seed of the single-chain
-submission. Multiple-testing across five targets is reported both as
-raw and Bonferroni-corrected ($\alpha=0.05/5=0.01$). The CPEB3
+submission. Multiple-testing across the $12$ targets is reported
+both as raw and Bonferroni-corrected ($\alpha=0.05/12 \approx 0.0042$).
+The CPEB3
 case-study null is a $n=20$ random single-nucleotide control
 (extended to $n=100$ in the supplement) with an add-1-smoothed
 empirical $p$-value.
@@ -398,7 +399,7 @@ the blind-only summary. The remaining $11$ targets are post-cutoff
 for both predictors and can be compared fairly.
 
 \subsection{Hazard 3: AF3's per-residue pLDDT is rank-calibrated on
-$4/5$ targets we tested}
+$\mathbf{6/12}$ targets after Bonferroni correction}
 \label{sec:calib}
 
 Table~\ref{tab:calib} reports Spearman rank correlation between AF3's
@@ -495,12 +496,15 @@ that turn out to be no further from the crystal than the consensus
 regions. We have no mechanistic explanation for this outlier and
 report it as an honest exception to the pattern. Raw, $10/12$ targets are significant at $\alpha=0.05$.
 After Bonferroni correction at $\alpha = 0.05/12 \approx 0.0042$,
-$6/12$ targets survive. By contrast, the AF3 pLDDT comparison from
-\S\ref{sec:calib} was on $5$ targets and survived Bonferroni
-($\alpha=0.05/5=0.01$) on $2/5$. The DRfold2 ensemble-std is therefore
-a stronger per-residue uncertainty signal in this panel than AF3's
-explicit pLDDT, despite being implicit and requiring access to the
-unprocessed ensemble (not the user-facing \texttt{opt\_0}).
+$6/12$ targets survive --- numerically identical to AF3's pLDDT
+calibration on the same $12$-target panel (\S\ref{sec:calib}, also
+$6/12$ Bonferroni-significant), and stronger on per-target peak
+correlation strength (9J4N $\rho=+0.66$, $p \approx 10^{-11}$
+for DRfold2's ensemble std vs.\ 9DE7 $\rho=-0.60$, $p \approx
+6 \cdot 10^{-7}$ for AF3's pLDDT). The DRfold2 ensemble-std is
+therefore a per-residue uncertainty signal of comparable quality
+to AF3's explicit pLDDT, despite being implicit and requiring access
+to the unprocessed ensemble (not the user-facing \texttt{opt\_0}).
 
 We emphasise that this is a \emph{post-hoc} discovery on the same
 panel; an out-of-distribution validation of the same correlation on
@@ -554,11 +558,14 @@ $10\times$ in RMSD, an effect users with no ground truth cannot
 detect.
 
 The pLDDT calibration result (\S\ref{sec:calib}) qualifies the
-notion that ``AlphaFold knows when it is wrong''. On our panel, the
-per-residue pLDDT is Bonferroni-significant on $2/5$ targets and
-rank-correlated raw on $4/5$; the two strongly-calibrated cases are
-also the two where the prediction is globally furthest from the
-crystal, so pLDDT is most useful where it most matters.
+notion that ``AlphaFold knows when it is wrong''. On the $12$-target
+panel, the per-residue pLDDT is in the calibrated direction (negative
+correlation between pLDDT and crystal error) on $10/12$ targets, raw
+significant at $\alpha=0.05$ on $9/12$, and survives Bonferroni
+correction at $\alpha=0.05/12 \approx 0.0042$ on $\mathbf{6/12}$. The
+two strongly-calibrated cases with the lowest $p$-values are also two
+of the four targets where AF3's mean RMSD is largest --- pLDDT is
+most useful where it most matters.
 
 \section{Limitations}
 
@@ -663,6 +670,10 @@ democratising biomolecular interaction prediction.'' bioRxiv (2024).
 \bibitem{skilandat2016} Skilandat, M., Boese, M., Sigel, R.K.
 ``Secondary structure confirmation and localization of Mg$^{2+}$
 ions in the mammalian CPEB3 ribozyme.'' \textit{RNA} 22, 750--763 (2016).
+\bibitem{przytula2022} Przytula-Mally, A.~\textit{et~al.}
+``Anticodon-like loop-mediated dimerization in the crystal structures
+of HDV-like CPEB3 ribozymes.'' bioRxiv 2022.09.22.508989 (2022).
+PDB 7QR3.
 \bibitem{elyaniv2010} El-Yaniv, R., Wiener, Y. ``On the foundations
 of noise-free selective classification.'' \emph{Journal of Machine
 Learning Research} 11, 1605--1641 (2010).
