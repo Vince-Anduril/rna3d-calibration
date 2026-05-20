@@ -354,9 +354,38 @@ signals are largely orthogonal, the joint cutoff has a higher
 selective-prediction guarantee than either signal alone at the
 same total rejection fraction, provided both signals are
 individually calibrated --- which we have shown is the case on
-$6/12$ targets each in Table~\ref{tab:calib}. We leave the
-quantitative measurement of joint coverage gain to follow-up work
-on a larger panel.
+$6/12$ targets each in Table~\ref{tab:calib}. The full procedure is
+given in Algorithm~\ref{algo:joint}.
+
+\begin{algorithm}[!t]
+\caption{Combined-cutoff selective prediction across two
+orthogonal per-residue uncertainty signals.}
+\label{algo:joint}
+\textbf{Input:} (i)~prediction $P$ with per-residue uncertainty
+signals $u^{(A)}, u^{(B)} \in \mathbb{R}^L$ (e.g.\ AF3 pLDDT,
+DRfold2 ensemble std); (ii)~calibration sets
+$\mathcal{C}_A, \mathcal{C}_B$ of $(u, e)$ pairs from held-out
+targets; (iii)~target coverage $\alpha$.\\
+\textbf{Output:} accept/reject mask $m \in \{0, 1\}^L$.
+\begin{algorithmic}[1]
+  \STATE Fit $\tau_A$ on $\mathcal{C}_A$ so that
+        $\Pr_{e}\{e \leq \delta \mid u^{(A)} \leq \tau_A\} \geq 1 - \alpha$
+        (split-conformal calibration).
+  \STATE Similarly fit $\tau_B$ on $\mathcal{C}_B$ for the
+        DRfold2-std direction.
+  \FOR{$i = 1, \ldots, L$}
+    \IF{$u^{(A)}(i) \leq \tau_A$ \AND $u^{(B)}(i) \leq \tau_B$}
+      \STATE $m_i \gets 1$ \quad \emph{(accept residue $i$)}
+    \ELSE
+      \STATE $m_i \gets 0$ \quad \emph{(reject)}
+    \ENDIF
+  \ENDFOR
+  \RETURN $m$
+\end{algorithmic}
+\end{algorithm}
+
+We leave the quantitative measurement of joint coverage gain over
+either signal alone to follow-up work on a larger panel.
 
 \subsection{Peak per-target correlation strength is comparable}
 
@@ -379,6 +408,82 @@ collapses the ensemble to one structure. Post-selection, the same
 signal is rank-correlated with the residual error of the final
 \texttt{opt\_0} structure with the per-target strengths reported in
 Table~\ref{tab:calib}.
+
+\subsection{AF3 pLDDT calibration depends on submission framing}
+\label{sec:multichain}
+
+We surface one additional empirical observation that is directly
+relevant to deploying AF3's pLDDT as an abstention signal in
+practice. The AlphaFold Server accepts \emph{multi-chain} submissions
+that bundle several RNA entities into one job. On a matched control
+test --- the same R1108 sequence submitted (i)~as its own
+single-chain job and (ii)~as one of seven RNA chains in a single
+multi-chain job --- the mean per-residue pLDDT \emph{drops from
+$\sim$$56$ to $\sim$$25$} and the C1$'$ Kabsch RMSD vs.\ the 7QR3:C
+crystal \emph{rises from $6.5$~\AA{} to $25.6$~\AA{}}, with no
+change in sequence or in any user-visible Server warning. For our
+purposes the relevant fact is that the user's abstention threshold
+(e.g., ``trust residues with pLDDT $\geq 70$'') becomes meaningless
+when submission framing is uncontrolled: in the multi-chain run no
+residue clears any reasonable cutoff because the entire molecule
+sits in a uniformly low-confidence regime. This is a single matched
+observation, not a benchmarked hazard, but a deployed selective-prediction
+pipeline that calls the AlphaFold Server programmatically should
+either enforce single-chain submission per RNA or validate the
+pLDDT distribution against an expected baseline before applying any
+per-residue cutoff. We have not observed an equivalent
+framing dependence for DRfold2's ensemble-std signal: DRfold2
+receives one sequence per call by design.
+
+\subsection{Why are the two signals orthogonal? An architectural
+interpretation}
+
+The two signals collapse to very different per-residue patterns
+(Fig.~\ref{fig:pertarget}). One plausible reading is that they
+measure different sources of \emph{epistemic} uncertainty:
+
+\begin{itemize}
+\item \textbf{AF3 pLDDT} is a learned per-residue scalar trained on a
+synthetic target (the predicted lDDT-C$_\alpha$ against AlphaFold's
+own training-time recycling outputs). It is therefore a property of
+\emph{the trained confidence head}, sensitive to features that the
+confidence head learned to identify (e.g., low-MSA-depth regions,
+contact ambiguity in the Pairformer's pair representation).
+\item \textbf{DRfold2 ensemble std} is the spread across $80$
+independent forward passes of four different model configurations
+on the same input. It is therefore a property of \emph{the
+architecture-level uncertainty} --- which residue positions the
+four configurations disagree most about before the energy-based
+selection step picks one. The four DRfold2 configurations are
+explicitly trained as variants of each other and the within-config
+$20$ models contribute additional stochastic spread.
+\end{itemize}
+
+The two signals would be expected to agree if both were faithful
+estimates of the same underlying ``per-residue prediction
+difficulty''. The observed orthogonality on this benchmark suggests
+either that the underlying difficulty is multi-dimensional and each
+signal captures a different facet, or that one of the two signals
+contains substantial systematic-error components on top of any
+shared ``difficulty'' axis. Distinguishing these is left for
+follow-up work with a larger and more diverse panel.
+
+\subsection{Reproducibility and runtime}
+
+All DRfold2 inferences in this study were run on a single
+RTX-class GPU (one $\sim$$3$~min call per target on RTX~5090, $\sim$$6$~min
+on the same hardware including the CPU-bound
+\texttt{Optimization.py} step). The full $12$-target panel took
+$\sim$$1$~hour of pod time for $\sim$$\$0.30$. All AlphaFold~3 calls
+were one-click Server submissions (default settings, no MSA tuning,
+no parameter changes); each takes $\sim$$5$ minutes server-side and
+returns a ZIP with five seeds and per-atom pLDDT JSONs. The full
+analysis pipeline (Kabsch alignment, RMSD computation, Spearman
+correlations, Bonferroni correction, figure generation) is
+deterministic and runs in seconds on a laptop CPU from the released
+intermediate files. The full source tree, AF3 ZIPs, DRfold2
+$80$-model ensembles, and all generated figures are at
+\url{https://github.com/Vince-Anduril/rna3d-calibration}.
 
 \section{Discussion}
 
@@ -426,6 +531,36 @@ DRfold2 on absolute prediction quality; that is the subject of a
 separate companion paper.
 \end{itemize}
 
+\subsection{Future work}
+
+Three concrete extensions would tighten this work into a definitive
+statement about ensemble-disagreement UQ:
+
+\begin{enumerate}
+\item \textbf{Larger and out-of-domain panel.}
+Extending the panel from $N=12$ to $N \gtrsim 50$ RNA crystals,
+ideally drawing on the next post-cutoff batch (deposit dates
+2026~or later for both models), would give the cross-signal
+orthogonality test (\S~IV-B) statistical power and would resolve
+whether the two signals' Bonferroni-survival rates remain at
+$\sim$$50\%$ or converge to a stable fraction. Adding protein
+structure prediction targets (AlphaFold~3 covers both) would test
+whether the ensemble-std procedure of Algorithm~\ref{algo:ensstd}
+generalises beyond RNA.
+\item \textbf{Multi-seed AF3 as an alternative implicit signal.}
+AF3 itself emits five seeds per Server call. Treating the
+five-seed C1$'$ spread as an ensemble-disagreement signal
+analogous to DRfold2's $80$-model std would let us compare the
+implicit vs.\ explicit signals \emph{within the same model}, which
+is a cleaner test than the across-model comparison we report.
+\item \textbf{Conformal calibration of the joint cutoff.}
+Section~IV-C proposes a joint cutoff using both signals; calibrating
+it with split conformal prediction~\cite{vovk2005} on a held-out
+fraction of the panel would convert the empirical Spearman
+correlations into a calibrated coverage guarantee, which is what a
+deployed selective-prediction system actually needs.
+\end{enumerate}
+
 \section{Conclusion}
 
 On a panel of $N=12$ post-cutoff RNA X-ray crystals, we have shown
@@ -470,6 +605,24 @@ structures of HDV-like CPEB3 ribozymes.'' bioRxiv
 \bibitem{elyaniv2010} El-Yaniv, R., Wiener, Y. ``On the
 foundations of noise-free selective classification.'' \emph{Journal
 of Machine Learning Research} 11, 1605--1641 (2010).
+\bibitem{lakshminarayanan2017} Lakshminarayanan, B., Pritzel, A.,
+Blundell, C. ``Simple and scalable predictive uncertainty
+estimation using deep ensembles.'' \emph{Advances in Neural
+Information Processing Systems} 30 (2017).
+\bibitem{gal2016} Gal, Y., Ghahramani, Z. ``Dropout as a Bayesian
+approximation: Representing model uncertainty in deep learning.''
+\emph{International Conference on Machine Learning} (2016).
+\bibitem{vovk2005} Vovk, V., Gammerman, A., Shafer, G.
+\emph{Algorithmic Learning in a Random World}. Springer (2005).
+\bibitem{guo2017} Guo, C., Pleiss, G., Sun, Y., Weinberger, K.Q.
+``On calibration of modern neural networks.''
+\emph{International Conference on Machine Learning} (2017).
+\bibitem{geifman2017} Geifman, Y., El-Yaniv, R. ``Selective
+classification for deep neural networks.''
+\emph{Advances in Neural Information Processing Systems} 30 (2017).
+\bibitem{casp15_rna} Das, R.~\textit{et al.} ``Assessment of
+three-dimensional RNA structure prediction in CASP15.''
+\emph{Proteins} (2023).
 \end{thebibliography}
 
 \end{document}
