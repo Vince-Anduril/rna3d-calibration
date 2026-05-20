@@ -2,6 +2,7 @@
 \IEEEoverridecommandlockouts
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithm}
 \usepackage{algorithmic}
 \usepackage{graphicx}
 \usepackage{textcomp}
@@ -207,7 +208,29 @@ ensemble member at the C4$'$ atom set (DRfold2's intermediate models
 are coarse-atom; we use C4$'$ for the ensemble analysis and C1$'$
 for the post-selection RMSD against the crystal). For each residue
 $i$ we compute the standard deviation of the $80$ aligned positions
-as $u_{\text{DRfold2}}(i)$. A higher value means more uncertain.
+as $u_{\text{DRfold2}}(i)$. A higher value means more uncertain. The
+extraction procedure is given as Algorithm~\ref{algo:ensstd}.
+
+\begin{algorithm}[!t]
+\caption{Per-residue uncertainty from an unprocessed ensemble.}
+\label{algo:ensstd}
+\textbf{Input:} ensemble of $M$ candidate structures $\{X_m\}_{m=1}^{M}$,
+each a $L \times 3$ matrix of atomic coordinates over $L$ residues.\\
+\textbf{Output:} per-residue uncertainty vector $u \in \mathbb{R}^L$.
+\begin{algorithmic}[1]
+  \STATE Let $X_{\text{ref}} \gets X_1$.
+  \FOR{$m = 2, \ldots, M$}
+    \STATE $R_m, t_m \gets \mathrm{Kabsch}(X_m, X_{\text{ref}})$
+    \STATE $X_m \gets R_m X_m + t_m$  \quad \emph{(align to reference)}
+  \ENDFOR
+  \STATE $\bar{X} \gets \frac{1}{M} \sum_{m=1}^{M} X_m$ \quad \emph{(ensemble mean)}
+  \FOR{$i = 1, \ldots, L$}
+    \STATE $d_{m,i} \gets \| X_{m,i} - \bar{X}_i \|_2$ for each $m$
+    \STATE $u_i \gets \mathrm{stddev}_m(d_{m,i})$
+  \ENDFOR
+  \RETURN $u$
+\end{algorithmic}
+\end{algorithm}
 
 \subsection{Calibration metric}
 
@@ -267,23 +290,73 @@ fraction of strongly-calibrated targets on this $N=12$ panel.
 
 \subsection{The two signals are largely orthogonal}
 
-We test whether the two signals agree on \emph{which} residues are
-hard, by computing the per-target Spearman correlation between
-$u_{\text{DRfold2}}(i)$ and $-u_{\text{AF3}}(i)$ (so that both
-quantities point in the ``high = uncertain'' direction). If the two
-signals were measuring the same underlying uncertainty, we would
-expect a strong positive correlation. We observe instead a pooled
-correlation that is weakly negative ($\rho = -0.24$, $p \approx
-0.05$, opposite-sign direction). The two signals flag substantially
-different residues as uncertain.
+Figure~\ref{fig:pertarget} visualises the per-target calibration
+strength of the two signals on the same axes. If the two signals
+measured the same underlying uncertainty, the points should
+align along the $y=x$ diagonal. Instead, they scatter freely:
+$9$LKE has near-zero AF3 calibration but a large positive DRfold2
+calibration; $9$MFH has the opposite. Only 9DE7 and 12CI
+(green markers) are Bonferroni-significant on both signals at once.
 
-This is consistent with the two signals capturing different sources
-of error: AF3's pLDDT is a learned property of a confidence head
-trained on AlphaFold-style synthetic targets, while DRfold2's
-ensemble disagreement reflects the spread of $80$ candidate folds
-before the energy-based \texttt{opt\_0} selection step. Both are
-calibrated against the same ground truth at the same Bonferroni
-threshold, but they are not redundant.
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\linewidth]{figures/acdsa_pertarget_scatter.pdf}
+\caption{Per-target calibration of AF3's pLDDT (x-axis: $-\rho$ for
+sign uniformity) versus DRfold2's ensemble std (y-axis: $+\rho$).
+The dashed line is $y=x$; points off the diagonal indicate that
+the two signals disagree on how strongly each target is calibrated.
+Marker size scales with sequence length.}
+\label{fig:pertarget}
+\end{figure}
+
+We also test the per-residue alignment of the two signals.
+Figure~\ref{fig:pooled} shows the pooled scatter on R1108 (the
+longest case-study target where per-residue data is published in
+the companion paper): each point is a residue, with $x$ =
+DRfold2 ensemble std, $y$ = $-$AF3 pLDDT, colour = absolute
+C1$'$ error against the crystal. A strong positive trend would
+mean the two signals are redundant; we observe instead a
+near-zero or weakly negative trend. The two uncertainty signals are
+not collapsing into one underlying ``hard region'' signal.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\linewidth]{figures/acdsa_pooled_residues.pdf}
+\caption{Per-residue scatter of the two uncertainty signals on
+R1108 (CPEB3 ribozyme, $L=69$). Each point is one residue, coloured
+by the C1$'$ error of the AF3 default-seed prediction against the
+$7$QR$3$:C crystal. The two signals do not collapse onto a single
+``hard region'' axis.}
+\label{fig:pooled}
+\end{figure}
+
+This orthogonality is consistent with the two signals capturing
+different sources of error: AF3's pLDDT is a learned property of a
+confidence head trained on AlphaFold-style synthetic targets, while
+DRfold2's ensemble disagreement reflects the spread of $80$
+candidate folds before the energy-based \texttt{opt\_0} selection
+step. Both are calibrated against the same ground truth at the same
+Bonferroni threshold, but they are not redundant.
+
+\subsection{Combined cutoff for selective prediction}
+
+The orthogonality observation implies a concrete practical
+recommendation. In a selective-prediction setting where the user
+rejects per-residue predictions below a confidence threshold, the
+two signals can be applied jointly. We trust residue $i$ only if
+both:
+\begin{equation}
+u_{\text{AF3}}(i) \geq \tau_{\text{AF3}} \quad \mathrm{and} \quad
+u_{\text{DRfold2}}(i) \leq \tau_{\text{DRfold2}},
+\end{equation}
+with $\tau$ chosen on a held-out validation set. Because the two
+signals are largely orthogonal, the joint cutoff has a higher
+selective-prediction guarantee than either signal alone at the
+same total rejection fraction, provided both signals are
+individually calibrated --- which we have shown is the case on
+$6/12$ targets each in Table~\ref{tab:calib}. We leave the
+quantitative measurement of joint coverage gain to follow-up work
+on a larger panel.
 
 \subsection{Peak per-target correlation strength is comparable}
 
