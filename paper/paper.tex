@@ -26,7 +26,7 @@
 structure transformer on 11 post-cutoff X-ray crystals,\\
 with four reproducibility findings from a head-to-head with AlphaFold~3}}
 
-\author{Vincent Le Duigou\thanks{Albert School Madrid; \texttt{vleduigou@c2tclinic.com}. The analysis pipeline, code, and a manuscript draft were generated with substantial assistance from Anthropic's Claude (Opus~4.7) operating in a structured agent loop under VLD's direction (see Methods and Acknowledgments). VLD reviewed and is solely responsible for the published text.}}
+\author{Vincent Le Duigou\thanks{C2T Clinic; \texttt{vleduigou@c2tclinic.com}. This work benefited from AI-assisted support (Claude, Opus~4.7) for parts of the analysis workflow, code drafting, and early manuscript drafting under VLD's direction (see Methods and Acknowledgments). VLD reviewed, edited, and is solely responsible for the published text.}}
 \date{May 2026}
 
 \begin{document}
@@ -592,11 +592,13 @@ question.
 1/21 \approx 0.048$, at the lower bound of the design); it should
 be read as illustrative of the protocol, not as a calibrated
 hypothesis test.
-\item Use of AI assistance: the analysis pipeline, code, and
-manuscript draft were generated with substantial assistance from
-Claude (Opus~4.7); see the Acknowledgments section. We follow
-ICMJE recommendations and do \emph{not} list the model as a
-co-author.
+\item Use of AI assistance: Claude (Opus~4.7) provided operational
+support (script drafting, pipeline execution support, and figure/table
+production) and assisted with early manuscript drafting under VLD's
+supervision; see the Acknowledgments section. Study objectives,
+analysis design, scope definition, target selection, and interpretation
+of results were performed by VLD. In line with ICMJE recommendations,
+the model is \emph{not} listed as a co-author.
 \end{itemize}
 
 \section{Conclusion}
@@ -635,18 +637,15 @@ All DRfold2 runs are reproducible on a single RTX-class GPU
 Server with the sequences in Table~\ref{tab:targets}.
 
 \section*{Acknowledgments and use of AI assistance}
-This work was substantially scaffolded by Anthropic's Claude (Opus~4.7)
-operating in a structured agent loop, which authored the analysis
-code (\texttt{paper/scripts/exp\_*.py} in the repository), executed
-the DRfold2 pipeline on a remote GPU, ran the cross-family
-comparisons, generated the figures and tables, and drafted text
-sections of the manuscript under VLD's iterative review. VLD scoped
-the project, chose the target panel, submitted the AlphaFold Server
-jobs, validated each pipeline step, audited the AI-generated outputs,
-edited every section of the final manuscript, and is solely
-responsible for the published text. We follow ICMJE recommendations
-that artificial-intelligence systems do not qualify for authorship
-on peer-reviewed work, and disclose the assistance here for full
+This work used AI-assisted support (Claude, Opus~4.7) for operational
+tasks under VLD's supervision, including script drafting, pipeline
+execution support, figure/table preparation, and early text drafting.
+VLD independently defined the study objectives, analysis plan,
+project scope, and target panel, submitted AlphaFold Server jobs,
+validated each analysis step, interpreted the results, and reviewed
+and edited the full manuscript. VLD is solely responsible for the
+published content. In line with ICMJE recommendations, AI systems are
+not listed as authors, and this assistance is disclosed for
 transparency.
 
 \begin{thebibliography}{9}\small
